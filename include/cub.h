@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 14:47:40 by discallow         #+#    #+#             */
-/*   Updated: 2024/11/19 22:04:46 by discallow        ###   ########.fr       */
+/*   Updated: 2024/11/21 19:24:55 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define CUB_H
 
 # include "../minilibx-linux/mlx.h"
+# include "../libft/libft.h"
+# include "../libft/get_next_line.h"
 # include <stdlib.h>
 # include <stdio.h>
 # include <X11/X.h>
@@ -30,10 +32,6 @@
 # define GREEN	"\033[0;32m"
 # define YELLOW	"\033[0;33m"
 # define CYAN	"\033[0;36m"
-
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 100
-# endif
 
 typedef struct s_position
 {
@@ -54,17 +52,19 @@ typedef struct	s_map_copy
 typedef struct	s_game
 {
 	char	**map;
-	char	*north;
-	char	*south;
-	char	*west;
-	char	*east;
+	t_position	north;
+	t_position	south;
+	t_position	west;
+	t_position	east;
 	int		x;
 	int		y;
+	int		fd;
 	t_map_copy	copy;
 	t_position	player;
 	t_position	exit;
 	t_position	wall;
 	t_position	floor;
+	t_position	ceiling;
 	t_position	enemy;
 }				t_game;
 

@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 18:12:51 by discallow         #+#    #+#             */
-/*   Updated: 2024/11/19 22:04:55 by discallow        ###   ########.fr       */
+/*   Updated: 2024/11/21 19:28:28 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,12 @@
 
 void	init_struct(t_game *game)
 {
+	game->east.path = NULL;
+	game->west.path = NULL;
+	game->north.path = NULL;
+	game->south.path = NULL;
+	game->floor.path = NULL;
+	game->ceiling.path = NULL;
 	game->x = 0;
 	game->y = 0;
 	game->map = NULL;

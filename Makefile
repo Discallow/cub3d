@@ -14,7 +14,6 @@ UNDERLINED_PURPLE = \033[4;35m
 RESET = \033[0m
 
 SRC_FILES = $(SRC_DIR)/main.c \
-		$(SRC_DIR)/get_next_line.c \
 		$(SRC_DIR)/parsing_map.c
 OBJ_FILES = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC_FILES))
 
@@ -29,7 +28,7 @@ mlx:
 
 $(NAME): $(OBJ_FILES)
 	@echo "$(PURPLE)Building...$(RESET)"
-	@$(CC) $^ -o $@ $(MLX_FLAGS) -L$(LIBFT_DIR)
+	$(CC) $^ -o $@ -L$(LIBFT_DIR) -lft $(MLX_FLAGS)
 	@echo "$(PURPLE)$(NAME) compiled successfully.$(RESET)"
 
 $(OBJ_FILES): | $(OBJ_DIR)
@@ -39,8 +38,8 @@ $(OBJ_DIR):
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(@D)
-	@echo "$(PURPLE)Compiling $(UNDERLINED_PURPLE)$<$(RESET)"
-	@$(CC) $(CFLAGS) -c $< -o $@
+	echo "$(PURPLE)Compiling $(UNDERLINED_PURPLE)$<$(RESET)"
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
 	@echo "$(PURPLE)Cleaning up...$(RESET)"
