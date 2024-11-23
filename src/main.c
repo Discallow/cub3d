@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 18:12:51 by discallow         #+#    #+#             */
-/*   Updated: 2024/11/21 19:28:28 by discallow        ###   ########.fr       */
+/*   Updated: 2024/11/22 19:11:01 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	init_struct(t_game *game)
 	game->floor.num = 0;
 	game->enemy.x = 0;
 	game->enemy.y = 0;
+	game->elements_filled = false;
 }
 
 int	main(int argc, char **argv)

@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 14:47:40 by discallow         #+#    #+#             */
-/*   Updated: 2024/11/21 19:24:55 by discallow        ###   ########.fr       */
+/*   Updated: 2024/11/23 03:47:06 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # include <fcntl.h>
 # include <errno.h>
 # include <string.h>
+# include <stdbool.h>
 
 # define RESET	"\033[0m"
 # define RED	"\033[0;31m"
@@ -33,11 +34,22 @@
 # define YELLOW	"\033[0;33m"
 # define CYAN	"\033[0;36m"
 
+# define NEWLINE 1
+
+typedef enum	e_element
+{
+	CEILING,
+	FLOOR,
+}				t_element;
+
 typedef struct s_position
 {
 	int		x;
 	int		y;
 	int		num;
+	int		red;
+	int		green;
+	int		blue;
 	int		total;
 	void	*img;
 	char	*path;
@@ -66,6 +78,7 @@ typedef struct	s_game
 	t_position	floor;
 	t_position	ceiling;
 	t_position	enemy;
+	bool		elements_filled;
 }				t_game;
 
 char	*get_next_line(int fd);

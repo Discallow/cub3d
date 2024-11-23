@@ -6,12 +6,13 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 21:51:44 by discallow         #+#    #+#             */
-/*   Updated: 2024/11/21 19:27:36 by discallow        ###   ########.fr       */
+/*   Updated: 2024/11/23 04:41:46 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 
+/*O nome deve ser tudo a seguir ao Element, excluindo a newline? like, incluir todos os spaces à frente?*/
 void	skip_spaces(char *line, size_t *i)
 {
 	size_t	index;
@@ -22,32 +23,68 @@ void	skip_spaces(char *line, size_t *i)
 	*i = index;
 }
 
+char	*check_name(char *line)
+{
+	int	i;
+	char	*str;
+
+	i = 0;
+	while (line[i] && ft_isspace(line[i]))
+		i++;
+	//printf("line here:%s", line + i);
+	str = ft_substr(line, i, ft_strlen(line) - i - NEWLINE);
+	printf("str:|%s|\n", str);
+	return (str);
+}
+
+bool	check_elements_filled(t_game *game)
+{
+	if (game->north.path && game->south.path && game->east.path
+		&& game->west.path && game->floor.path && game->ceiling.path)
+		return (true);
+	return (false);
+}
+
+/* char	*check_rgb_value(char *line, int element)
+{
+	return (line);
+} */
+
 void	check_valid_element(char *line, t_game *game)
 {
 	int	i;
 
 	i = 0;
+	if (check_elements_filled(game))
+	{
+		game->elements_filled = true;
+		return ;
+	}
 	while (line[i] && !ft_isspace(line[i]))
 		i++;
-	if (!ft_strncmp(line, "NO", i))
-		game->north.path = check_name(line);
-	else if (!ft_strncmp(line, "SO", i))
-		game->south.path = check_name(line);
-	else if (!ft_strncmp(line, "EA", i))
-		game->east.path = check_name(line);
-	else if (!ft_strncmp(line, "WE", i))
-		game->west.path = check_name(line);
-	else if (!ft_strncmp(line, "C", i))
-		game->floor.path = check_rgb_value(line);
-	else if (!ft_strncmp(line, "F", i))
-		game->floor.path = check_rgb_value(line);
+	if ((line[i] != 'C' || line[i] != 'F') && i < 2)
+		i = 2;
+	if (!ft_strncmp(line, "NO", i) && !game->north.path)
+		game->north.path = check_name(line + i);
+	else if (!ft_strncmp(line, "SO", i) && !game->south.path)
+		game->south.path = check_name(line + i);
+	else if (!ft_strncmp(line, "EA", i) && !game->east.path)
+		game->east.path = check_name(line + i);
+	else if (!ft_strncmp(line, "WE", i) && !game->west.path)
+		game->west.path = check_name(line + i);
+ 	else if (!ft_strncmp(line, "C", i) && !game->ceiling.path)
+		game->ceiling.path = check_name(line + i);
+	else if (!ft_strncmp(line, "F", i) && !game->floor.path)
+		game->floor.path = check_name(line + i);
+	else
 	{
-		printf(RED"%s is not a valid line"RESET, line);
+		ft_putstr_fd(RED, 2);
+		ft_putstr_fd("Invalid line: ", 2);
+		ft_putstr_fd(line, 2);
+		ft_putstr_fd(RESET, 2);
 		free (line);
 		exit (1);
 	}
-	printf("aqui\n");
-	exit(1);
 }
 
 void	check_valid_line(char *line, t_game *game)
@@ -58,7 +95,8 @@ void	check_valid_line(char *line, t_game *game)
 	skip_spaces(line, &i);
 	if (!line[i])
 		return ;
-	check_valid_element(line + i, game);
+	if (game->elements_filled == false)
+		check_valid_element(line + i, game);
 }
 
 void	read_file(t_game *game)
@@ -77,6 +115,7 @@ void	read_file(t_game *game)
 		check_valid_line(line, game);
 		free(line);
 	}
+	exit(1);
 }
 
 int	ft_strcmp2(char *str1)
