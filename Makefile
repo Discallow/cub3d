@@ -2,6 +2,7 @@ NAME = cub3D
 CC = cc 
 CFLAGS = -Wall -Wextra -Werror -g -I$(INCLUDE_DIR)
 MLX_FLAGS = -Lminilibx-linux -lmlx_Linux -lX11 -lXext
+MATH_FLAG = -lm
 INCLUDE_DIR = include
 RM = rm -f
 SRC_DIR = src
@@ -28,7 +29,7 @@ mlx:
 
 $(NAME): $(OBJ_FILES)
 	@echo "$(PURPLE)Building...$(RESET)"
-	$(CC) $^ -o $@ -L$(LIBFT_DIR) -lft $(MLX_FLAGS)
+	$(CC) $^ -o $@ -L$(LIBFT_DIR) -lft $(MLX_FLAGS) $(MATH_FLAG)
 	@echo "$(PURPLE)$(NAME) compiled successfully.$(RESET)"
 
 $(OBJ_FILES): | $(OBJ_DIR)
