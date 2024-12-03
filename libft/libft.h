@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 12:51:18 by asofia-c          #+#    #+#             */
-/*   Updated: 2024/09/30 17:50:19 by discallow        ###   ########.fr       */
+/*   Updated: 2024/11/30 17:14:21 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define LIBFT_H
 
 //<stdarg.h> is the library to va_arg
+# include "../include/cub.h"
 # include <ctype.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -58,6 +59,7 @@ char		*ft_substr(char const *s, unsigned int start, size_t len);//24
 char		*ft_strjoin(char *s1, char *s2);//25
 char		*ft_strtrim(char const *s1, char const *set);//26
 char		**ft_split(char const *s, char c);//27
+char		**ft_split2(char const *s, char c);//27
 char		*ft_itoa(int n);//28
 char		*ft_strmapi(char const *s, char (*f)(unsigned int, char));//29
 void		ft_striteri(char *s, void (*f)(unsigned int, char*));//30

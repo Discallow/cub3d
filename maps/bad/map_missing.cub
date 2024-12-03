@@ -1,11 +1,10 @@
 NO textures/test/north.xpm
 SO textures/test/south.xpm
 WE textures/test/west.xpm
-
-            E    
+    
    
 EA textures/test/east.xpm
-F 2020
+
 F 20,20,20
 C 200,200,200
 
