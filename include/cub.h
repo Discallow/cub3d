@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 14:47:40 by discallow         #+#    #+#             */
-/*   Updated: 2024/12/03 12:14:25 by discallow        ###   ########.fr       */
+/*   Updated: 2024/12/13 15:11:43 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@
 # define CYAN		"\033[0;36m"
 
 # define NEWLINE 1
+# define TILE_SIZE 32
 
 typedef enum	e_element
 {
@@ -48,14 +49,19 @@ typedef enum	e_element
 
 typedef struct s_position
 {
-	int		x;
-	int		y;
+	float	x;
+	float	y;
+	float	size;
 	int		num;
 	char	**rgb;
 	int		color;
 	int		total;
 	void	*img;
 	char	*path;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_len;
+	int		endian;
 }		t_position;
 
 typedef struct	s_map_copy
@@ -66,6 +72,8 @@ typedef struct	s_map_copy
 	bool	map_read;
 	int		start_line;
 	int		last_line;
+	int		max_width;
+	int		max_height;
 	char	*map_joined;
 	int		player_num;
 	
@@ -78,6 +86,8 @@ typedef struct	s_game
 	t_position	south;
 	t_position	west;
 	t_position	east;
+	int		x_len;
+	int		y_len;
 	int		x;
 	int		y;
 	int		fd;
@@ -87,7 +97,10 @@ typedef struct	s_game
 	t_position	wall;
 	t_position	floor;
 	t_position	ceiling;
-	t_position	enemy;		
+	t_position	enemy;
+	t_position	map2;
+	void		*window;
+	void		*connection;
 }				t_game;
 
 char	*get_next_line(int fd);
@@ -121,5 +134,17 @@ void	check_first_last_line(t_game *game);
 
 /*CLEANING ROUTINE*/
 void	free_everything(t_game *game);
+
+/*MOVES*/
+void	redraw_map(t_game *game);
+void	build_map(t_game *game);
+void	move_down(t_game *game);
+void	move_left(t_game *game);
+void	move_right(t_game *game);
+void	move_up(t_game *game);
+void	draw_square(t_position *data, int x, int y, int color);
+void	my_mlx_pixel_put(t_position *data, int x, int y, int color);
+void	build_map(t_game *game);
+void	destroy_map(t_game *game);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 05:49:29 by discallow         #+#    #+#             */
-/*   Updated: 2024/12/03 12:17:42 by discallow        ###   ########.fr       */
+/*   Updated: 2024/12/12 17:48:48 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void	check_one_or_space(t_game *game, int i)
 	static int	flag = 0;
 
 	len = ft_strlen(game->map[i]);
+	if (len > game->copy.max_width)
+		game->copy.max_width = len;
 	if (flag == 0)
 		check_first_last_line(game);
 	flag = 1;
@@ -49,6 +51,7 @@ void	validate_map(t_game *game)
 				check_borders(game, i, j);
 			j++;
 		}
+		game->copy.max_height++;
 		i++;
 	}
 	if (game->copy.player_num != 1)
@@ -105,8 +108,20 @@ void	read_file(t_game *game)
 		exit (1);
 	}
 	read_map(game);
-	free_everything(game);
-	exit(1);
+	t_game *tmp = game;
+	int i = 0;
+	int j = 0;
+	while (tmp->map[i])
+	{
+		j = 0;
+		while (tmp->map[i][j])
+		{
+			printf("%c", tmp->map[i][j]);
+			j++;
+		}
+		printf("|\n");
+		i++;
+	}
 }
 
 void	check_valid_map(char *line, t_game *game)

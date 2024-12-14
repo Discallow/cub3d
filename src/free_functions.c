@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 23:58:38 by discallow         #+#    #+#             */
-/*   Updated: 2024/12/03 12:15:07 by discallow        ###   ########.fr       */
+/*   Updated: 2024/12/04 16:08:17 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,5 @@ void	free_everything(t_game *game)
 			free(game->ceiling.rgb[i]);
 		free(game->ceiling.rgb);
 	}
+	free_everything_2(game);
 }
