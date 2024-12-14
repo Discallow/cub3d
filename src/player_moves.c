@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 20:23:57 by discallow         #+#    #+#             */
-/*   Updated: 2024/12/13 15:18:47 by discallow        ###   ########.fr       */
+/*   Updated: 2024/12/14 15:30:14 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,11 @@ int	get_pixel_color(t_game *game, int x, int y)
 
 void	destroy_map(t_game *game)
 {
+	mlx_destroy_image(game->connection, game->map2.img);
+	//mlx_clear_window(game->connection, game->window);
 	//mlx_destroy_image(game->connection, game->player.img);
-	mlx_destroy_image(game->connection, game->wall.img);
-	mlx_destroy_image(game->connection, game->floor.img);
+	// mlx_destroy_image(game->connection, game->wall.img);
+	// mlx_destroy_image(game->connection, game->floor.img);
 }
 
 void	redraw_map(t_game *game)
@@ -47,8 +49,8 @@ void	move_down(t_game *game)
 	if (game->player.y + 40 >= game->y /* || get_pixel_color(game, game->player.x + 40, game->player.y + 40) == 0x0000FF00 */)
 		return ;
 	//mlx_put_image_to_window(game->connection, game->window, game->player.img, game->player.x, game->player.y);
-	draw_square(&game->player, game->x_len / 4, game->y_len / 4, 0x00000000);
-	mlx_put_image_to_window(game->connection, game->window, game->player.img, game->player.x, game->player.y);
+	// draw_square(&game->player, game->x_len / 4, game->y_len / 4, 0x00000000);
+	// mlx_put_image_to_window(game->connection, game->window, game->player.img, game->player.x, game->player.y);
 	game->player.y += 10;
 	redraw_map(game);
 }
@@ -57,8 +59,8 @@ void	move_left(t_game *game)
 {
 	if (game->player.x - 20 <= 0)
 		return ;
-	draw_square(&game->player, game->x_len / 4, game->y_len / 4, 0x00000000);
-	mlx_put_image_to_window(game->connection, game->window, game->player.img, game->player.x, game->player.y);
+	// draw_square(&game->player, game->x_len / 4, game->y_len / 4, 0x00000000);
+	// mlx_put_image_to_window(game->connection, game->window, game->player.img, game->player.x, game->player.y);
 	game->player.x -= 10;
 	redraw_map(game);
 }
@@ -67,8 +69,8 @@ void	move_right(t_game *game)
 {
 	if (game->player.x + 40 >= game->x)
 		return ;
-	draw_square(&game->player, game->x_len / 4, game->y_len / 4, 0x00000000);
-	mlx_put_image_to_window(game->connection, game->window, game->player.img, game->player.x, game->player.y);
+	// draw_square(&game->player, game->x_len / 4, game->y_len / 4, 0x00000000);
+	// mlx_put_image_to_window(game->connection, game->window, game->player.img, game->player.x, game->player.y);
 	game->player.x += 10;
 	redraw_map(game);
 }
@@ -77,8 +79,8 @@ void	move_up(t_game *game)
 {
 	if (game->player.y - 20 <= 0)
 		return ;
-	draw_square(&game->player, game->x_len / 4, game->y_len / 4, 0x00000000);
-	mlx_put_image_to_window(game->connection, game->window, game->player.img, game->player.x, game->player.y);
+	// draw_square(&game->player, game->x_len / 4, game->y_len / 4, 0x00000000);
+	// mlx_put_image_to_window(game->connection, game->window, game->player.img, game->player.x, game->player.y);
 	game->player.y -= 10;
 	redraw_map(game);
 }
