@@ -6,7 +6,7 @@
 /*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 14:47:40 by discallow         #+#    #+#             */
-/*   Updated: 2024/12/14 15:37:07 by asofia-g         ###   ########.fr       */
+/*   Updated: 2024/12/14 16:13:04 by asofia-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,9 @@ typedef struct s_position
 	float	y;
 	float	size;
 	int		num;
+	char	dir;
+	int		dir_x;
+	int		dir_y;
 	char	**rgb;
 	int		color;
 	int		total;

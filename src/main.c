@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
+/*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 18:12:51 by discallow         #+#    #+#             */
-/*   Updated: 2024/12/14 15:29:58 by discallow        ###   ########.fr       */
+/*   Updated: 2024/12/14 16:24:25 by asofia-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,9 @@ void	init_struct(t_game *game)
 	game->map = NULL;
 	game->copy.exit = 0;
 	game->player.num = 0;
+	game->player.dir = N;
+	game->player.dir_x = 0;
+	game->player.dir_y = 0;
 	game->exit.num = 0;
 	game->wall.num = 0;
 	game->floor.num = 0;
