@@ -6,8 +6,8 @@
 /*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 22:27:37 by asofia-g          #+#    #+#             */
-/*   Updated: 2024/11/23 22:28:09 by asofia-g         ###   ########.fr       */
+/*   Updated: 2024/12/14 14:47:01 by asofia-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <math.h>//math functions, need -lm to compile
+#include "../include/cub.h"
