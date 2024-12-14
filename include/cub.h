@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 14:47:40 by discallow         #+#    #+#             */
-/*   Updated: 2024/12/13 15:11:43 by discallow        ###   ########.fr       */
+/*   Updated: 2024/12/14 14:38:39 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ void	move_down(t_game *game);
 void	move_left(t_game *game);
 void	move_right(t_game *game);
 void	move_up(t_game *game);
-void	draw_square(t_position *data, int x, int y, int color);
+void	draw_square(t_position *data, int x, int y, int start_x, int start_y, int color);
 void	my_mlx_pixel_put(t_position *data, int x, int y, int color);
 void	build_map(t_game *game);
 void	destroy_map(t_game *game);
