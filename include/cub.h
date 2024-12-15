@@ -6,14 +6,14 @@
 /*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 14:47:40 by discallow         #+#    #+#             */
-/*   Updated: 2024/12/14 16:13:04 by asofia-g         ###   ########.fr       */
+/*   Updated: 2024/12/15 15:37:04 by asofia-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB_H
 # define CUB_H
 
-# include "../minilibx-linux/mlx.h"
+# include "../mlx-linux/mlx.h"
 # include "../libft/libft.h"
 # include "../libft/get_next_line.h"
 # include <stdlib.h>
@@ -54,7 +54,7 @@ typedef struct s_position
 	float	y;
 	float	size;
 	int		num;
-	char	dir;
+	char	*dir;
 	int		dir_x;
 	int		dir_y;
 	char	**rgb;
