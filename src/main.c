@@ -256,16 +256,16 @@ void	build_map(t_game *game)
 		while (game->map[i][j])
 		{
 			if (game->map[i][j] == '1')
-				draw_square(&game->map2, game->x_len, game->y_len, j * game->x_len, i * game->y_len, 0x0000FF00);
+				draw_square(&game->map2, game->x_len - 1, game->y_len - 1, j * game->x_len, i * game->y_len, 0x0000FF00);
 				//mlx_put_image_to_window(game->connection, game->window, game->wall.img, j * game->x_len, i * game->y_len);
 			else if (game->map[i][j] != '1')
-				draw_square(&game->map2, game->x_len, game->y_len, j * game->x_len, i * game->y_len, 0x00808080);
+				draw_square(&game->map2, game->x_len - 1, game->y_len - 1, j * game->x_len, i * game->y_len, 0x00808080);
 				// mlx_put_image_to_window(game->connection, game->window, game->floor.img, j * game->x_len, i * game->y_len);
 			if (!flag && game->map[i][j] == 'N')
 			{
 				game->player.x = j * game->x_len;
 				game->player.y = i * game->y_len;
-				draw_square(&game->map2, game->x_len / 4, game->y_len / 4, j * game->x_len, i * game->y_len, 0x000000FF);
+				draw_square(&game->map2, game->x_len / 4 - 1, game->y_len / 4 - 1, j * game->x_len, i * game->y_len, 0x000000FF);
 				// mlx_put_image_to_window(game->connection, game->window, img->img, j * game->x_len, i * game->y_len);
 				flag = 1;
 			}
@@ -274,7 +274,7 @@ void	build_map(t_game *game)
 		i++;
 	}
 	if (flag)
-		draw_square(&game->map2, game->x_len / 4, game->y_len / 4, game->player.x, game->player.y, 0x000000FF);
+		draw_square(&game->map2, game->x_len / 4 - 1, game->y_len / 4 - 1, game->player.x, game->player.y, 0x000000FF);
 	mlx_put_image_to_window(game->connection, game->window, game->map2.img, 0, 0);
 }
 
