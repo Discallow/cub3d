@@ -45,7 +45,7 @@ int	ft_atoi2(const char *s)
 	}
 	while (ft_isspace(s[i]))
 		i++;
-	if (result > 255 || result < 0 || s[i])
+	if (result > 255 || result < 0 || s[i] || size == 0)
 		return (-1);
 	return (result);
 }

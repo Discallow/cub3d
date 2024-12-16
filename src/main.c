@@ -249,7 +249,7 @@ void	build_map(t_game *game)
 	draw_square(&game->wall, game->x_len, game->y_len, 0x0000FF00); */
 	//printf("player x:%f, player y:%f\n", game->player.x, game->player.y);
 	printf("WND_HEIGHT=%d\n", game->y);//APAGAR
-	// ft_raycasting(game);
+	//ft_raycasting(game);
 	while (game->map[i])
 	{
 		j = 0;
@@ -284,7 +284,7 @@ int	main(int argc, char **argv)
 
 
 	if (argc != 2)
-		return (printf(RED"Invalid number of arguments"RESET"\n"));
+		return (printf(RED"Introduce a mapfile as argument"RESET"\n"));
 	display_big_cub3d();
 	display_controls();
 	init_struct(&game);
