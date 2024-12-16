@@ -6,7 +6,7 @@
 /*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 22:27:37 by asofia-g          #+#    #+#             */
-/*   Updated: 2024/12/16 01:33:30 by asofia-g         ###   ########.fr       */
+/*   Updated: 2024/12/16 02:35:55 by asofia-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 void	ft_get_player_inicial_direction(t_game *game)
 {
 	if (ft_strcmp(game->player.dir, "N") == 0)
-		game->player.dir_y = 1;
-	if (ft_strcmp(game->player.dir, "S") == 0)
 		game->player.dir_y = -1;
+	if (ft_strcmp(game->player.dir, "S") == 0)
+		game->player.dir_y = 1;
 	if (ft_strcmp(game->player.dir, "E") == 0)
 		game->player.dir_x = 1;
 	if (ft_strcmp(game->player.dir, "W") == 0)
@@ -31,13 +31,14 @@ void	ft_get_player_inicial_direction(t_game *game)
 */
 void	ft_ray_position(t_game *game, int x)
 {
-	game->calc.plane_x = game->player.dir_y * 0.66;
-	game->calc.plane_y = - game->player.dir_x * 0.66;
+	game->calc.plane_x = game->player.dir_y;
+	game->calc.plane_y = - game->player.dir_x;
 	game->calc.camera_x = 2 * x / (double)game->x - 1;
 	game->calc.ray_dir_x = game->player.dir_x + 
 						game->calc.plane_x * game->calc.camera_x;
 	game->calc.ray_dir_y = game->player.dir_y + 
 						game->calc.plane_y * game->calc.camera_x;
+	printf("dir_x=%d, dir_y= %d, plane_x=%f, plane_y=%f, camera_x=%f, ray_dir_x=%f, ray_dir_y=%f\n", game->player.dir_x, game->player.dir_y, game->calc.plane_x, game->calc.plane_y, game->calc.camera_x, game->calc.ray_dir_x, game->calc.ray_dir_y);//APAGAR
 }
 
 /*which box of the map we're in*/
