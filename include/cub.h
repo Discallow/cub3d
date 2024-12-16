@@ -6,7 +6,7 @@
 /*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 14:47:40 by discallow         #+#    #+#             */
-/*   Updated: 2024/12/15 15:37:04 by asofia-g         ###   ########.fr       */
+/*   Updated: 2024/12/15 23:17:53 by asofia-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,28 @@ typedef struct	s_map_copy
 	
 }				t_map_copy;
 
+typedef struct	s_calculation
+{
+	double	camera_x;
+	double	ray_dir_x;
+	double	ray_dir_y;
+	double	plane_x;
+	double	plane_y;
+	int		map_x;
+	int		map_y;
+	double	delta_dist_x;
+	double	delta_dist_y;
+	int		step_x;
+	int		step_y;
+	double	side_dist_x;
+	double	side_dist_y;
+	int		wall_side;
+	double	wall_dist;
+	int 	draw_start;
+	int 	draw_end;
+	double	wall_x;
+}				t_calculation;
+
 typedef struct	s_game
 {
 	char	**map;
@@ -105,6 +127,7 @@ typedef struct	s_game
 	t_position	map2;
 	void		*window;
 	void		*connection;
+	t_calculation	calc;
 }				t_game;
 
 char	*get_next_line(int fd);
@@ -150,5 +173,12 @@ void	draw_square(t_position *data, int x, int y, int start_x, int start_y, int c
 void	my_mlx_pixel_put(t_position *data, int x, int y, int color);
 void	build_map(t_game *game);
 void	destroy_map(t_game *game);
+
+/*DRAWING*/
+void	my_mlx_pixel_put(t_position *data, int x, int y, int color);
+void    ver_Line(t_position *data, int pos_x, int start, int end, int color);
+
+/*RAYCASTING*/
+void	ft_raycasting(t_game *game);
 
 #endif

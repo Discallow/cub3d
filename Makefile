@@ -28,7 +28,9 @@ SRC_FILES = $(SRC_DIR)/main.c \
 		$(SRC_DIR)/check_elements.c \
 		$(SRC_DIR)/read_validate_map.c \
 		$(SRC_DIR)/check_borders.c \
-		$(SRC_DIR)/player_moves.c
+		$(SRC_DIR)/player_moves.c \
+		$(SRC_DIR)/drawing.c \
+		$(SRC_DIR)/raycasting.c
 OBJ_FILES = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC_FILES))
 
 all: libft mlx $(NAME)

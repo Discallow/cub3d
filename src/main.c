@@ -6,7 +6,7 @@
 /*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 18:12:51 by discallow         #+#    #+#             */
-/*   Updated: 2024/12/15 15:36:23 by asofia-g         ###   ########.fr       */
+/*   Updated: 2024/12/16 00:57:01 by asofia-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ void	init_struct(t_game *game)
 	game->ceiling.path = NULL;
 	game->x = 0;
 	game->y = 0;
-	game->player.x = 20;
-	game->player.y = 20;
+	//game->player.x = 20;
+	//game->player.y = 20;
 	game->player.size = 0;
 	game->map = NULL;
 	game->copy.exit = 0;
@@ -118,14 +118,6 @@ int	window_closed(t_game *game)
 	free(game->connection);
 	free_everything(game);
 	exit (0);
-}
-
-void	my_mlx_pixel_put(t_position *data, int x, int y, int color)
-{
-	char	*dst;
-
-	dst = data->addr + (y * data->line_len + x * (data->bits_per_pixel / 8));
-	*(unsigned int *)dst = color;
 }
 
 void	draw_square(t_position *data, int width, int height, int start_x, int start_y, int color)
@@ -256,6 +248,8 @@ void	build_map(t_game *game)
 	game->wall.addr = mlx_get_data_addr(game->wall.img, &game->wall.bits_per_pixel, &game->wall.line_len, &game->wall.endian);
 	draw_square(&game->wall, game->x_len, game->y_len, 0x0000FF00); */
 	//printf("player x:%f, player y:%f\n", game->player.x, game->player.y);
+	printf("WND_HEIGHT=%d\n", game->y);//APAGAR
+	//ft_raycasting(game);
 	while (game->map[i])
 	{
 		j = 0;
@@ -267,7 +261,7 @@ void	build_map(t_game *game)
 			else if (game->map[i][j] != '1')
 				draw_square(&game->map2, game->x_len, game->y_len, j * game->x_len, i * game->y_len, 0x00808080);
 				// mlx_put_image_to_window(game->connection, game->window, game->floor.img, j * game->x_len, i * game->y_len);
-			if (!flag && game->map[i][j] == 'S')
+			if (!flag && game->map[i][j] == 'N')
 			{
 				game->player.x = j * game->x_len;
 				game->player.y = i * game->y_len;
