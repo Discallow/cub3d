@@ -1,0 +1,5 @@
+[✅]mapa works.cub não está a funcionar: 
+        Invalid line at line 8: F      17,    38,     64
+
+[✅]mensagem de erro ao entrar no jogo, mudar de "invalid number of arguments"
+        para outra do tipo "Introduce a mapfile as argument"

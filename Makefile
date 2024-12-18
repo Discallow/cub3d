@@ -1,7 +1,7 @@
 NAME = cub3D
 CC = cc 
 CFLAGS = -Wall -Wextra -Werror -g
-MLX_FLAGS = -Lminilibx-linux -lmlx_Linux -lX11 -lXext
+MLX_FLAGS = -L$(MLX_DIR) -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lz
 MATH_FLAG = -lm
 INCLUDE_DIR = include
 RM = rm -f
@@ -10,6 +10,7 @@ OBJ_DIR = obj
 LIBFT_DIR	= libft/
 LIBFT_NAME	= libft.a
 LIBFT		= $(LIBFT_DIR)$(LIBFT_NAME)
+#change the folder name from minilibx-linux to mlx_linux
 MLX_DIR = minilibx-linux/
 MLX_NAME = libmlx.a
 MLX	 = $(MLX_DIR)$(MLX_NAME)
@@ -27,7 +28,9 @@ SRC_FILES = $(SRC_DIR)/main.c \
 		$(SRC_DIR)/check_elements.c \
 		$(SRC_DIR)/read_validate_map.c \
 		$(SRC_DIR)/check_borders.c \
-		$(SRC_DIR)/player_moves.c
+		$(SRC_DIR)/player_moves.c \
+		$(SRC_DIR)/drawing.c \
+		$(SRC_DIR)/raycasting.c
 OBJ_FILES = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC_FILES))
 
 all: libft mlx $(NAME)
@@ -35,8 +38,14 @@ all: libft mlx $(NAME)
 libft:
 	@echo "$(PURPLE)Making libft...$(RESET)"
 	@make -sC $(LIBFT_DIR)
+
+#to run the configure into it added "cd mlx-linux && ./configure"
 mlx:
 	@echo "$(PURPLE)Making mlx...$(RESET)"
+	@if [ -f $(MLX_DIR)/configure ] && [ ! -x $(MLX_DIR)/configure ]; then \
+		echo "$(CYAN)Setting executable permission for configure...$(RESET)"; \
+		@chmod +x $(MLX_DIR)/configure; \
+	fi
 	@make -sC $(MLX_DIR)
 
 $(NAME): $(OBJ_FILES)

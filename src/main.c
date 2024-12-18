@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 18:12:51 by discallow         #+#    #+#             */
-/*   Updated: 2024/12/18 14:59:10 by discallow        ###   ########.fr       */
+/*   Updated: 2024/12/18 15:10:27 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,15 @@ void	init_struct(t_game *game)
 	game->ceiling.path = NULL;
 	game->x = 0;
 	game->y = 0;
-	game->player.x = 20;
-	game->player.y = 20;
+	//game->player.x = 20;
+	//game->player.y = 20;
 	game->player.size = 0;
 	game->map = NULL;
 	game->copy.exit = 0;
 	game->player.num = 0;
+	game->player.dir = "N";
+	game->player.dir_x = 0;
+	game->player.dir_y = 0;
 	game->exit.num = 0;
 	game->wall.num = 0;
 	game->floor.num = 0;
@@ -115,14 +118,6 @@ int	window_closed(t_game *game)
 	free(game->connection);
 	free_everything(game);
 	exit (0);
-}
-
-void	my_mlx_pixel_put(t_position *data, int x, int y, int color)
-{
-	char	*dst;
-
-	dst = data->addr + (y * data->line_len + x * (data->bits_per_pixel / 8));
-	*(unsigned int *)dst = color;
 }
 
 void	draw_square(t_position *data, int width, int height, int start_x, int start_y, int color)
@@ -236,6 +231,8 @@ void	build_map(t_game *game)
 	// img = &game->player;
 	i = 0;
 	j = 0;
+	game->player.img = mlx_new_image(game->connection, game->x, game->y);
+	game->player.addr = mlx_get_data_addr(game->player.img, &game->player.bits_per_pixel, &game->player.line_len, &game->player.endian);
 
  	game->map2.img = mlx_new_image(game->connection, game->x / 5, game->y / 5);
 	game->map2.addr = mlx_get_data_addr(game->map2.img, &game->map2.bits_per_pixel, &game->map2.line_len, &game->map2.endian);
@@ -253,22 +250,24 @@ void	build_map(t_game *game)
 	game->wall.addr = mlx_get_data_addr(game->wall.img, &game->wall.bits_per_pixel, &game->wall.line_len, &game->wall.endian);
 	draw_square(&game->wall, game->x_len, game->y_len, 0x0000FF00); */
 	//printf("player x:%f, player y:%f\n", game->player.x, game->player.y);
+	printf("WND_HEIGHT=%d\n", game->y);//APAGAR
+	ft_raycasting(game);
 	while (game->map[i])
 	{
 		j = 0;
 		while (game->map[i][j])
 		{
 			if (game->map[i][j] == '1')
-				draw_square(&game->map2, game->x_len, game->y_len, j * game->x_len, i * game->y_len, 0x0000FF00);
+				draw_square(&game->map2, game->x_len - 1, game->y_len - 1, j * game->x_len, i * game->y_len, 0x0000FF00);
 				//mlx_put_image_to_window(game->connection, game->window, game->wall.img, j * game->x_len, i * game->y_len);
 			else if (game->map[i][j] != '1')
-				draw_square(&game->map2, game->x_len, game->y_len, j * game->x_len, i * game->y_len, 0x00808080);
+				draw_square(&game->map2, game->x_len - 1, game->y_len - 1, j * game->x_len, i * game->y_len, 0x00808080);
 				// mlx_put_image_to_window(game->connection, game->window, game->floor.img, j * game->x_len, i * game->y_len);
-			if (!flag && game->map[i][j] == 'S')
+			if (!flag && game->map[i][j] == 'N')
 			{
 				game->player.x = j * game->x_len;
 				game->player.y = i * game->y_len;
-				draw_square(&game->map2, game->x_len / 4, game->y_len / 4, j * game->x_len, i * game->y_len, 0x000000FF);
+				draw_square(&game->map2, game->x_len / 4 - 1, game->y_len / 4 - 1, j * game->x_len, i * game->y_len, 0x000000FF);
 				// mlx_put_image_to_window(game->connection, game->window, img->img, j * game->x_len, i * game->y_len);
 				flag = 1;
 			}
@@ -277,7 +276,7 @@ void	build_map(t_game *game)
 		i++;
 	}
 	if (flag)
-		draw_square(&game->map2, game->x_len / 4, game->y_len / 4, game->player.x, game->player.y, 0x000000FF);
+		draw_square(&game->map2, game->x_len / 4 - 1, game->y_len / 4 - 1, game->player.x, game->player.y, 0x000000FF);
 	mlx_put_image_to_window(game->connection, game->window, game->map2.img, 0, 0);
 }
 
@@ -287,7 +286,7 @@ int	main(int argc, char **argv)
 
 
 	if (argc != 2)
-		return (printf(RED"Invalid number of arguments"RESET"\n"));
+		return (printf(RED"Introduce a mapfile as argument"RESET"\n"));
 	display_big_cub3d();
 	display_controls();
 	init_struct(&game);
