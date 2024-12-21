@@ -6,7 +6,7 @@
 /*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 18:12:51 by discallow         #+#    #+#             */
-/*   Updated: 2024/12/16 02:48:52 by asofia-g         ###   ########.fr       */
+/*   Updated: 2024/12/18 00:44:40 by asofia-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -249,7 +249,7 @@ void	build_map(t_game *game)
 	draw_square(&game->wall, game->x_len, game->y_len, 0x0000FF00); */
 	//printf("player x:%f, player y:%f\n", game->player.x, game->player.y);
 	printf("WND_HEIGHT=%d\n", game->y);//APAGAR
-	// ft_raycasting(game);
+	ft_raycasting(game);
 	while (game->map[i])
 	{
 		j = 0;

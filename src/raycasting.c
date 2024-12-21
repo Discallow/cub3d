@@ -6,7 +6,7 @@
 /*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 22:27:37 by asofia-g          #+#    #+#             */
-/*   Updated: 2024/12/16 02:35:55 by asofia-g         ###   ########.fr       */
+/*   Updated: 2024/12/18 00:44:07 by asofia-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ void	ft_get_player_inicial_direction(t_game *game)
 */
 void	ft_ray_position(t_game *game, int x)
 {
-	game->calc.plane_x = game->player.dir_y;
-	game->calc.plane_y = - game->player.dir_x;
+	game->calc.plane_x = game->player.dir_y * 0.66;
+	game->calc.plane_y = - game->player.dir_x * 0.66;
 	game->calc.camera_x = 2 * x / (double)game->x - 1;
 	game->calc.ray_dir_x = game->player.dir_x + 
 						game->calc.plane_x * game->calc.camera_x;
