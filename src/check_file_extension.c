@@ -16,7 +16,7 @@ void	check_extension(char *file)
 {
 	if (ft_strcmp2(file) == 0)
 	{
-		write(2, "Wrong extension file\n", 21);
+		printf(RED"Wrong extension file"RESET"\n");
 		exit (1);
 	}
 }

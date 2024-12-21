@@ -38,12 +38,12 @@ void	check_valid_color(t_game *game, char *line, int i)
 {
 	if (!ft_strncmp(line, "C", i) && !game->ceiling.path)
 	{
-		game->ceiling.path = check_name(game, line + i, line);
+		game->ceiling.path = ft_strdup(line + i);/* check_name(game, line + i, line); */
 		check_rgb_value(game, &game->ceiling, line);
 	}
 	else if (!ft_strncmp(line, "F", i) && !game->floor.path)
 	{
-		game->floor.path = check_name(game, line + i, line);
+		game->floor.path = ft_strdup(line + i);/* check_name(game, line + i, line); */
 		check_rgb_value(game, &game->floor, line);
 	}
 	else
@@ -79,6 +79,7 @@ void	check_rgb_value( t_game *game, t_position *element, char *line)
 	int		num;
 
 	num = 0;
+
 	element->rgb = ft_split(element->path, ',');
 	if (!element->rgb)
 		return_invalid_color(element->path, game, line);

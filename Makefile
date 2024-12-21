@@ -11,7 +11,7 @@ LIBFT_DIR	= libft/
 LIBFT_NAME	= libft.a
 LIBFT		= $(LIBFT_DIR)$(LIBFT_NAME)
 #change the folder name from minilibx-linux to mlx_linux
-MLX_DIR = mlx-linux/
+MLX_DIR = minilibx-linux/
 MLX_NAME = libmlx.a
 MLX	 = $(MLX_DIR)$(MLX_NAME)
 PURPLE = \033[1;35m
@@ -44,9 +44,8 @@ mlx:
 	@echo "$(PURPLE)Making mlx...$(RESET)"
 	@if [ -f $(MLX_DIR)/configure ] && [ ! -x $(MLX_DIR)/configure ]; then \
 		echo "$(CYAN)Setting executable permission for configure...$(RESET)"; \
-		chmod +x $(MLX_DIR)/configure; \
+		@chmod +x $(MLX_DIR)/configure; \
 	fi
-	@if [ -x $(MLX_DIR)/configure ]; then cd $(MLX_DIR) && ./configure; fi
 	@make -sC $(MLX_DIR)
 
 $(NAME): $(OBJ_FILES)
