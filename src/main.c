@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 18:12:51 by discallow         #+#    #+#             */
-/*   Updated: 2024/12/18 15:10:27 by discallow        ###   ########.fr       */
+/*   Updated: 2024/12/20 22:42:43 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,11 @@ void	init_struct(t_game *game)
 	game->copy.max_height = 0;
 	game->x_len = 0;
 	game->y_len = 0;
+	game->player.move_speed = 0.1;
+	game->player.rotation_speed = 0.1;
+	game->player.angle = 0.0;
+	game->delta_x = cos(0) * 5;
+	game->delta_y = sin(0) * 5;
 }
 
 void	display_big_cub3d(void)
@@ -202,19 +207,16 @@ void	draw_line(t_position *data, int x0, int y0, int x1, int y1, int color)
 	}
 }
 
-void	draw_grid(t_position *data, int win_width, int win_height, int cell_size, int color)
-{
-	int x, y;
+void draw_player_direction(t_game *game, t_position *data) {
+    int line_length = 10; // Length of the line
+    int start_x = (int)game->player.x;
+    int start_y = (int)game->player.y;
+    int end_x = start_x + game->delta_x * line_length * 5;
+    int end_y = start_y + game->delta_y * line_length * 5;
 
-	// Draw vertical lines
-	for (x = 0; x <= win_width; x += cell_size)
-		draw_line(data, x, 0, x, win_height, color);
-
-	// Draw horizontal lines
-	for (y = 0; y <= win_height; y += cell_size)
-		draw_line(data, 0, y, win_width, y, color);
+    // Use the draw_line function to draw the line
+    draw_line(data, start_x, start_y, end_x, end_y, 0x00FF0000); // Red color
 }
-
 
 void	build_map(t_game *game)
 {
@@ -225,8 +227,8 @@ void	build_map(t_game *game)
 
 	//printf("y:%d\n", game->y_len);
 	//printf("game->x:%d, game->y:%d, game->copy.max_len:%d\n", game->x, game->y, game->copy.max_len);
-	game->x_len = game->x / game->copy.max_width / 5;
-	game->y_len = game->y / game->copy.max_height / 5;
+	game->x_len = game->x / game->copy.max_width;
+	game->y_len = game->y / game->copy.max_height;
 	//printf("x:%d, y:%d\n", game->x_len, game->y_len);
 	// img = &game->player;
 	i = 0;
@@ -234,7 +236,7 @@ void	build_map(t_game *game)
 	game->player.img = mlx_new_image(game->connection, game->x, game->y);
 	game->player.addr = mlx_get_data_addr(game->player.img, &game->player.bits_per_pixel, &game->player.line_len, &game->player.endian);
 
- 	game->map2.img = mlx_new_image(game->connection, game->x / 5, game->y / 5);
+ 	game->map2.img = mlx_new_image(game->connection, game->x, game->y);
 	game->map2.addr = mlx_get_data_addr(game->map2.img, &game->map2.bits_per_pixel, &game->map2.line_len, &game->map2.endian);
 	//draw_grid(&game->map2, game->x / 5, game->y / 5, 20, 0x00FFFFFF); // White grid
 /* 	game->floor.img = mlx_new_image(game->connection, game->x_len, game->y_len);
@@ -251,7 +253,7 @@ void	build_map(t_game *game)
 	draw_square(&game->wall, game->x_len, game->y_len, 0x0000FF00); */
 	//printf("player x:%f, player y:%f\n", game->player.x, game->player.y);
 	printf("WND_HEIGHT=%d\n", game->y);//APAGAR
-	ft_raycasting(game);
+	//ft_raycasting(game);
 	while (game->map[i])
 	{
 		j = 0;
@@ -277,13 +279,13 @@ void	build_map(t_game *game)
 	}
 	if (flag)
 		draw_square(&game->map2, game->x_len / 4 - 1, game->y_len / 4 - 1, game->player.x, game->player.y, 0x000000FF);
+	draw_player_direction(game, &game->map2);
 	mlx_put_image_to_window(game->connection, game->window, game->map2.img, 0, 0);
 }
 
 int	main(int argc, char **argv)
 {
 	t_game	game;
-
 
 	if (argc != 2)
 		return (printf(RED"Introduce a mapfile as argument"RESET"\n"));
