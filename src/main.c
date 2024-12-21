@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
+/*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 18:12:51 by discallow         #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/12/18 00:44:40 by asofia-g         ###   ########.fr       */
-=======
-/*   Updated: 2024/12/20 22:42:43 by discallow        ###   ########.fr       */
->>>>>>> 5b7c2d270b9ef9626628dd8acdef0140d4cb18e7
+/*   Updated: 2024/12/21 18:34:43 by asofia-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,19 +225,21 @@ void build_map(t_game *game)
 	static int flag = 0;
 	int i;
 	int j;
+	int	scale;
 
 	// printf("y:%d\n", game->y_len);
 	// printf("game->x:%d, game->y:%d, game->copy.max_len:%d\n", game->x, game->y, game->copy.max_len);
-	game->x_len = game->x / game->copy.max_width;
-	game->y_len = game->y / game->copy.max_height;
+	scale = 1;
+	game->x_len = game->x / game->copy.max_width / scale;
+	game->y_len = game->y / game->copy.max_height / scale;
 	// printf("x:%d, y:%d\n", game->x_len, game->y_len);
 	//  img = &game->player;
 	i = 0;
 	j = 0;
-	game->player.img = mlx_new_image(game->connection, game->x, game->y);
+	game->player.img = mlx_new_image(game->connection, game->x , game->y );
 	game->player.addr = mlx_get_data_addr(game->player.img, &game->player.bits_per_pixel, &game->player.line_len, &game->player.endian);
 
-	game->map2.img = mlx_new_image(game->connection, game->x, game->y);
+	game->map2.img = mlx_new_image(game->connection, game->x / scale, game->y / scale);
 	game->map2.addr = mlx_get_data_addr(game->map2.img, &game->map2.bits_per_pixel, &game->map2.line_len, &game->map2.endian);
 	// draw_grid(&game->map2, game->x / 5, game->y / 5, 20, 0x00FFFFFF); // White grid
 	/* 	game->floor.img = mlx_new_image(game->connection, game->x_len, game->y_len);
@@ -258,11 +256,7 @@ void build_map(t_game *game)
 		draw_square(&game->wall, game->x_len, game->y_len, 0x0000FF00); */
 	// printf("player x:%f, player y:%f\n", game->player.x, game->player.y);
 	printf("WND_HEIGHT=%d\n", game->y); // APAGAR
-<<<<<<< HEAD
 	ft_raycasting(game);
-=======
-	// ft_raycasting(game);
->>>>>>> 5b7c2d270b9ef9626628dd8acdef0140d4cb18e7
 	while (game->map[i])
 	{
 		j = 0;

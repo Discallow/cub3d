@@ -6,7 +6,7 @@
 /*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 22:27:37 by asofia-g          #+#    #+#             */
-/*   Updated: 2024/12/21 16:55:29 by asofia-g         ###   ########.fr       */
+/*   Updated: 2024/12/21 19:27:50 by asofia-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ void	ft_get_player_inicial_direction(t_game *game)
 */
 void	ft_ray_position(t_game *game, int x)
 {
-	game->calc.plane_x = game->player.dir_y * 0.66;
-	game->calc.plane_y = - game->player.dir_x * 0.66;
+	game->calc.plane_x = - game->player.dir_y * 0.66;
+	game->calc.plane_y = game->player.dir_x * 0.66;
 	game->calc.camera_x = 2 * x / (double)game->x - 1;
 	game->calc.ray_dir_x = game->player.dir_x + 
 						game->calc.plane_x * game->calc.camera_x;
@@ -60,6 +60,7 @@ void	ft_delta_dist(t_game *game)
 		game->calc.delta_dist_y = 1e30;
 	else
 		game->calc.delta_dist_y = fabs(1 / game->calc.ray_dir_y);
+	printf("delta_dist_x =%f, delta_dist_y =%f\n", game->calc.delta_dist_x, game->calc.delta_dist_y);//APAGAR
 }
 
 /*side_dist is length of ray from current position to next x or y-side
@@ -115,7 +116,7 @@ void	ft_dda(t_game *game)
 		}
 		printf("map_x=%d, map_y=%d\n", game->calc.map_x, game->calc.map_y);//APAGAR
 		printf("map[map_x][map_y]=%d\n", game->map[game->calc.map_x][game->calc.map_y]);//APAGAR
-		if (game->map[game->calc.map_x][game->calc.map_y] == '1') 
+		if (game->map[game->calc.map_y][game->calc.map_x] == '1') 
 			break;
 	}
 }
