@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 18:12:51 by discallow         #+#    #+#             */
-/*   Updated: 2024/12/20 22:42:43 by discallow        ###   ########.fr       */
+/*   Updated: 2024/12/23 19:26:04 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -259,6 +259,7 @@ void	build_map(t_game *game)
 		j = 0;
 		while (game->map[i][j])
 		{
+			//printf("i[%d], j[%d]:%c\n", i, j, game->map[i][j]);
 			if (game->map[i][j] == '1')
 				draw_square(&game->map2, game->x_len - 1, game->y_len - 1, j * game->x_len, i * game->y_len, 0x0000FF00);
 				//mlx_put_image_to_window(game->connection, game->window, game->wall.img, j * game->x_len, i * game->y_len);
@@ -267,6 +268,7 @@ void	build_map(t_game *game)
 				// mlx_put_image_to_window(game->connection, game->window, game->floor.img, j * game->x_len, i * game->y_len);
 			if (!flag && game->map[i][j] == 'N')
 			{
+				//printf("x:%d, y:%d\n", (int)game->player.x, (int)game->player.y);
 				game->player.x = j * game->x_len;
 				game->player.y = i * game->y_len;
 				draw_square(&game->map2, game->x_len / 4 - 1, game->y_len / 4 - 1, j * game->x_len, i * game->y_len, 0x000000FF);
