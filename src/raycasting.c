@@ -6,7 +6,7 @@
 /*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 22:27:37 by asofia-g          #+#    #+#             */
-/*   Updated: 2024/12/27 17:54:48 by asofia-g         ###   ########.fr       */
+/*   Updated: 2024/12/27 21:25:50 by asofia-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,18 @@
 
 void	ft_get_player_inicial_direction(t_game *game)
 {
+	if (game->player.flag_dir == 1)
+		return;
 	if (ft_strcmp(game->player.dir, "N") == 0)
-		game->player.dir_y = -1;
+		game->player.dir_y = -1.0;
 	if (ft_strcmp(game->player.dir, "S") == 0)
-		game->player.dir_y = 1;
+		game->player.dir_y = 1.0;
 	if (ft_strcmp(game->player.dir, "E") == 0)
-		game->player.dir_x = 1;
+		game->player.dir_x = 1.0;
 	if (ft_strcmp(game->player.dir, "W") == 0)
-		game->player.dir_x = -1;
+		game->player.dir_x = -1.0;
+	game->player.angle = atan2(game->player.dir_y, game->player.dir_x);
+	game->player.flag_dir = 1;
 }
 
 /*calculate ray position and direction 
@@ -38,13 +42,14 @@ void	ft_ray_position(t_game *game, int x)
 						game->calc.plane_x * game->calc.camera_x;
 	game->calc.ray_dir_y = game->player.dir_y + 
 						game->calc.plane_y * game->calc.camera_x;
-	printf("dir_x=%d, dir_y= %d, plane_x=%f, plane_y=%f, camera_x=%f, ray_dir_x=%f, ray_dir_y=%f\n", game->player.dir_x, game->player.dir_y, game->calc.plane_x, game->calc.plane_y, game->calc.camera_x, game->calc.ray_dir_x, game->calc.ray_dir_y);//APAGAR
+	printf("dir_x=%f, dir_y= %f, plane_x=%f, plane_y=%f, camera_x=%f, ray_dir_x=%f, ray_dir_y=%f\n", game->player.dir_x, game->player.dir_y, game->calc.plane_x, game->calc.plane_y, game->calc.camera_x, game->calc.ray_dir_x, game->calc.ray_dir_y);//APAGAR
 }
 
 /*which box of the map we're in*/
 void	ft_which_box_in(t_game *game)
 {
-	printf("player_x=%d, player_y=%d\n", (int)game->player.x, (int)game->player.y);//APAGAR
+	printf("player_x=%f, player_y=%f\n", game->player.x, game->player.y);//APAGAR
+	printf("player_angle=%f\n", game->player.angle);//APAGAR
 	game->calc.map_x = (int)game->player.x;
 	game->calc.map_y = (int)game->player.y;
 }
@@ -97,7 +102,7 @@ void	ft_side_dist(t_game *game)
 /*jump to next map square, either in x-direction, or in y-direction
 *if we hit a wall we break out of the loop
 *wall_side = 0, means we hit x side of the wall
-*wall_side = 1, means we hit x side of the wall*/
+*wall_side = 1, means we hit y side of the wall*/
 void	ft_dda(t_game *game)
 {
 	while (1)
@@ -115,7 +120,7 @@ void	ft_dda(t_game *game)
 			game->calc.wall_side = 1;
 		}
 		printf("map_x=%d, map_y=%d\n", game->calc.map_x, game->calc.map_y);//APAGAR
-		printf("map[map_x][map_y]=%d\n", game->map[game->calc.map_x][game->calc.map_y]);//APAGAR
+		// printf("map[map_x][map_y]=%d\n", game->map[game->calc.map_x][game->calc.map_y]);//APAGAR
 		if (game->map[game->calc.map_y][game->calc.map_x] == '1') 
 			break;
 	}
@@ -167,7 +172,7 @@ int	ft_chose_color(t_game *game)
 	int color;
 
 	color = 0x000000FF;
-	if (game->calc.wall_side == 1) 
+	if (game->calc.wall_side == 0) 
 		color = ((color >> 1) & 0x7F7F7F);
 	return(color);
 }
@@ -175,7 +180,7 @@ int	ft_chose_color(t_game *game)
 void	ft_raycasting(t_game *game)
 {
 	int	x;
-	// int color;
+	int color;
 	
 	x = 0;
 	ft_get_player_inicial_direction(game);//qdo o player se mexer não pode vir buscar esta função
@@ -189,10 +194,10 @@ void	ft_raycasting(t_game *game)
 		ft_wall_height(game);
 		// ft_wall_x(game) //just for textures
 		ft_chose_color(game);
-		// color = ft_chose_color(game);
+		color = ft_chose_color(game);
 		//printf("game.->map2=%p\n", &game->map2);//APAGAR
 		printf("x:%d, game->calc.draw_start:%d, game->calc.draw_end:%d\n", x, game->calc.draw_start, game->calc.draw_end);
-		ver_Line(&game->map2, x, game->calc.draw_start, game->calc.draw_end, 0x000000FF);
+		ver_Line(&game->map2, x, game->calc.draw_start, game->calc.draw_end, color);
 		x++;
 	}
 }

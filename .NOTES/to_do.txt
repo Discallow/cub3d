@@ -12,6 +12,6 @@
 
 [ ] direção do player está trocada ao desenhar em vermelho
 
-[ ] brilho
+[✅] brilho
 
-[ ] contas da rotação
+[✅] contas da rotação

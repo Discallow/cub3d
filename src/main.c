@@ -6,7 +6,7 @@
 /*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 18:12:51 by discallow         #+#    #+#             */
-/*   Updated: 2024/12/27 18:18:40 by asofia-g         ###   ########.fr       */
+/*   Updated: 2024/12/27 21:14:14 by asofia-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,9 @@ void init_struct(t_game *game)
 	game->copy.exit = 0;
 	game->player.num = 0;
 	game->player.dir = "N";
-	game->player.dir_x = 0;
-	game->player.dir_y = 0;
+	game->player.dir_x = 0.0;
+	game->player.dir_y = 0.0;
+	game->player.flag_dir = 0;
 	game->exit.num = 0;
 	game->wall.num = 0;
 	game->floor.num = 0;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
+/*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 14:47:40 by discallow         #+#    #+#             */
-/*   Updated: 2024/12/20 23:24:04 by discallow        ###   ########.fr       */
+/*   Updated: 2024/12/27 21:13:37 by asofia-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,9 @@ typedef struct s_position
 	float	size;
 	int		num;
 	char	*dir;
-	int		dir_x;
-	int		dir_y;
+	double	dir_x;
+	double	dir_y;
+	int		flag_dir;
 	char	**rgb;
 	int		color;
 	int		total;
