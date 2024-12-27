@@ -6,7 +6,7 @@
 /*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 22:27:37 by asofia-g          #+#    #+#             */
-/*   Updated: 2024/12/21 19:27:50 by asofia-g         ###   ########.fr       */
+/*   Updated: 2024/12/27 17:54:48 by asofia-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,7 +192,7 @@ void	ft_raycasting(t_game *game)
 		// color = ft_chose_color(game);
 		//printf("game.->map2=%p\n", &game->map2);//APAGAR
 		printf("x:%d, game->calc.draw_start:%d, game->calc.draw_end:%d\n", x, game->calc.draw_start, game->calc.draw_end);
-		ver_Line(&game->player, x, game->calc.draw_start, game->calc.draw_end, 0x000000FF);
+		ver_Line(&game->map2, x, game->calc.draw_start, game->calc.draw_end, 0x000000FF);
 		x++;
 	}
 }

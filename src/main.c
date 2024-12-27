@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
+/*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 18:12:51 by discallow         #+#    #+#             */
-/*   Updated: 2024/12/23 19:26:56 by discallow        ###   ########.fr       */
+/*   Updated: 2024/12/27 18:18:40 by asofia-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,9 +222,9 @@ void draw_player_direction(t_game *game, t_position *data)
 void build_map(t_game *game)
 {
 	// t_position	*img;
-	static int flag = 0;
-	int i;
-	int j;
+	// static int flag = 0;
+	// int i;
+	// int j;
 	int	scale;
 
 	// printf("y:%d\n", game->y_len);
@@ -234,8 +234,8 @@ void build_map(t_game *game)
 	game->y_len = game->y / game->copy.max_height / scale;
 	// printf("x:%d, y:%d\n", game->x_len, game->y_len);
 	//  img = &game->player;
-	i = 0;
-	j = 0;
+	// i = 0;
+	// j = 0;
 	game->player.img = mlx_new_image(game->connection, game->x , game->y );
 	game->player.addr = mlx_get_data_addr(game->player.img, &game->player.bits_per_pixel, &game->player.line_len, &game->player.endian);
 
@@ -257,34 +257,34 @@ void build_map(t_game *game)
 	// printf("player x:%f, player y:%f\n", game->player.x, game->player.y);
 	printf("WND_HEIGHT=%d\n", game->y); // APAGAR
 	ft_raycasting(game);
-	while (game->map[i])
-	{
-		j = 0;
-		while (game->map[i][j])
-		{
-			//printf("i[%d], j[%d]:%c\n", i, j, game->map[i][j]);
-			if (game->map[i][j] == '1')
-				draw_square(&game->map2, game->x_len - 1, game->y_len - 1, j * game->x_len, i * game->y_len, 0x0000FF00);
-			// mlx_put_image_to_window(game->connection, game->window, game->wall.img, j * game->x_len, i * game->y_len);
-			else if (game->map[i][j] != '1')
-				draw_square(&game->map2, game->x_len - 1, game->y_len - 1, j * game->x_len, i * game->y_len, 0x00808080);
-			// mlx_put_image_to_window(game->connection, game->window, game->floor.img, j * game->x_len, i * game->y_len);
-			if (!flag && game->map[i][j] == 'N')
-			{
-				//printf("x:%d, y:%d\n", (int)game->player.x, (int)game->player.y);
-				game->player.x = j * game->x_len;
-				game->player.y = i * game->y_len;
-				draw_square(&game->map2, game->x_len / 4 - 1, game->y_len / 4 - 1, j * game->x_len, i * game->y_len, 0x000000FF);
-				// mlx_put_image_to_window(game->connection, game->window, img->img, j * game->x_len, i * game->y_len);
-				flag = 1;
-			}
-			j++;
-		}
-		i++;
-	}
-	if (flag)
-		draw_square(&game->map2, game->x_len / 4 - 1, game->y_len / 4 - 1, game->player.x, game->player.y, 0x000000FF);
-	draw_player_direction(game, &game->map2);
+	// while (game->map[i])
+	// {
+	// 	j = 0;
+	// 	while (game->map[i][j])
+	// 	{
+	// 		//printf("i[%d], j[%d]:%c\n", i, j, game->map[i][j]);
+	// 		if (game->map[i][j] == '1')
+	// 			draw_square(&game->map2, game->x_len - 1, game->y_len - 1, j * game->x_len, i * game->y_len, 0x0000FF00);
+	// 		// mlx_put_image_to_window(game->connection, game->window, game->wall.img, j * game->x_len, i * game->y_len);
+	// 		else if (game->map[i][j] != '1')
+	// 			draw_square(&game->map2, game->x_len - 1, game->y_len - 1, j * game->x_len, i * game->y_len, 0x00808080);
+	// 		// mlx_put_image_to_window(game->connection, game->window, game->floor.img, j * game->x_len, i * game->y_len);
+	// 		if (!flag && game->map[i][j] == 'N')
+	// 		{
+	// 			//printf("x:%d, y:%d\n", (int)game->player.x, (int)game->player.y);
+	// 			game->player.x = j * game->x_len;
+	// 			game->player.y = i * game->y_len;
+	// 			draw_square(&game->map2, game->x_len / 4 - 1, game->y_len / 4 - 1, j * game->x_len, i * game->y_len, 0x000000FF);
+	// 			// mlx_put_image_to_window(game->connection, game->window, img->img, j * game->x_len, i * game->y_len);
+	// 			flag = 1;
+	// 		}
+	// 		j++;
+	// 	}
+	// 	i++;
+	// }
+	// if (flag)
+	// 	draw_square(&game->map2, game->x_len / 4 - 1, game->y_len / 4 - 1, game->player.x, game->player.y, 0x000000FF);
+	// draw_player_direction(game, &game->map2);
 	mlx_put_image_to_window(game->connection, game->window, game->map2.img, 0, 0);
 }
 
