@@ -6,29 +6,11 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 22:39:40 by asofia-g          #+#    #+#             */
-/*   Updated: 2024/12/21 05:50:37 by discallow        ###   ########.fr       */
+/*   Updated: 2024/12/28 11:58:52 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub.h"
-
-/* void    draw_rays_3D(t_game *game)
-{
-    int mx;
-    int my;
-    int mp;
-    double  dof;
-    double  aTan;
-    
-    game->calc.ray_angle = game->player.angle;
-    dof = 0;
-    aTan = -1 / tan(game->calc.ray_angle);
-    if (game->calc.ray_angle > M_PI)
-    {
-        game->calc.ray_dir_y = (((int)game->player.y >> 6) << 6) - 0.0001;
-        game->calc.ray_dir_x = game->player.y - game->calc.ray_dir_y
-    }
-} */
 
 void	my_mlx_pixel_put(t_position *data, int x, int y, int color)
 {

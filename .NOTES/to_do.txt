@@ -4,13 +4,13 @@
 [✅]mensagem de erro ao entrar no jogo, mudar de "invalid number of arguments"
         para outra do tipo "Introduce a mapfile as argument"
 
-[ ] game->player.x e game->player.y só varia com movimento, não ao desenhar
+[✅] game->player.x e game->player.y só varia com movimento, não ao desenhar
 
-[ ] a posição inicial passa para o meio da casinha, tipo 3.5
+[✅] a posição inicial passa para o meio da casinha, tipo 3.5
 
-[ ] minimapa em 1/5
+[✅] minimapa em 1/5
 
-[ ] direção do player está trocada ao desenhar em vermelho
+[✅] direção do player está trocada ao desenhar em vermelho (removi o vermelho, a linha, mas basta descomentar a função draw_player_direction)
 
 [✅] brilho
 

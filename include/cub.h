@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 14:47:40 by discallow         #+#    #+#             */
-/*   Updated: 2024/12/27 21:13:37 by asofia-g         ###   ########.fr       */
+/*   Updated: 2024/12/28 18:12:03 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@
 # define NEWLINE 	1
 # define TILE_SIZE	32
 # define M_PI		3.14159265358979323846
+# define SCALE		2
 
 typedef enum	e_element
 {
@@ -75,6 +76,8 @@ typedef struct s_position
 
 typedef struct	s_map_copy
 {
+	double	x;
+	double	y;
 	int		exit;
 	int		line_index;
 	bool	elements_filled;
@@ -180,10 +183,12 @@ void	move_down(t_game *game);
 void	move_left(t_game *game);
 void	move_right(t_game *game);
 void	move_up(t_game *game);
+void	rotate_right(t_game *game);
 void	draw_square(t_position *data, int x, int y, int start_x, int start_y, int color);
 void	my_mlx_pixel_put(t_position *data, int x, int y, int color);
 void	build_map(t_game *game);
 void	destroy_map(t_game *game);
+void	rotate_left(t_game *game);
 
 /*DRAWING*/
 void	my_mlx_pixel_put(t_position *data, int x, int y, int color);
