@@ -6,7 +6,7 @@
 /*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 22:27:37 by asofia-g          #+#    #+#             */
-/*   Updated: 2024/12/27 21:25:50 by asofia-g         ###   ########.fr       */
+/*   Updated: 2024/12/29 12:40:45 by asofia-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ void	ft_dda(t_game *game)
 			game->calc.wall_side = 1;
 		}
 		printf("map_x=%d, map_y=%d\n", game->calc.map_x, game->calc.map_y);//APAGAR
-		// printf("map[map_x][map_y]=%d\n", game->map[game->calc.map_x][game->calc.map_y]);//APAGAR
+		printf("map[map_x][map_y]=%d\n", game->map[game->calc.map_x][game->calc.map_y]);//APAGAR
 		if (game->map[game->calc.map_y][game->calc.map_x] == '1') 
 			break;
 	}

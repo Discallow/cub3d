@@ -44,7 +44,7 @@ mlx:
 	@echo "$(PURPLE)Making mlx...$(RESET)"
 	@if [ -f $(MLX_DIR)/configure ] && [ ! -x $(MLX_DIR)/configure ]; then \
 		echo "$(CYAN)Setting executable permission for configure...$(RESET)"; \
-		@chmod +x $(MLX_DIR)/configure; \
+		chmod +x $(MLX_DIR)/configure; \
 	fi
 	@make -sC $(MLX_DIR)
 
