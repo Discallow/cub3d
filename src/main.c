@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 18:12:51 by discallow         #+#    #+#             */
-/*   Updated: 2024/12/29 13:15:11 by asofia-g         ###   ########.fr       */
+/*   Updated: 2024/12/30 22:18:07 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -254,12 +254,13 @@ void	draw_minimap(t_game *game)
 
 void build_map(t_game *game)
 {
+	printf("x:%f, y:%f\n", game->player.x, game->player.y);
 	game->x_len = game->x / game->copy.max_width / SCALE;
 	game->y_len = game->y / game->copy.max_height / SCALE;
 	game->player.img = mlx_new_image(game->connection, game->x , game->y );
 	game->player.addr = mlx_get_data_addr(game->player.img, &game->player.bits_per_pixel, &game->player.line_len, &game->player.endian);
 
-	game->map2.img = mlx_new_image(game->connection, game->x / SCALE, game->y / SCALE);
+	game->map2.img = mlx_new_image(game->connection, game->x, game->y);
 	game->map2.addr = mlx_get_data_addr(game->map2.img, &game->map2.bits_per_pixel, &game->map2.line_len, &game->map2.endian);
 	/* 	game->floor.img = mlx_new_image(game->connection, game->x_len, game->y_len);
 		game->floor.addr = mlx_get_data_addr(game->floor.img, &game->floor.bits_per_pixel, &game->floor.line_len, &game->floor.endian);
@@ -268,9 +269,9 @@ void build_map(t_game *game)
 		game->wall.addr = mlx_get_data_addr(game->wall.img, &game->wall.bits_per_pixel, &game->wall.line_len, &game->wall.endian);
 		draw_square(&game->wall, game->x_len, game->y_len, 0x0000FF00); */
 	//printf("WND_HEIGHT=%d\n", game->y); // APAGAR
-	//ft_raycasting(game);
+	ft_raycasting(game);
 	draw_minimap(game);
-	draw_player_direction(game, &game->map2);
+	//draw_player_direction(game, &game->map2);
 	mlx_put_image_to_window(game->connection, game->window, game->map2.img, 0, 0);
 }
 
@@ -285,8 +286,6 @@ int main(int argc, char **argv)
 	init_struct(&game);
 	check_map(&game, argv[1]);
 	init_connection(&game);
-	// put_player(&game);
-	// my_mlx_pixel_put(&img, 5, 5, 0x00FF0000);
 	build_map(&game);
 	mlx_hook(game.window, KeyPress, KeyPressMask, &key_pressed, &game);
 	mlx_hook(game.window, DestroyNotify, NoEventMask, &window_closed, &game);

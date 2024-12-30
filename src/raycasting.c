@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 22:27:37 by asofia-g          #+#    #+#             */
-/*   Updated: 2024/12/29 12:40:45 by asofia-g         ###   ########.fr       */
+/*   Updated: 2024/12/30 22:12:58 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,14 @@ void	ft_ray_position(t_game *game, int x)
 						game->calc.plane_x * game->calc.camera_x;
 	game->calc.ray_dir_y = game->player.dir_y + 
 						game->calc.plane_y * game->calc.camera_x;
-	printf("dir_x=%f, dir_y= %f, plane_x=%f, plane_y=%f, camera_x=%f, ray_dir_x=%f, ray_dir_y=%f\n", game->player.dir_x, game->player.dir_y, game->calc.plane_x, game->calc.plane_y, game->calc.camera_x, game->calc.ray_dir_x, game->calc.ray_dir_y);//APAGAR
+	//printf("dir_x=%f, dir_y= %f, plane_x=%f, plane_y=%f, camera_x=%f, ray_dir_x=%f, ray_dir_y=%f\n", game->player.dir_x, game->player.dir_y, game->calc.plane_x, game->calc.plane_y, game->calc.camera_x, game->calc.ray_dir_x, game->calc.ray_dir_y);//APAGAR
 }
 
 /*which box of the map we're in*/
 void	ft_which_box_in(t_game *game)
 {
-	printf("player_x=%f, player_y=%f\n", game->player.x, game->player.y);//APAGAR
-	printf("player_angle=%f\n", game->player.angle);//APAGAR
+	// printf("player_x=%f, player_y=%f\n", game->player.x, game->player.y);//APAGAR
+	// printf("player_angle=%f\n", game->player.angle);//APAGAR
 	game->calc.map_x = (int)game->player.x;
 	game->calc.map_y = (int)game->player.y;
 }
@@ -65,7 +65,7 @@ void	ft_delta_dist(t_game *game)
 		game->calc.delta_dist_y = 1e30;
 	else
 		game->calc.delta_dist_y = fabs(1 / game->calc.ray_dir_y);
-	printf("delta_dist_x =%f, delta_dist_y =%f\n", game->calc.delta_dist_x, game->calc.delta_dist_y);//APAGAR
+	//printf("delta_dist_x =%f, delta_dist_y =%f\n", game->calc.delta_dist_x, game->calc.delta_dist_y);//APAGAR
 }
 
 /*side_dist is length of ray from current position to next x or y-side
@@ -96,7 +96,7 @@ void	ft_side_dist(t_game *game)
 		game->calc.side_dist_y = (game->calc.map_y + 1.0 - 
 								game->player.y) * game->calc.delta_dist_y;
 	}
-	printf("side_dist_x=%f, side_dist_y=%f\n", game->calc.side_dist_x, game->calc.side_dist_y);//APAGAR
+	// printf("side_dist_x=%f, side_dist_y=%f\n", game->calc.side_dist_x, game->calc.side_dist_y);//APAGAR
 }
 
 /*jump to next map square, either in x-direction, or in y-direction
@@ -119,8 +119,8 @@ void	ft_dda(t_game *game)
 			game->calc.map_y += game->calc.step_y;
 			game->calc.wall_side = 1;
 		}
-		printf("map_x=%d, map_y=%d\n", game->calc.map_x, game->calc.map_y);//APAGAR
-		printf("map[map_x][map_y]=%d\n", game->map[game->calc.map_x][game->calc.map_y]);//APAGAR
+		// printf("map_x=%d, map_y=%d\n", game->calc.map_x, game->calc.map_y);//APAGAR
+		// printf("map[map_x][map_y]=%d\n", game->map[game->calc.map_x][game->calc.map_y]);//APAGAR
 		if (game->map[game->calc.map_y][game->calc.map_x] == '1') 
 			break;
 	}
@@ -196,7 +196,7 @@ void	ft_raycasting(t_game *game)
 		ft_chose_color(game);
 		color = ft_chose_color(game);
 		//printf("game.->map2=%p\n", &game->map2);//APAGAR
-		printf("x:%d, game->calc.draw_start:%d, game->calc.draw_end:%d\n", x, game->calc.draw_start, game->calc.draw_end);
+		//printf("x:%d, game->calc.draw_start:%d, game->calc.draw_end:%d\n", x, game->calc.draw_start, game->calc.draw_end);
 		ver_Line(&game->map2, x, game->calc.draw_start, game->calc.draw_end, color);
 		x++;
 	}

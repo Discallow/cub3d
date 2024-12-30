@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 22:39:40 by asofia-g          #+#    #+#             */
-/*   Updated: 2024/12/28 11:58:52 by discallow        ###   ########.fr       */
+/*   Updated: 2024/12/30 21:56:37 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void    ver_Line(t_position *data, int pos_x, int start, int end, int color)
     int y;
     
     y = start;
-    printf("pos_x=%d, start=%d, end=%d\n", pos_x, start, end);//APAGAR
+    //printf("pos_x=%d, start=%d, end=%d\n", pos_x, start, end);//APAGAR
     while (y <= end)
     {
         my_mlx_pixel_put(data, pos_x, y, color);
