@@ -6,7 +6,7 @@
 /*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 20:23:57 by discallow         #+#    #+#             */
-/*   Updated: 2024/12/31 10:06:39 by asofia-g         ###   ########.fr       */
+/*   Updated: 2024/12/31 10:20:40 by asofia-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,14 @@ void	move_down(t_game *game)
 	//printf("game->player.x:%f, game->x:%d\n", game->player.x, game->x);
 /* 	if (game->player.y + 40 >= game->y)
 		return ; */
-	game->player.x -= game->delta_x;
-	game->player.y -= game->delta_y;
-	game->copy.x -= game->delta_x;
-	game->copy.y -= game->delta_y;
+	// game->player.x -= game->delta_x;
+	// game->player.y -= game->delta_y;
+	// game->copy.x -= game->delta_x;
+	// game->copy.y -= game->delta_y;
+	game->player.x -= game->player.dir_x;
+	game->player.y -= game->player.dir_y;
+	game->copy.x -= game->player.dir_x;
+	game->copy.y -= game->player.dir_y;
 	redraw_map(game);
 }
 
@@ -42,8 +46,12 @@ void	move_left(t_game *game)
 {
 /* 	if (game->player.x <= 0)
 		return ; */
-	game->player.x -= 0.1;
-	game->copy.x -= game->x_len / 10;
+	// game->player.x -= 0.1;
+	// game->copy.x -= game->x_len / 10;
+	game->player.x += game->player.dir_y;
+	game->player.y -= game->player.dir_x;
+	game->copy.x += game->player.dir_y;
+	game->copy.y -= game->player.dir_x;
 	redraw_map(game);
 }
 
@@ -51,8 +59,12 @@ void	move_right(t_game *game)
 {
 /* 	if (game->player.x + 40 >= game->x)
 		return ; */
-	game->player.x += 0.1;
-	game->copy.x += game->x_len / 10;
+	// game->player.x += 0.1;
+	// game->copy.x += game->x_len / 10;
+	game->player.x -= game->player.dir_y;
+	game->player.y += game->player.dir_x;
+	game->copy.x -= game->player.dir_y;
+	game->copy.y += game->player.dir_x;
 	redraw_map(game);
 }
 
@@ -67,10 +79,14 @@ void	move_up(t_game *game)
 		game->delta_x += 0.1;
 		game->delta_y += 0.1;
 	}
-	game->player.x += game->delta_x;
-	game->player.y += game->delta_y;
-	game->copy.x += game->delta_x;
-	game->copy.y += game->delta_y;
+	// game->player.x += game->delta_x;
+	// game->player.y += game->delta_y;
+	// game->copy.x += game->delta_x;
+	// game->copy.y += game->delta_y;
+	game->player.x += game->player.dir_x;
+	game->player.y += game->player.dir_y;
+	game->copy.x += game->player.dir_x;
+	game->copy.y += game->player.dir_y;
 	redraw_map(game);
 }
 
