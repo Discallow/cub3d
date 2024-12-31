@@ -6,7 +6,7 @@
 /*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 20:23:57 by discallow         #+#    #+#             */
-/*   Updated: 2024/12/31 09:59:49 by asofia-g         ###   ########.fr       */
+/*   Updated: 2024/12/31 10:06:39 by asofia-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	destroy_map(t_game *game)
 {
 	mlx_destroy_image(game->connection, game->map2.img);
-	//mlx_clear_window(game->connection, game->window);
 	//mlx_destroy_image(game->connection, game->player.img);
 	// mlx_destroy_image(game->connection, game->wall.img);
 	// mlx_destroy_image(game->connection, game->floor.img);
@@ -62,10 +61,11 @@ void	move_up(t_game *game)
 	//printf("x:%.1f, y:%.1f\n", game->player.x + game->delta_x, game->player.y + game->delta_y);
 	if (game->copy.y + game->delta_y <= 0 || game->copy.x + game->delta_x <= 0)
 		return ;
+	// game->map[(int)game->copy.x - 1][(int)game->copy.y] = 'P';
 	if (game->delta_x == cos(0))
 	{
-		game->delta_x *= 5;
-		game->delta_y *= 5;
+		game->delta_x += 0.1;
+		game->delta_y += 0.1;
 	}
 	game->player.x += game->delta_x;
 	game->player.y += game->delta_y;
@@ -81,8 +81,8 @@ void	rotate_right(t_game *game)
 		game->player.angle -= 2 * M_PI;
 	game->player.dir_x = cos(game->player.angle);
     game->player.dir_y = sin(game->player.angle);
-	game->delta_x = game->player.dir_x * 5;
-	game->delta_y = game->player.dir_y * 5;
+	game->delta_x = game->player.dir_x;
+	game->delta_y = game->player.dir_y;
 	redraw_map(game);
 }
 
@@ -93,7 +93,7 @@ void	rotate_left(t_game *game)
 		game->player.angle += 2 * M_PI;
 	game->player.dir_x = cos(game->player.angle);
 	game->player.dir_y = sin(game->player.angle);
-	game->delta_x = game->player.dir_x * 5;
-	game->delta_y = game->player.dir_y * 5;
+	game->delta_x = game->player.dir_x;
+	game->delta_y = game->player.dir_y;
 	redraw_map(game);
 }

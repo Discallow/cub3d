@@ -17,9 +17,9 @@
 
 [✅] contas da rotação
 
-[ ] se minimizar a janela ou colocar uma janela a sobrepor, a imagem desaparece
+[✅] se minimizar a janela ou colocar uma janela a sobrepor, a imagem desaparece
 
-[ ] com SCALE 2 não aparece o minimapa no computador da sofia e não desenha o 
+[✅] com SCALE 2 não aparece o minimapa no computador da sofia e não desenha o 
         Raycasting para o Diogo, com SCALE 1 desenha tudo para a sofia
 
 [ ] no minimapa começa sempre por assumir que o player está virado para ESTE 

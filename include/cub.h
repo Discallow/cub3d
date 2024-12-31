@@ -6,7 +6,7 @@
 /*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 14:47:40 by discallow         #+#    #+#             */
-/*   Updated: 2024/12/31 09:49:24 by asofia-g         ###   ########.fr       */
+/*   Updated: 2024/12/31 10:09:13 by asofia-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,13 @@
 # define MAGENTA	"\033[0;35m"
 # define CYAN		"\033[0;36m"
 
-# define NEWLINE 	1
-# define TILE_SIZE	32
-# define M_PI		3.14159265358979323846
-# define SCALE		1
-# define texWidth 64
-# define texHeight 64
-# define NUM_TEXTURES 4
+# define NEWLINE 		1
+# define TILE_SIZE		32
+# define M_PI			3.14159265358979323846
+# define SCALE			5
+# define texWidth 		64
+# define texHeight 		64
+# define NUM_TEXTURES 	4
 
 typedef enum	e_element
 {
