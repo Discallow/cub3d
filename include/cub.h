@@ -6,7 +6,7 @@
 /*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 14:47:40 by discallow         #+#    #+#             */
-/*   Updated: 2024/12/29 13:05:50 by asofia-g         ###   ########.fr       */
+/*   Updated: 2024/12/31 09:49:24 by asofia-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@
 # include <string.h>
 # include <stdbool.h>
 # include <math.h>//math functions, need -lm to compile
+# include <stdint.h>//to use uint32_t, int > 0 with 32 bits 
+					/*(0 a 4.294.967.295 (2^32 - 1))*/
 
 # define RESET		"\033[0m"
 # define BOLD    	"\033[1m"
@@ -43,6 +45,9 @@
 # define TILE_SIZE	32
 # define M_PI		3.14159265358979323846
 # define SCALE		1
+# define texWidth 64
+# define texHeight 64
+# define NUM_TEXTURES 4
 
 typedef enum	e_element
 {
@@ -59,7 +64,7 @@ typedef struct s_position
 	char	*dir;
 	double	dir_x;
 	double	dir_y;
-	int		flag_dir;
+	int		flag_pos;
 	char	**rgb;
 	int		color;
 	int		total;

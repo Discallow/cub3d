@@ -6,7 +6,7 @@
 /*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 22:27:37 by asofia-g          #+#    #+#             */
-/*   Updated: 2024/12/29 12:40:45 by asofia-g         ###   ########.fr       */
+/*   Updated: 2024/12/31 09:49:24 by asofia-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_get_player_inicial_direction(t_game *game)
 {
-	if (game->player.flag_dir == 1)
+	if (game->player.flag_pos == 1)
 		return;
 	if (ft_strcmp(game->player.dir, "N") == 0)
 		game->player.dir_y = -1.0;
@@ -25,7 +25,7 @@ void	ft_get_player_inicial_direction(t_game *game)
 	if (ft_strcmp(game->player.dir, "W") == 0)
 		game->player.dir_x = -1.0;
 	game->player.angle = atan2(game->player.dir_y, game->player.dir_x);
-	game->player.flag_dir = 1;
+	game->player.flag_pos = 1;
 }
 
 /*calculate ray position and direction 
