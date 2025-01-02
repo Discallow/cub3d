@@ -6,7 +6,7 @@
 /*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 22:27:37 by asofia-g          #+#    #+#             */
-/*   Updated: 2024/12/31 10:05:55 by asofia-g         ###   ########.fr       */
+/*   Updated: 2025/01/02 03:24:59 by asofia-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,8 @@ void	ft_side_dist(t_game *game)
 
 /*jump to next map square, either in x-direction, or in y-direction
 *if we hit a wall we break out of the loop
-*wall_side = 0, means we hit x side of the wall
-*wall_side = 1, means we hit y side of the wall*/
+*wall_side = 0, means we hit vertical side of the wall
+*wall_side = 1, means we hit horizontal side of the wall*/
 void	ft_dda(t_game *game)
 {
 	while (1)
@@ -129,8 +129,6 @@ void	ft_dda(t_game *game)
 /*Calculate distance of perpendicular ray, i.e. remove fisheye effect!*/
 void	ft_wall_height(t_game *game)
 {
-	int 	line_height;
-
 	if (game->calc.wall_side == 0)
 	{
 		game->calc.wall_dist = (game->calc.map_x - game->player.x +
@@ -141,11 +139,11 @@ void	ft_wall_height(t_game *game)
 		game->calc.wall_dist = (game->calc.map_y - game->player.y + 
 			(1 - game->calc.step_y) / 2) / game->calc.ray_dir_y;
 	}
-	line_height = (int)(game->y / game->calc.wall_dist);
-	game->calc.draw_start = -line_height / 2 + game->y / 2;
+	game->calc.line_height = (int)(game->y / game->calc.wall_dist);
+	game->calc.draw_start = -game->calc.line_height / 2 + game->y / 2;
 	if (game->calc.draw_start < 0)
 		game->calc.draw_start = 0;
-	game->calc.draw_end = line_height / 2 + game->y / 2;
+	game->calc.draw_end = game->calc.line_height / 2 + game->y / 2;
 	if (game->calc.draw_end >= game->y)
 		game->calc.draw_end = game->y - 1;
 }
@@ -166,6 +164,75 @@ void	ft_wall_x(t_game *game)
 	game->calc.wall_x -= floor(game->calc.wall_x);
 }
 
+/*Calculate x coordinate on the texture*/
+void	ft_tex_x(t_game *game)
+{
+	game->calc.tex_x = (int)(game->calc.wall_x * TEXTURE_SIZE);
+
+	if ((game->calc.wall_side == 0 && game->calc.ray_dir_x < 0) ||
+		(game->calc.wall_side == 1 && game->calc.ray_dir_y > 0))
+	game->calc.tex_x = TEXTURE_SIZE - game->calc.tex_x - 1;		
+}
+
+/*Calculates which texture to use depending wall cardinal direction*/
+void	ft_set_wall_texture(t_game *game)
+{
+	if (game->calc.wall_side == 1)
+	{
+		if (game->calc.ray_dir_y <= 0)
+			game->calc.tex_drawn = NORTH;
+		else if (game->calc.ray_dir_y > 0)
+			game->calc.tex_drawn = SOUTH;
+	}
+	else if (game->calc.wall_side == 0)
+	{
+		if(game->calc.ray_dir_x >= 0)
+			game->calc.tex_drawn = EAST;
+		else if (game->calc.ray_dir_x < 0)
+			game->calc.tex_drawn = WEST;
+	}
+}
+/*give x and y sides different brightness*/
+int	ft_set_bright(t_game *game, int color)
+{
+	if (game->calc.tex_drawn == NORTH || game->calc.tex_drawn == EAST) 
+		color = ((color >> 1) & 8355711);
+	return(color);
+}
+
+/*tex_y_step calculate how much to increase the texture 
+*	coordinate per screen pixel
+*
+*tex_y = (int)pos & (TEXTURE_SIZE - 1) - Cast the texture coordinate to integer
+*	and mask with (texHeight - 1) in case of overflow
+*/
+void	buffering_texture_strip(t_game *game, int **buffer, int x)
+{
+	int	tex_y;
+	int	color;
+	int	i;
+
+	load_all_textures(game);
+	ft_set_wall_texture(game);
+	game->calc.tex_y_step = 1.0 * TEXTURE_SIZE / game->calc.line_height;
+	game->calc.tex_y_pos = (game->calc.draw_start - game->y / 2 +
+						game->calc.line_height / 2) * game->calc.tex_y_step;
+	i = game->calc.draw_start;
+	while (i < game->calc.draw_end)
+	{
+		tex_y = (int)game->calc.tex_y_pos & (TEXTURE_SIZE - 1);	
+		game->calc.tex_y_pos += game->calc.tex_y_step;
+		// printf("ray_dir_x=%f, ray_di_y=%f, wall_dist=%f, side= %d, x = %d, wall_x = %f, texture to be drawn = %d, tex_x = %d, tex_y =%d\n", game->calc.ray_dir_x, game->calc.ray_dir_y, game->calc.wall_dist, game->calc.wall_side, x, game->calc.wall_x, game->calc.tex_drawn, game->calc.tex_x, tex_y);//APAGAR
+		color = game->textures[game->calc.tex_drawn].
+					data[TEXTURE_SIZE * tex_y + game->calc.tex_x];
+		color = ft_set_bright(game, color);
+		if (color > 0)
+			buffer[i][x] = color;
+		i ++;
+	}
+	
+}
+
 /*give x and y sides different brightness*/
 int	ft_chose_color(t_game *game)
 {
@@ -180,10 +247,19 @@ int	ft_chose_color(t_game *game)
 void	ft_raycasting(t_game *game)
 {
 	int	x;
-	int color;
+	int color;//for untextured
+	// int **pixels_buffer;// y-coordinate first because it works per scanline //just for textures
+	// int i ;//just for textures
 	
+	// pixels_buffer = malloc(game->y * sizeof(int *));//just for textures
+	// i = 0;
+	// while (i < game->y) 
+	// {
+    // 	pixels_buffer[i] = malloc(game->x * sizeof(int));
+    // 	i++;
+	// }
 	x = 0;
-	ft_get_player_inicial_direction(game);//qdo o player se mexer não pode vir buscar esta função
+	ft_get_player_inicial_direction(game);
 	while (x < game->x)
 	{
 		ft_ray_position(game, x);
@@ -192,12 +268,22 @@ void	ft_raycasting(t_game *game)
 		ft_side_dist(game);
 		ft_dda(game);
 		ft_wall_height(game);
-		// ft_wall_x(game) //just for textures
-		ft_chose_color(game);
-		color = ft_chose_color(game);
+		
+		// ft_wall_x(game);//just for textures
+		// ft_tex_x(game);//just for textures
+		// buffering_texture_strip(game,pixels_buffer,x);//just for textures
+		
+		color = ft_chose_color(game);//for untextured
 		//printf("game.->map2=%p\n", &game->map2);//APAGAR
 		//printf("x:%d, game->calc.draw_start:%d, game->calc.draw_end:%d\n", x, game->calc.draw_start, game->calc.draw_end);
-		ver_Line(&game->map2, x, game->calc.draw_start, game->calc.draw_end, color);
+		ver_Line(&game->map2, x, game->calc.draw_start, game->calc.draw_end, color);//for untextured
 		x++;
 	}
+	// update_image_from_buffer(game,&game->map2,pixels_buffer);//just for textures
+	// i = 0;
+	// while (i < game->y) {
+	// 	free(pixels_buffer[i]);
+	// 	i++;
+	// }
+	// free(pixels_buffer);
 }

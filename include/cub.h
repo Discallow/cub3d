@@ -6,7 +6,7 @@
 /*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 14:47:40 by discallow         #+#    #+#             */
-/*   Updated: 2024/12/31 10:09:13 by asofia-g         ###   ########.fr       */
+/*   Updated: 2025/01/02 01:31:23 by asofia-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # include <string.h>
 # include <stdbool.h>
 # include <math.h>//math functions, need -lm to compile
-# include <stdint.h>//to use uint32_t, int > 0 with 32 bits 
+/*# include <stdint.h>//to use uint32_t, int > 0 with 32 bits */
 					/*(0 a 4.294.967.295 (2^32 - 1))*/
 
 # define RESET		"\033[0m"
@@ -45,8 +45,7 @@
 # define TILE_SIZE		32
 # define M_PI			3.14159265358979323846
 # define SCALE			5
-# define texWidth 		64
-# define texHeight 		64
+# define TEXTURE_SIZE 	64
 # define NUM_TEXTURES 	4
 
 typedef enum	e_element
@@ -117,36 +116,61 @@ typedef struct	s_calculation
 	double	side_dist_y;
 	int		wall_side;
 	double	wall_dist;
+	int		line_height;
 	int 	draw_start;
 	int 	draw_end;
 	double	wall_x;
+	int		tex_x;
+	double	tex_y_step;
+	double	tex_y_pos;
+	int		tex_drawn;
 }				t_calculation;
+
+typedef struct s_texture
+{
+	void	*tex;
+	char    *data;
+	int		tex_width;
+	int		tex_height;
+	int     bpp;
+	int     size_line;
+	int     endian;
+}				t_texture;
+
+typedef enum	e_textures_direction
+{
+	NORTH = 0,
+	SOUTH = 1,
+	WEST = 2,
+	EAST = 3
+}				t_textures_direction;
 
 typedef struct	s_game
 {
-	char	**map;
-	t_position	north;
-	t_position	south;
-	t_position	west;
-	t_position	east;
-	int		x_len;
-	int		y_len;
-	int		x;
-	int		y;
-	int		fd;
-	t_map_copy	copy;
-	t_position	player;
-	t_position	exit;
-	t_position	wall;
-	t_position	floor;
-	t_position	ceiling;
-	t_position	enemy;
-	t_position	map2;
-	void		*window;
-	void		*connection;
-	double		delta_x;
-	double		delta_y;
+	char			**map;
+	t_position		north;
+	t_position		south;
+	t_position		west;
+	t_position		east;
+	int				x_len;
+	int				y_len;
+	int				x;
+	int				y;
+	int				fd;
+	t_map_copy		copy;
+	t_position		player;
+	t_position		exit;
+	t_position		wall;
+	t_position		floor;
+	t_position		ceiling;
+	t_position		enemy;
+	t_position		map2;
+	void			*window;
+	void			*connection;
+	double			delta_x;
+	double			delta_y;
 	t_calculation	calc;
+	t_texture		textures[NUM_TEXTURES];
 }				t_game;
 
 char	*get_next_line(int fd);
@@ -199,6 +223,12 @@ void	rotate_left(t_game *game);
 void	my_mlx_pixel_put(t_position *data, int x, int y, int color);
 void    ver_Line(t_position *data, int pos_x, int start, int end, int color);
 void	draw_line(t_position *data, int x0, int y0, int x1, int y1, int color);
+void 	update_image_from_buffer(t_game *game, t_position *data,
+								int **buffer);
+/**/
+/*LOAD TEXTURES*/
+void	load_texture(t_game *game, char *relative_path, int index);
+void    load_all_textures(t_game *game);
 
 /*RAYCASTING*/
 void	ft_raycasting(t_game *game);
