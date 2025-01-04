@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 23:53:51 by discallow         #+#    #+#             */
-/*   Updated: 2024/12/03 12:17:28 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/03 15:34:45 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,20 +76,20 @@ char	*ft_strjoin3(char *s1, char *s2)
 	return (buffer);
 }
 
-int	ft_strcmp2(char *str1)
+int	ft_strcmp2(char *str1, char *str2)
 {
 	int	i;
 
 	i = 0;
 	if (!str1)
-		return (1);
+		return (0);
 	while (str1[i])
 		i++;
 	i--;
-	if ((str1[i] && str1[i] != 'b')
-		|| (str1[i - 1] && str1[i - 1] != 'u')
-		|| (str1[i - 2] && str1[i - 2] != 'c')
-		|| (str1[i - 3] && str1[i - 3] != '.'))
-		return (0);
-	return (1);
+	if ((str1[i] && str1[i] != str2[3])
+		|| (str1[i - 1] && str1[i - 1] != str2[2])
+		|| (str1[i - 2] && str1[i - 2] != str2[1])
+		|| (str1[i - 3] && str1[i - 3] != str2[0]))
+		return (1);
+	return (0);
 }

@@ -6,19 +6,20 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 00:01:40 by discallow         #+#    #+#             */
-/*   Updated: 2024/12/03 12:12:16 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/03 15:34:56 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub.h"
 
-void	check_extension(char *file)
+int	check_extension(char *file)
 {
-	if (ft_strcmp2(file) == 0)
+	if (ft_strcmp2(file, ".cub"))
 	{
 		printf(RED"Wrong extension file"RESET"\n");
-		exit (1);
+		return (1);
 	}
+	return (0);
 }
 
 void	open_file(t_game *game, char *file)
