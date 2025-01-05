@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 18:12:51 by discallow         #+#    #+#             */
-/*   Updated: 2025/01/05 15:18:20 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/05 15:32:16 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,8 @@ void init_connection(t_game *game)
 		exit(1);
 	}
 	mlx_get_screen_size(game->connection, &game->x, &game->y);
-	/*  	game->x = 800;
-		game->y = 800; */
+	game->x = 800;
+	game->y = 800;
 	game->window = mlx_new_window(game->connection, (game->x),
 								  (game->y), "CUB");
 	if (!game->window)
@@ -178,7 +178,7 @@ int key_pressed(int keysim, t_game *game)
 	if (keysim == XK_Escape)
 	{
 		write(1, "Couldn't you kill all the enemies? Are you afraid?\n", 51);
-		// destroy_map(game);
+		destroy_map(game);
 		mlx_destroy_window(game->connection, game->window);
 		mlx_destroy_display(game->connection);
 		free(game->connection);
@@ -263,10 +263,10 @@ void	draw_minimap(t_game *game)
 				game->copy.y = i * game->y_len + game->y_len / 2;
 				flag = 1;
 			}
-			if (game->map[i][j] == 'P')
+/* 			if (game->map[i][j] == 'P')
 			{
 				printf("x:%d, y:%d\n", j, i);
-			}
+			} */
 			j++;
 		}
 		i++;
@@ -276,7 +276,7 @@ void	draw_minimap(t_game *game)
 
 void build_map(t_game *game)
 {
-	printf("x:%d, y:%d\n", (int)game->player.x, (int)game->player.y);
+	//printf("x:%d, y:%d\n", (int)game->player.x, (int)game->player.y);
 	game->x_len = game->x / game->copy.max_width / SCALE;
 	game->y_len = game->y / game->copy.max_height / SCALE;
 	game->map2.img = mlx_new_image(game->connection, game->x, game->y);
@@ -302,7 +302,12 @@ int	display_map(t_game *game)
 		rotate_left(game);
 	if (game->player.rotate_right)
 		rotate_right(game);
-	//build_map(game);
+	else
+	{
+		build_map(game);
+		return (0);
+	}
+	redraw_map(game);
 	return (0);
 }
 

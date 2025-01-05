@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 20:23:57 by discallow         #+#    #+#             */
-/*   Updated: 2025/01/04 22:46:21 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/05 15:31:58 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	move_backwards(t_game *game)
 	game->player.y -= game->player.dir_y / 10;
 	game->copy.x -= game->player.dir_x * game->x_len / 10;
 	game->copy.y -= game->player.dir_y * game->y_len / 10;
-	redraw_map(game);
+	//redraw_map(game);
 }
 
 void	move_left(t_game *game)
@@ -44,7 +44,7 @@ void	move_left(t_game *game)
 	game->player.y -= game->player.dir_x / 10;
 	game->copy.x += game->player.dir_y * game->x_len / 10;
 	game->copy.y -= game->player.dir_x * game->y_len / 10;
-	redraw_map(game);
+	//redraw_map(game);
 }
 
 void	move_right(t_game *game)
@@ -57,7 +57,7 @@ void	move_right(t_game *game)
 	game->player.y += game->player.dir_x / 10;
 	game->copy.x -= game->player.dir_y * game->x_len / 10;
 	game->copy.y += game->player.dir_x * game->y_len / 10;
-	redraw_map(game);
+	//redraw_map(game);
 }
 
 void	move_forward(t_game *game)
@@ -70,7 +70,7 @@ void	move_forward(t_game *game)
 	// game->map[(int)game->player.x][(int)game->player.y] = 'P';
 	game->copy.x += game->player.dir_x * game->x_len / 10;
 	game->copy.y += game->player.dir_y * game->y_len / 10;
-	redraw_map(game);
+	//redraw_map(game);
 }
 
 void	rotate_right(t_game *game)
@@ -80,7 +80,7 @@ void	rotate_right(t_game *game)
 		game->player.angle -= 2 * M_PI;
 	game->player.dir_x = cos(game->player.angle);
     game->player.dir_y = sin(game->player.angle);
-	redraw_map(game);
+	//redraw_map(game);
 }
 
 void	rotate_left(t_game *game)
@@ -90,5 +90,5 @@ void	rotate_left(t_game *game)
 		game->player.angle += 2 * M_PI;
 	game->player.dir_x = cos(game->player.angle);
 	game->player.dir_y = sin(game->player.angle);
-	redraw_map(game);
+	//redraw_map(game);
 }
