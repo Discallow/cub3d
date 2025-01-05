@@ -3,8 +3,8 @@ EA textures/wolfenstein/grey_stone.xpm
 SO textures/wolfenstein/purple_stone.xpm
 WE textures/wolfenstein/wood.xpm
 
-C 35,19,73
-F 15,6,40
+C 135, 206, 235
+F 245, 245, 220
 
 111111111111111
 111111000111111

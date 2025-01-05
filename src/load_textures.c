@@ -6,7 +6,7 @@
 /*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 00:57:40 by asofia-g          #+#    #+#             */
-/*   Updated: 2025/01/05 00:42:40 by asofia-g         ###   ########.fr       */
+/*   Updated: 2025/01/05 11:10:17 by asofia-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,5 @@ void    load_all_textures(t_game *game)
 	buffering_texture(game, game->south.path, SOUTH);
 	buffering_texture(game, game->west.path, WEST);
 	buffering_texture(game, game->east.path, EAST);
+	//se alguma textura deu erro ao ser copiada, é necessário apagar todas
 }

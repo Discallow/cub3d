@@ -6,7 +6,7 @@
 /*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 22:27:37 by asofia-g          #+#    #+#             */
-/*   Updated: 2025/01/04 21:35:40 by asofia-g         ###   ########.fr       */
+/*   Updated: 2025/01/05 11:42:24 by asofia-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,63 +174,6 @@ void	ft_tex_x(t_game *game)
 	game->calc.tex_x = TEXTURE_SIZE - game->calc.tex_x - 1;		
 }
 
-/*Calculates which texture to use depending wall cardinal direction*/
-void	ft_set_wall_texture(t_game *game)
-{
-	if (game->calc.wall_side == 1)
-	{
-		if (game->calc.ray_dir_y <= 0)
-			game->calc.tex_drawn = NORTH;
-		else if (game->calc.ray_dir_y > 0)
-			game->calc.tex_drawn = SOUTH;
-	}
-	else if (game->calc.wall_side == 0)
-	{
-		if(game->calc.ray_dir_x >= 0)
-			game->calc.tex_drawn = EAST;
-		else if (game->calc.ray_dir_x < 0)
-			game->calc.tex_drawn = WEST;
-	}
-}
-/*give x and y sides different brightness*/
-int	ft_set_bright(t_game *game, int color)
-{
-	if (game->calc.tex_drawn == NORTH || game->calc.tex_drawn == EAST) 
-		color = ((color >> 1) & 8355711);
-	return(color);
-}
-
-/*tex_y_step calculate how much to increase the texture 
-*	coordinate per screen pixel
-*
-*tex_y = (int)pos & (TEXTURE_SIZE - 1) - Cast the texture coordinate to integer
-*	and mask with (texHeight - 1) in case of overflow
-*/
-void	buffering_image_strip(t_game *game, int **buffer, int x)
-{
-	int	tex_y;
-	int	color;
-	int	y;
-
-	ft_set_wall_texture(game);
-	game->calc.tex_y_step = 1.0 * TEXTURE_SIZE / game->calc.line_height;
-	game->calc.tex_y_pos = (game->calc.draw_start - game->y / 2 +
-						game->calc.line_height / 2) * game->calc.tex_y_step;
-	y = game->calc.draw_start;
-	while (y < game->calc.draw_end)
-	{
-		tex_y = (int)game->calc.tex_y_pos & (TEXTURE_SIZE - 1);	
-		game->calc.tex_y_pos += game->calc.tex_y_step;
-		// printf("ray_dir_x=%f, ray_di_y=%f, wall_dist=%f, side= %d, x = %d, wall_x = %f, texture to be drawn = %d, tex_x = %d, tex_y =%d\n", game->calc.ray_dir_x, game->calc.ray_dir_y, game->calc.wall_dist, game->calc.wall_side, x, game->calc.wall_x, game->calc.tex_drawn, game->calc.tex_x, tex_y);//APAGAR
-		color = game->tex_buff[game->calc.tex_drawn]
-								[TEXTURE_SIZE * tex_y + game->calc.tex_x];
-		color = ft_set_bright(game, color);
-		if (color > 0)
-			buffer[y][x] = color;
-		y ++;
-	}	
-}
-
 /*give x and y sides different brightness*/
 int	ft_chose_color(t_game *game)
 {
@@ -286,7 +229,6 @@ void	ft_raycasting_untextured(t_game *game)
 /*TEXTURED VERTION*/
 void	ft_raycasting(t_game *game)
 {
-	int i;//just for textures
 	int	x;
 	int **pixels_buffer; //just for textures
 	
@@ -303,17 +245,11 @@ void	ft_raycasting(t_game *game)
 		ft_wall_height(game);
 		ft_wall_x(game);//just for textures
 		ft_tex_x(game);//just for textures
-		buffering_image_strip(game,pixels_buffer,x);//just for textures
+		buffering_image_strip(game, pixels_buffer, x);//just for textures
 		//printf("game.->map2=%p\n", &game->map2);//APAGAR
 		//printf("x:%d, game->calc.draw_start:%d, game->calc.draw_end:%d\n", x, game->calc.draw_start, game->calc.draw_end);
 		x++;
 	}
 	update_image_from_buffer(game,&game->map2,pixels_buffer);//just for textures
-	i = 0;
-	while (i < game->y) 
-	{
-		free(pixels_buffer[i]);
-		i++;
-	}
-	free(pixels_buffer);
+	free_pixels_buffer(pixels_buffer, game->y);//just for textures
 }
