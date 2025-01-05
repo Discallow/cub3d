@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 18:12:51 by discallow         #+#    #+#             */
-/*   Updated: 2025/01/05 18:40:35 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/05 18:42:04 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void init_struct(t_game *game)
 	game->map = NULL;
 	game->copy.exit = 0;
 	game->player.num = 0;
-	game->player.dir = "N";
 	game->player.dir_x = 0.0;
 	game->player.dir_y = 0.0;
 	game->player.flag_pos = 0;
