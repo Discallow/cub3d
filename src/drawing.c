@@ -6,7 +6,7 @@
 /*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 22:39:40 by asofia-g          #+#    #+#             */
-/*   Updated: 2025/01/02 01:30:04 by asofia-g         ###   ########.fr       */
+/*   Updated: 2025/01/04 19:05:01 by asofia-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void update_image_from_buffer(t_game *game, t_position *data,
 {
 	int			x;
 	int 		y;
-	int	*img_addr;
+	int			*img_addr;
 	int			pixel_index;
 
 	img_addr = (int *)data->addr;
@@ -51,7 +51,6 @@ void update_image_from_buffer(t_game *game, t_position *data,
 			pixel_index = y * (data->line_len / 4) + x;
 			if (buffer[y][x] > 0)
 				img_addr[pixel_index] = buffer[y][x];
-
 			x++;
 		}
 		y++;

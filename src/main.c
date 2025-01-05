@@ -6,7 +6,7 @@
 /*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 18:12:51 by discallow         #+#    #+#             */
-/*   Updated: 2024/12/31 10:07:44 by asofia-g         ###   ########.fr       */
+/*   Updated: 2025/01/04 21:28:18 by asofia-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -269,6 +269,7 @@ void build_map(t_game *game)
 		game->wall.addr = mlx_get_data_addr(game->wall.img, &game->wall.bits_per_pixel, &game->wall.line_len, &game->wall.endian);
 		draw_square(&game->wall, game->x_len, game->y_len, 0x0000FF00); */
 	//printf("WND_HEIGHT=%d\n", game->y); // APAGAR
+	//ft_raycasting_untextured(game);
 	ft_raycasting(game);
 	draw_minimap(game);
 	//draw_player_direction(game, &game->map2);
@@ -286,6 +287,7 @@ int main(int argc, char **argv)
 	init_struct(&game);
 	check_map(&game, argv[1]);
 	init_connection(&game);
+	load_all_textures(&game);
 	build_map(&game);
 	mlx_hook(game.window, KeyPress, KeyPressMask, &key_pressed, &game);
 	mlx_hook(game.window, DestroyNotify, NoEventMask, &window_closed, &game);

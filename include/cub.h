@@ -6,7 +6,7 @@
 /*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 14:47:40 by discallow         #+#    #+#             */
-/*   Updated: 2025/01/02 01:31:23 by asofia-g         ###   ########.fr       */
+/*   Updated: 2025/01/04 23:21:41 by asofia-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ typedef struct	s_calculation
 typedef struct s_texture
 {
 	void	*tex;
-	char    *data;
+	char    *data_addr;
 	int		tex_width;
 	int		tex_height;
 	int     bpp;
@@ -171,6 +171,7 @@ typedef struct	s_game
 	double			delta_y;
 	t_calculation	calc;
 	t_texture		textures[NUM_TEXTURES];
+	int				**tex_buff;
 }				t_game;
 
 char	*get_next_line(int fd);
