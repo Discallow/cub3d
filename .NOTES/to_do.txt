@@ -36,3 +36,9 @@
 [ ] validar se as texturas são validas. a função mlx_xpm_file_to_image devolve NULL caso a textura seja invalida por exemplo.
                 garantir que não existem leaks em qualquer uma das imagens validadas.
                 exemplo: as primeiras 2 são validas, a 3 é invalida.
+
+[ ] alterar as texturas para funcionar com qualquer tamanho de imagem
+
+[ ] quando se troca de janela a imagem desaparece
+
+[ ] minimapa adequar a mapas grandes

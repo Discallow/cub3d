@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_functions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
+/*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 23:58:38 by discallow         #+#    #+#             */
-/*   Updated: 2024/12/04 16:08:17 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/05 11:42:39 by asofia-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	free_everything_2(t_game *game)
 			free(game->map[i]);
 		free(game->map);
 	}
+	free_textures(game);//just for textures
 }
 
 void	free_everything(t_game *game)

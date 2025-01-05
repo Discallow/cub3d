@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 18:12:51 by discallow         #+#    #+#             */
-/*   Updated: 2025/01/04 22:46:55 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/05 15:18:20 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -281,6 +281,7 @@ void build_map(t_game *game)
 	game->y_len = game->y / game->copy.max_height / SCALE;
 	game->map2.img = mlx_new_image(game->connection, game->x, game->y);
 	game->map2.addr = mlx_get_data_addr(game->map2.img, &game->map2.bits_per_pixel, &game->map2.line_len, &game->map2.endian);
+	//ft_raycasting_untextured(game);
 	ft_raycasting(game);
 	draw_minimap(game);
 	//draw_player_direction(game, &game->map2);
@@ -316,6 +317,7 @@ int main(int argc, char **argv)
 	init_struct(&game);
 	check_map(&game, argv[1]);
 	init_connection(&game);
+	load_all_textures(&game);
 	build_map(&game);
 	mlx_hook(game.window, KeyPress, KeyPressMask, key_pressed, &game);
 	mlx_hook(game.window, KeyRelease, KeyReleaseMask, key_released, &game);
