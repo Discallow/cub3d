@@ -42,3 +42,7 @@
 [ ] quando se troca de janela a imagem desaparece
 
 [ ] minimapa adequar a mapas grandes
+
+[ ] ler a direção do palyer para a variável game->dir
+
+[✅] criar variável para wall_side VERTICAL e HORIZONTAL

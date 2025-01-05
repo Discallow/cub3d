@@ -6,7 +6,7 @@
 /*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 22:39:40 by asofia-g          #+#    #+#             */
-/*   Updated: 2025/01/05 14:07:07 by asofia-g         ###   ########.fr       */
+/*   Updated: 2025/01/05 17:07:59 by asofia-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,14 @@ void    ver_Line(t_position *data, int pos_x, int start, int end, int color)
 /*Calculates which texture to use depending wall cardinal direction*/
 void	ft_set_wall_texture(t_game *game)
 {
-	if (game->calc.wall_side == 1)
+	if (game->calc.wall_side == HORIZONTAL)
 	{
 		if (game->calc.ray_dir_y <= 0)
 			game->calc.tex_drawn = NORTH;
 		else if (game->calc.ray_dir_y > 0)
 			game->calc.tex_drawn = SOUTH;
 	}
-	else if (game->calc.wall_side == 0)
+	else if (game->calc.wall_side == VERTICAL)
 	{
 		if(game->calc.ray_dir_x >= 0)
 			game->calc.tex_drawn = EAST;
@@ -77,7 +77,6 @@ void	buffering_image_strip(t_game *game, int **buffer, int x)
 	game->calc.tex_y_step = 1.0 * TEXTURE_SIZE / game->calc.line_height;
 	game->calc.tex_y_pos = (game->calc.draw_start - game->y / 2 +
 						game->calc.line_height / 2) * game->calc.tex_y_step;
-	// y = game->calc.draw_start;
 	y = -1;
 	while (y++ < game->calc.draw_start)
 		buffer[y][x] = game->ceiling.color;

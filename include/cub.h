@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 14:47:40 by discallow         #+#    #+#             */
-/*   Updated: 2025/01/05 18:37:22 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/05 18:40:08 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@
 # define SCALE			5
 # define TEXTURE_SIZE 	64
 # define NUM_TEXTURES 	4
+# define VERTICAL		0
+# define HORIZONTAL		1
 
 typedef enum	e_element
 {
