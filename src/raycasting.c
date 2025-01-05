@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 22:27:37 by asofia-g          #+#    #+#             */
-/*   Updated: 2025/01/05 15:32:14 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/05 18:37:13 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@ void	ft_get_player_inicial_direction(t_game *game)
 {
 	if (game->player.flag_pos == 1)
 		return;
-	if (ft_strcmp(game->player.dir, "N") == 0)
+	if (game->player.dir == 'N')
 		game->player.dir_y = -1.0;
-	if (ft_strcmp(game->player.dir, "S") == 0)
+	if (game->player.dir == 'S')
 		game->player.dir_y = 1.0;
-	if (ft_strcmp(game->player.dir, "E") == 0)
+	if (game->player.dir == 'E')
 		game->player.dir_x = 1.0;
-	if (ft_strcmp(game->player.dir, "W") == 0)
+	if (game->player.dir == 'W')
 		game->player.dir_x = -1.0;
 	game->player.angle = atan2(game->player.dir_y, game->player.dir_x);
 	game->player.flag_pos = 1;

@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 18:12:51 by discallow         #+#    #+#             */
-/*   Updated: 2025/01/05 15:32:16 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/05 18:34:38 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void init_struct(t_game *game)
 	game->map = NULL;
 	game->copy.exit = 0;
 	game->player.num = 0;
-	game->player.dir = "N";
 	game->player.dir_x = 0.0;
 	game->player.dir_y = 0.0;
 	game->player.flag_pos = 0;
@@ -55,6 +54,7 @@ void init_struct(t_game *game)
 	game->player.move_w = false;
 	game->player.rotate_left = false;
 	game->player.rotate_right = false;
+	game->flag = false;
 }
 
 void display_big_cub3d(void)
@@ -102,8 +102,8 @@ void init_connection(t_game *game)
 		exit(1);
 	}
 	mlx_get_screen_size(game->connection, &game->x, &game->y);
-	game->x = 800;
-	game->y = 800;
+/* 	game->x = 800;
+	game->y = 800; */
 	game->window = mlx_new_window(game->connection, (game->x),
 								  (game->y), "CUB");
 	if (!game->window)
@@ -302,12 +302,18 @@ int	display_map(t_game *game)
 		rotate_left(game);
 	if (game->player.rotate_right)
 		rotate_right(game);
-	else
+	//destroy_map(game);
+/* 	else
 	{
 		build_map(game);
 		return (0);
 	}
-	redraw_map(game);
+	redraw_map(game); */
+	if (game->flag)
+	{
+		game->flag = false;
+		redraw_map(game);
+	}	
 	return (0);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 14:47:40 by discallow         #+#    #+#             */
-/*   Updated: 2025/01/05 11:20:27 by asofia-g         ###   ########.fr       */
+/*   Updated: 2025/01/05 18:37:22 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ typedef struct s_position
 	bool	rotate_left;
 	float	size;
 	int		num;
-	char	*dir;
+	char	dir;
 	double	dir_x;
 	double	dir_y;
 	int		flag_pos;
@@ -156,6 +156,7 @@ typedef struct	s_game
 	t_position		south;
 	t_position		west;
 	t_position		east;
+	bool			flag;
 	int				x_len;
 	int				y_len;
 	int				x;
