@@ -22,14 +22,17 @@
 [✅] com SCALE 2 não aparece o minimapa no computador da sofia e não desenha o 
         Raycasting para o Diogo, com SCALE 1 desenha tudo para a sofia
 
-[ ] no minimapa começa sempre por assumir que o player está virado para ESTE 
+[✅] no minimapa começa sempre por assumir que o player está virado para ESTE 
         em vez de ler a direção que está no mapa
 
-[ ] para andar para os lado não está a andar perpendicular à direção da mira
+[✅] para andar para os lado não está a andar perpendicular à direção da mira
 
-[ ] para andar para a frente e para trás, como no minimapa está a iniciar com a
+[✅] para andar para a frente e para trás, como no minimapa está a iniciar com a
          mira virada para este, sem ter rotação, começa por andar para os lados
 
-[ ] Parsing - Falta:
+[✅] Parsing - Falta:
         - texturas são XPM
-        - se as texturas são validas
+
+[ ] validar se as texturas são validas. a função mlx_xpm_file_to_image devolve NULL caso a textura seja invalida por exemplo.
+                garantir que não existem leaks em qualquer uma das imagens validadas.
+                exemplo: as primeiras 2 são validas, a 3 é invalida.

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_moves.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 20:23:57 by discallow         #+#    #+#             */
-/*   Updated: 2024/12/31 10:20:40 by asofia-g         ###   ########.fr       */
+/*   Updated: 2025/01/04 21:55:03 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,6 @@
 void	destroy_map(t_game *game)
 {
 	mlx_destroy_image(game->connection, game->map2.img);
-	//mlx_destroy_image(game->connection, game->player.img);
-	// mlx_destroy_image(game->connection, game->wall.img);
-	// mlx_destroy_image(game->connection, game->floor.img);
 }
 
 void	redraw_map(t_game *game)
@@ -26,19 +23,14 @@ void	redraw_map(t_game *game)
 	build_map(game);
 }
 
-void	move_down(t_game *game)
+void	move_backwards(t_game *game)
 {
-	//printf("game->player.x:%f, game->x:%d\n", game->player.x, game->x);
 /* 	if (game->player.y + 40 >= game->y)
 		return ; */
-	// game->player.x -= game->delta_x;
-	// game->player.y -= game->delta_y;
-	// game->copy.x -= game->delta_x;
-	// game->copy.y -= game->delta_y;
-	game->player.x -= game->player.dir_x;
-	game->player.y -= game->player.dir_y;
-	game->copy.x -= game->player.dir_x;
-	game->copy.y -= game->player.dir_y;
+	game->player.x -= game->player.dir_x / 10;
+	game->player.y -= game->player.dir_y / 10;
+	game->copy.x -= game->player.dir_x * game->x_len / 10;
+	game->copy.y -= game->player.dir_y * game->y_len / 10;
 	redraw_map(game);
 }
 
@@ -48,10 +40,10 @@ void	move_left(t_game *game)
 		return ; */
 	// game->player.x -= 0.1;
 	// game->copy.x -= game->x_len / 10;
-	game->player.x += game->player.dir_y;
-	game->player.y -= game->player.dir_x;
-	game->copy.x += game->player.dir_y;
-	game->copy.y -= game->player.dir_x;
+	game->player.x += game->player.dir_y / 10;
+	game->player.y -= game->player.dir_x / 10;
+	game->copy.x += game->player.dir_y * game->x_len / 10;
+	game->copy.y -= game->player.dir_x * game->y_len / 10;
 	redraw_map(game);
 }
 
@@ -61,32 +53,22 @@ void	move_right(t_game *game)
 		return ; */
 	// game->player.x += 0.1;
 	// game->copy.x += game->x_len / 10;
-	game->player.x -= game->player.dir_y;
-	game->player.y += game->player.dir_x;
-	game->copy.x -= game->player.dir_y;
-	game->copy.y += game->player.dir_x;
+	game->player.x -= game->player.dir_y / 10;
+	game->player.y += game->player.dir_x / 10;
+	game->copy.x -= game->player.dir_y * game->x_len / 10;
+	game->copy.y += game->player.dir_x * game->y_len / 10;
 	redraw_map(game);
 }
 
-void	move_up(t_game *game)
+void	move_forward(t_game *game)
 {
-	//printf("x:%.1f, y:%.1f\n", game->player.x + game->delta_x, game->player.y + game->delta_y);
-	if (game->copy.y + game->delta_y <= 0 || game->copy.x + game->delta_x <= 0)
-		return ;
+/* 	if (game->copy.y + game->delta_y <= 0 || game->copy.x + game->delta_x <= 0)
+		return ; */
 	// game->map[(int)game->copy.x - 1][(int)game->copy.y] = 'P';
-	if (game->delta_x == cos(0))
-	{
-		game->delta_x += 0.1;
-		game->delta_y += 0.1;
-	}
-	// game->player.x += game->delta_x;
-	// game->player.y += game->delta_y;
-	// game->copy.x += game->delta_x;
-	// game->copy.y += game->delta_y;
-	game->player.x += game->player.dir_x;
-	game->player.y += game->player.dir_y;
-	game->copy.x += game->player.dir_x;
-	game->copy.y += game->player.dir_y;
+	game->player.x += game->player.dir_x / 10;
+	game->player.y += game->player.dir_y / 10;
+	game->copy.x += game->player.dir_x * game->x_len / 10;
+	game->copy.y += game->player.dir_y * game->y_len / 10;
 	redraw_map(game);
 }
 
@@ -97,8 +79,6 @@ void	rotate_right(t_game *game)
 		game->player.angle -= 2 * M_PI;
 	game->player.dir_x = cos(game->player.angle);
     game->player.dir_y = sin(game->player.angle);
-	game->delta_x = game->player.dir_x;
-	game->delta_y = game->player.dir_y;
 	redraw_map(game);
 }
 
@@ -109,7 +89,5 @@ void	rotate_left(t_game *game)
 		game->player.angle += 2 * M_PI;
 	game->player.dir_x = cos(game->player.angle);
 	game->player.dir_y = sin(game->player.angle);
-	game->delta_x = game->player.dir_x;
-	game->delta_y = game->player.dir_y;
 	redraw_map(game);
 }

@@ -6,7 +6,7 @@
 /*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 14:47:40 by discallow         #+#    #+#             */
-/*   Updated: 2025/01/04 23:21:41 by asofia-g         ###   ########.fr       */
+/*   Updated: 2025/01/05 00:49:04 by asofia-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,12 @@ typedef struct s_position
 {
 	double	x;
 	double	y;
+	bool	move_w;
+	bool	move_s;
+	bool	move_a;
+	bool	move_d;
+	bool	rotate_right;
+	bool	rotate_left;
 	float	size;
 	int		num;
 	char	*dir;
@@ -74,8 +80,6 @@ typedef struct s_position
 	int		line_len;
 	int		endian;
 	double	angle;
-	double	move_speed;
-	double	rotation_speed;
 }		t_position;
 
 typedef struct	s_map_copy
@@ -139,10 +143,10 @@ typedef struct s_texture
 
 typedef enum	e_textures_direction
 {
-	NORTH = 0,
-	SOUTH = 1,
-	WEST = 2,
-	EAST = 3
+	NORTH,
+	SOUTH,
+	WEST,
+	EAST,
 }				t_textures_direction;
 
 typedef struct	s_game
@@ -167,8 +171,6 @@ typedef struct	s_game
 	t_position		map2;
 	void			*window;
 	void			*connection;
-	double			delta_x;
-	double			delta_y;
 	t_calculation	calc;
 	t_texture		textures[NUM_TEXTURES];
 	int				**tex_buff;
@@ -185,8 +187,8 @@ void	return_invalid_line(t_game *game, char *line);
 void	skip_spaces(char *line, size_t *i);
 int		ft_atoi2(const char *s);
 char	*ft_strjoin3(char *s1, char *s2);
-int		ft_strcmp2(char *str1);
-void	check_extension(char *file);
+int		ft_strcmp2(char *str1, char *str2);
+int		check_extension(char *file);
 void	open_file(t_game *game, char *file);
 void	check_valid_element(char *line, t_game *game);
 void	check_valid_color(t_game *game, char *line, int i);
@@ -209,10 +211,10 @@ void	free_everything(t_game *game);
 /*MOVES*/
 void	redraw_map(t_game *game);
 void	build_map(t_game *game);
-void	move_down(t_game *game);
+void	move_backwards(t_game *game);
 void	move_left(t_game *game);
 void	move_right(t_game *game);
-void	move_up(t_game *game);
+void	move_forward(t_game *game);
 void	rotate_right(t_game *game);
 void	draw_square(t_position *data, int x, int y, int start_x, int start_y, int color);
 void	my_mlx_pixel_put(t_position *data, int x, int y, int color);

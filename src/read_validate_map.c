@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 05:49:29 by discallow         #+#    #+#             */
-/*   Updated: 2024/12/28 18:13:49 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/03 15:42:35 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,18 @@ void	read_file(t_game *game)
 		printf(RED"Not all the elements were defined"RESET"\n");
 		free_everything(game);
 		exit (1);
+	}
+	if (game->copy.elements_filled)
+	{
+		if (ft_strcmp2(game->north.path, ".xpm") || 
+		ft_strcmp2(game->south.path, ".xpm") ||
+		ft_strcmp2(game->east.path, ".xpm") ||
+		ft_strcmp2(game->west.path, ".xpm"))
+		{
+			printf(RED"Wrong extension file"RESET"\n");
+			free_everything(game);
+			exit (1);
+		}
 	}
 	read_map(game);
 	t_game *tmp = game;

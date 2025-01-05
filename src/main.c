@@ -6,7 +6,7 @@
 /*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 18:12:51 by discallow         #+#    #+#             */
-/*   Updated: 2025/01/04 21:28:18 by asofia-g         ###   ########.fr       */
+/*   Updated: 2025/01/05 00:51:15 by asofia-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,13 @@ void init_struct(t_game *game)
 	game->copy.max_height = 0;
 	game->x_len = 0;
 	game->y_len = 0;
-	game->player.move_speed = 0.1;
-	game->player.rotation_speed = 0.1;
 	game->player.angle = 0.0;
-	game->delta_x = cos(0);
-	game->delta_y = sin(0);
+	game->player.move_a = false;
+	game->player.move_d = false;
+	game->player.move_s = false;
+	game->player.move_w = false;
+	game->player.rotate_left = false;
+	game->player.rotate_right = false;
 }
 
 void display_big_cub3d(void)
@@ -142,20 +144,37 @@ void draw_square(t_position *data, int width, int height, int start_x, int start
 	}
 }
 
+int	key_released(int keysim, t_game *game)
+{
+	if (keysim == XK_w || keysim == XK_Up)
+		game->player.move_w = false;
+	if (keysim == XK_Right)
+		game->player.rotate_right = false;
+	if (keysim == XK_a)
+		game->player.move_a = false;
+	if (keysim == XK_s || keysim == XK_Down)
+		game->player.move_s = false;
+	if (keysim == XK_d)
+		game->player.move_d = false;
+	if (keysim == XK_Left)
+		game->player.rotate_left = false;
+	return (0);
+}
+
 int key_pressed(int keysim, t_game *game)
 {
 	if (keysim == XK_w || keysim == XK_Up)
-		move_up(game);
+		game->player.move_w = true;
 	if (keysim == XK_Right)
-		rotate_right(game);
+		game->player.rotate_right = true;
 	if (keysim == XK_a)
-		move_left(game);
+		game->player.move_a = true;
 	if (keysim == XK_s || keysim == XK_Down)
-		move_down(game);
+		game->player.move_s = true;
 	if (keysim == XK_d)
-		move_right(game);
+		game->player.move_d = true;
 	if (keysim == XK_Left)
-		rotate_left(game);
+		game->player.rotate_left = true;
 	if (keysim == XK_Escape)
 	{
 		write(1, "Couldn't you kill all the enemies? Are you afraid?\n", 51);
@@ -210,7 +229,7 @@ void draw_line(t_position *data, int x0, int y0, int x1, int y1, int color)
 	}
 }
 
-void draw_player_direction(t_game *game, t_position *data)
+/* void draw_player_direction(t_game *game, t_position *data)
 {
 	int line_length = 5; // Length of the line
 	int start_x = (int)game->copy.x;
@@ -220,7 +239,7 @@ void draw_player_direction(t_game *game, t_position *data)
 
 	// Use the draw_line function to draw the line
 	draw_line(data, start_x, start_y, end_x, end_y, 0x00FF0000); // Red color
-}
+} */
 
 void	draw_minimap(t_game *game)
 {
@@ -257,23 +276,31 @@ void build_map(t_game *game)
 	printf("x:%f, y:%f\n", game->player.x, game->player.y);
 	game->x_len = game->x / game->copy.max_width / SCALE;
 	game->y_len = game->y / game->copy.max_height / SCALE;
-	game->player.img = mlx_new_image(game->connection, game->x , game->y );
-	game->player.addr = mlx_get_data_addr(game->player.img, &game->player.bits_per_pixel, &game->player.line_len, &game->player.endian);
-
 	game->map2.img = mlx_new_image(game->connection, game->x, game->y);
 	game->map2.addr = mlx_get_data_addr(game->map2.img, &game->map2.bits_per_pixel, &game->map2.line_len, &game->map2.endian);
-	/* 	game->floor.img = mlx_new_image(game->connection, game->x_len, game->y_len);
-		game->floor.addr = mlx_get_data_addr(game->floor.img, &game->floor.bits_per_pixel, &game->floor.line_len, &game->floor.endian);
-		draw_square(&game->floor, game->x_len, game->y_len, 0x00808080); */
-	/* 	game->wall.img = mlx_new_image(game->connection, game->x_len, game->y_len);
-		game->wall.addr = mlx_get_data_addr(game->wall.img, &game->wall.bits_per_pixel, &game->wall.line_len, &game->wall.endian);
-		draw_square(&game->wall, game->x_len, game->y_len, 0x0000FF00); */
-	//printf("WND_HEIGHT=%d\n", game->y); // APAGAR
 	//ft_raycasting_untextured(game);
 	ft_raycasting(game);
 	draw_minimap(game);
 	//draw_player_direction(game, &game->map2);
 	mlx_put_image_to_window(game->connection, game->window, game->map2.img, 0, 0);
+}
+
+int	display_map(t_game *game)
+{
+	if (game->player.move_w)
+		move_forward(game);
+	if (game->player.move_a)
+		move_left(game);
+	if (game->player.move_s)
+		move_backwards(game);
+	if (game->player.move_d)
+		move_right(game);
+	if (game->player.rotate_left)
+		rotate_left(game);
+	if (game->player.rotate_right)
+		rotate_right(game);
+	//build_map(game);
+	return (0);
 }
 
 int main(int argc, char **argv)
@@ -289,8 +316,10 @@ int main(int argc, char **argv)
 	init_connection(&game);
 	load_all_textures(&game);
 	build_map(&game);
-	mlx_hook(game.window, KeyPress, KeyPressMask, &key_pressed, &game);
-	mlx_hook(game.window, DestroyNotify, NoEventMask, &window_closed, &game);
+	mlx_hook(game.window, KeyPress, KeyPressMask, key_pressed, &game);
+	mlx_hook(game.window, KeyRelease, KeyReleaseMask, key_released, &game);
+	mlx_hook(game.window, DestroyNotify, NoEventMask, window_closed, &game);
+	mlx_loop_hook(game.connection, display_map, &game);
 	mlx_loop(game.connection);
 	/* 	mlx_destroy_window(game.connection, game.window);
 		mlx_destroy_display(game.connection);
