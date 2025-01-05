@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 18:12:51 by discallow         #+#    #+#             */
-/*   Updated: 2025/01/04 22:31:37 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/04 22:46:55 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -253,7 +253,6 @@ void	draw_minimap(t_game *game)
 		j = 0;
 		while (game->map[i][j])
 		{
-			//printf("i[%d], j[%d]:%c\n", i, j, game->map[i][j]);
 			if (game->map[i][j] == '1')
 				draw_square(&game->map2, game->x_len - 1, game->y_len - 1, j * game->x_len, i * game->y_len, 0x0000FF00);
 			else if (game->map[i][j] != '1')
@@ -264,6 +263,10 @@ void	draw_minimap(t_game *game)
 				game->copy.y = i * game->y_len + game->y_len / 2;
 				flag = 1;
 			}
+			if (game->map[i][j] == 'P')
+			{
+				printf("x:%d, y:%d\n", j, i);
+			}
 			j++;
 		}
 		i++;
@@ -273,7 +276,7 @@ void	draw_minimap(t_game *game)
 
 void build_map(t_game *game)
 {
-	printf("x:%f, y:%f\n", game->player.x, game->player.y);
+	printf("x:%d, y:%d\n", (int)game->player.x, (int)game->player.y);
 	game->x_len = game->x / game->copy.max_width / SCALE;
 	game->y_len = game->y / game->copy.max_height / SCALE;
 	game->map2.img = mlx_new_image(game->connection, game->x, game->y);

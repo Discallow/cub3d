@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 20:23:57 by discallow         #+#    #+#             */
-/*   Updated: 2025/01/04 21:55:03 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/04 22:46:21 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void	move_forward(t_game *game)
 	// game->map[(int)game->copy.x - 1][(int)game->copy.y] = 'P';
 	game->player.x += game->player.dir_x / 10;
 	game->player.y += game->player.dir_y / 10;
+	// game->map[(int)game->player.x][(int)game->player.y] = 'P';
 	game->copy.x += game->player.dir_x * game->x_len / 10;
 	game->copy.y += game->player.dir_y * game->y_len / 10;
 	redraw_map(game);
