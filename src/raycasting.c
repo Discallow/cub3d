@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
+/*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 22:27:37 by asofia-g          #+#    #+#             */
-/*   Updated: 2025/01/05 15:32:14 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/05 17:09:59 by asofia-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,13 +111,13 @@ void	ft_dda(t_game *game)
 		{
 			game->calc.side_dist_x += game->calc.delta_dist_x;
 			game->calc.map_x += game->calc.step_x;
-			game->calc.wall_side = 0;
+			game->calc.wall_side = VERTICAL;
 		}
 		else
 		{
 			game->calc.side_dist_y += game->calc.delta_dist_y;
 			game->calc.map_y += game->calc.step_y;
-			game->calc.wall_side = 1;
+			game->calc.wall_side = HORIZONTAL;
 		}
 		// printf("map_x=%d, map_y=%d\n", game->calc.map_x, game->calc.map_y);//APAGAR
 		// printf("map[map_x][map_y]=%d\n", game->map[game->calc.map_x][game->calc.map_y]);//APAGAR
@@ -129,7 +129,7 @@ void	ft_dda(t_game *game)
 /*Calculate distance of perpendicular ray, i.e. remove fisheye effect!*/
 void	ft_wall_height(t_game *game)
 {
-	if (game->calc.wall_side == 0)
+	if (game->calc.wall_side == VERTICAL)
 	{
 		game->calc.wall_dist = (game->calc.map_x - game->player.x +
 			(1 - game->calc.step_x) / 2) / game->calc.ray_dir_x;
@@ -151,7 +151,7 @@ void	ft_wall_height(t_game *game)
 /*Calculate value of wallX, where exactly the wall was hit*/
 void	ft_wall_x(t_game *game)
 {	
-	if (game->calc.wall_side == 0)
+	if (game->calc.wall_side == VERTICAL)
 	{
 		game->calc.wall_x = game->player.y + 
 								game->calc.wall_dist * game->calc.ray_dir_y;
@@ -169,8 +169,8 @@ void	ft_tex_x(t_game *game)
 {
 	game->calc.tex_x = (int)(game->calc.wall_x * TEXTURE_SIZE);
 
-	if ((game->calc.wall_side == 0 && game->calc.ray_dir_x < 0) ||
-		(game->calc.wall_side == 1 && game->calc.ray_dir_y > 0))
+	if ((game->calc.wall_side == VERTICAL && game->calc.ray_dir_x < 0) ||
+		(game->calc.wall_side == HORIZONTAL && game->calc.ray_dir_y > 0))
 	game->calc.tex_x = TEXTURE_SIZE - game->calc.tex_x - 1;		
 }
 
@@ -180,7 +180,7 @@ int	ft_chose_color(t_game *game)
 	int color;
 
 	color = 0x000000FF;
-	if (game->calc.wall_side == 0) 
+	if (game->calc.wall_side == VERTICAL) 
 		color = ((color >> 1) & 0x7F7F7F);
 	return(color);
 }
