@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 18:12:51 by discallow         #+#    #+#             */
-/*   Updated: 2025/01/05 18:42:04 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/06 22:23:33 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,44 +241,80 @@ void draw_line(t_position *data, int x0, int y0, int x1, int y1, int color)
 	draw_line(data, start_x, start_y, end_x, end_y, 0x00FF0000); // Red color
 } */
 
-void	draw_minimap(t_game *game)
-{
-	static int	flag = 0;
-	int			i;
-	int			j;
-	
-	i = 0;
-	while (game->map[i])
-	{
-		j = 0;
-		while (game->map[i][j])
-		{
-			if (game->map[i][j] == '1')
-				draw_square(&game->map2, game->x_len - 1, game->y_len - 1, j * game->x_len, i * game->y_len, 0x0000FF00);
-			else if (game->map[i][j] != '1')
-				draw_square(&game->map2, game->x_len - 1, game->y_len - 1, j * game->x_len, i * game->y_len, 0x00808080);
-			if (!flag && game->map[i][j] == 'N')
-			{
-				game->copy.x = j * game->x_len + game->x_len / 2;
-				game->copy.y = i * game->y_len + game->y_len / 2;
-				flag = 1;
-			}
-/* 			if (game->map[i][j] == 'P')
-			{
-				printf("x:%d, y:%d\n", j, i);
-			} */
-			j++;
-		}
-		i++;
-	}
-	draw_square(&game->map2, game->x_len / 4 - 1, game->y_len / 4 - 1, game->copy.x, game->copy.y, 0x000000FF);
+static int max(int a, int b) {
+    if (a > b)
+        return a;
+    else
+        return b;
 }
+
+static int min(int a, int b) {
+    if (a < b)
+        return a;
+    else
+        return b;
+}
+
+ void draw_minimap(t_game *game)
+{
+    int start_i, end_i, start_j, end_j;
+    int i, j, k, l;
+    
+    int px = (int)game->player.x;
+    int py = (int)game->player.y;
+
+    start_i = max(0, py - 3);
+    end_i = min(game->copy.max_height, py + 3);
+    start_j = max(0, px - 3);
+    end_j = min(game->copy.max_width, px + 3);
+    while (end_i - start_i < 6) 
+	{
+        if (start_i > 0) 
+			start_i--;
+        else if (end_i < game->copy.max_height) 
+			end_i++;
+        else 
+			break;
+    }
+    while (end_j - start_j < 6) 
+	{
+        if (start_j > 0) 
+			start_j--;
+        else if (end_j < game->copy.max_width) 
+			end_j++;
+        else 
+			break;
+    }
+    i = 0;
+	l = start_i;
+    while (start_i < end_i)
+    {
+		k = 0;
+        j = start_j;
+        while (j < end_j)
+        {
+            if (game->map[start_i][j] == '1')
+                draw_square(&game->map2, game->x_len, game->y_len, k * game->x_len, i * game->y_len, 0x0000FF00);
+            else if (game->map[start_i][j] == '0' || game->map[start_i][j] == 'N' || game->map[start_i][j] == 'P'
+				|| game->map[start_i][j] == 'E' || game->map[start_i][j] == 'W' || game->map[start_i][j] == 'S')
+                draw_square(&game->map2, game->x_len, game->y_len, k * game->x_len, i * game->y_len, 0x00808080);
+            j++;
+			k++;
+        }
+		start_i++;
+        i++;
+    }
+    float player_x_on_map = (game->player.x - (float)start_j) * game->x_len;
+    float player_y_on_map = (game->player.y - (float)l) * game->y_len;
+    draw_square(&game->map2, game->x_len / 4 - 1, game->y_len / 4 - 1,
+                (int)player_x_on_map, (int)player_y_on_map, 0x000000FF);
+}
+
 
 void build_map(t_game *game)
 {
-	//printf("x:%d, y:%d\n", (int)game->player.x, (int)game->player.y);
-	game->x_len = game->x / game->copy.max_width / SCALE;
-	game->y_len = game->y / game->copy.max_height / SCALE;
+	game->x_len = game->x / SCALE / 8;
+	game->y_len = game->x / SCALE / 8;
 	game->map2.img = mlx_new_image(game->connection, game->x, game->y);
 	game->map2.addr = mlx_get_data_addr(game->map2.img, &game->map2.bits_per_pixel, &game->map2.line_len, &game->map2.endian);
 	//ft_raycasting_untextured(game);

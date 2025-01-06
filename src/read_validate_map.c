@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 05:49:29 by discallow         #+#    #+#             */
-/*   Updated: 2025/01/05 18:37:25 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/06 20:15:40 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,20 +121,6 @@ void	read_file(t_game *game)
 		}
 	}
 	read_map(game);
-	t_game *tmp = game;
-	int i = 0;
-	int j = 0;
-	while (tmp->map[i])
-	{
-		j = 0;
-		while (tmp->map[i][j])
-		{
-			printf("%c", tmp->map[i][j]);
-			j++;
-		}
-		printf("|\n");
-		i++;
-	}
 }
 
 void	check_valid_map(char *line, t_game *game)
