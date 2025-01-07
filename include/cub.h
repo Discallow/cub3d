@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
+/*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 14:47:40 by discallow         #+#    #+#             */
-/*   Updated: 2025/01/05 18:40:08 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/07 02:10:05 by asofia-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@
 # define M_PI			3.14159265358979323846
 # define SCALE			5
 # define TEXTURE_SIZE 	64
-# define NUM_TEXTURES 	4
+# define NUM_TEXTURES 	5
 # define VERTICAL		0
 # define HORIZONTAL		1
 
@@ -130,6 +130,7 @@ typedef struct	s_calculation
 	double	tex_y_step;
 	double	tex_y_pos;
 	int		tex_drawn;
+	int		enemy_in;
 }				t_calculation;
 
 typedef struct s_texture
@@ -149,6 +150,7 @@ typedef enum	e_textures_direction
 	SOUTH,
 	WEST,
 	EAST,
+	ENEMY,
 }				t_textures_direction;
 
 typedef struct	s_game
@@ -231,8 +233,8 @@ void    ver_Line(t_position *data, int pos_x, int start, int end, int color);
 void	draw_line(t_position *data, int x0, int y0, int x1, int y1, int color);
 void 	update_image_from_buffer(t_game *game, t_position *data,
 								int **buffer);
-void	buffering_image_strip(t_game *game, int **buffer, int x);
-void	ft_set_wall_texture(t_game *game);
+void	buffering_image_strip(t_game *game, int **buffer, int x, int enemy);
+void	ft_set_wall_texture(t_game *game, int enemy);
 int		ft_set_bright(t_game *game, int color);
 
 /*LOAD TEXTURES*/

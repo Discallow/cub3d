@@ -6,7 +6,7 @@
 /*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 22:39:40 by asofia-g          #+#    #+#             */
-/*   Updated: 2025/01/05 17:07:59 by asofia-g         ###   ########.fr       */
+/*   Updated: 2025/01/07 04:04:43 by asofia-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,13 @@ void    ver_Line(t_position *data, int pos_x, int start, int end, int color)
 }
 
 /*Calculates which texture to use depending wall cardinal direction*/
-void	ft_set_wall_texture(t_game *game)
+void	ft_set_wall_texture(t_game *game, int enemy)
 {
+	if (enemy == 1)
+	{
+		game->calc.tex_drawn = ENEMY;
+		return;
+	}
 	if (game->calc.wall_side == HORIZONTAL)
 	{
 		if (game->calc.ray_dir_y <= 0)
@@ -67,18 +72,18 @@ int		ft_set_bright(t_game *game, int color)
 *tex_y = (int)pos & (TEXTURE_SIZE - 1) - Cast the texture coordinate to integer
 *	and mask with (texHeight - 1) in case of overflow
 */
-void	buffering_image_strip(t_game *game, int **buffer, int x)
+void	buffering_image_strip(t_game *game, int **buffer, int x, int enemy)
 {
 	int	tex_y;
 	int	color;
 	int	y;
 
-	ft_set_wall_texture(game);
+	ft_set_wall_texture(game, enemy);
 	game->calc.tex_y_step = 1.0 * TEXTURE_SIZE / game->calc.line_height;
 	game->calc.tex_y_pos = (game->calc.draw_start - game->y / 2 +
 						game->calc.line_height / 2) * game->calc.tex_y_step;
-	y = -1;
-	while (y++ < game->calc.draw_start)
+	y = -1 + game->calc.draw_start * enemy;
+	while (y++ < game->calc.draw_start && enemy == 0)
 		buffer[y][x] = game->ceiling.color;
 	while (y < game->calc.draw_end)
 	{
@@ -92,7 +97,7 @@ void	buffering_image_strip(t_game *game, int **buffer, int x)
 		y ++;
 	}
 	y = game->calc.draw_end - 1;
-	while (++y < game->y)
+	while (enemy == 0 && ++y < game->y)
 		buffer[y][x] = game->floor.color;
 }
 
@@ -119,4 +124,3 @@ void update_image_from_buffer(t_game *game, t_position *data,
 		y++;
 	}
 }
-

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
+/*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 22:27:37 by asofia-g          #+#    #+#             */
-/*   Updated: 2025/01/05 18:38:53 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/07 05:20:07 by asofia-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,8 +103,9 @@ void	ft_side_dist(t_game *game)
 *if we hit a wall we break out of the loop
 *wall_side = 0, means we hit vertical side of the wall
 *wall_side = 1, means we hit horizontal side of the wall*/
-void	ft_dda(t_game *game)
+void	ft_dda(t_game *game, char c)
 {
+	printf("ANTES:side_dist_x =%f, side_dist_y =%f, map x,y = %c\n",game->calc.side_dist_x, game->calc.side_dist_y, game->map[game->calc.map_y][game->calc.map_x]);//APAGAR
 	while (1)
 	{
 		if (game->calc.side_dist_x < game->calc.side_dist_y)
@@ -120,14 +121,18 @@ void	ft_dda(t_game *game)
 			game->calc.wall_side = HORIZONTAL;
 		}
 		// printf("map_x=%d, map_y=%d\n", game->calc.map_x, game->calc.map_y);//APAGAR
-		// printf("map[map_x][map_y]=%d\n", game->map[game->calc.map_x][game->calc.map_y]);//APAGAR
-		if (game->map[game->calc.map_y][game->calc.map_x] == '1') 
+		//printf("map[map_x][map_y]=%d\n", game->map[game->calc.map_x][game->calc.map_y]);//APAGAR
+		if (game->map[game->calc.map_y][game->calc.map_x] == 'X') 
+			game->calc.enemy_in = 1;
+		if (game->map[game->calc.map_y][game->calc.map_x] == '1' ||
+				game->map[game->calc.map_y][game->calc.map_x] == c) 
 			break;
 	}
+	// printf("DEPOIS:side_dist_x =%f, side_dist_y =%f, map x,y = %c\n",game->calc.side_dist_x, game->calc.side_dist_y, game->map[game->calc.map_y][game->calc.map_x]);//APAGAR
 }
 
 /*Calculate distance of perpendicular ray, i.e. remove fisheye effect!*/
-void	ft_wall_height(t_game *game)
+void	ft_wall_height(t_game *game, int scale)
 {
 	if (game->calc.wall_side == VERTICAL)
 	{
@@ -139,7 +144,7 @@ void	ft_wall_height(t_game *game)
 		game->calc.wall_dist = (game->calc.map_y - game->player.y + 
 			(1 - game->calc.step_y) / 2) / game->calc.ray_dir_y;
 	}
-	game->calc.line_height = (int)(game->y / game->calc.wall_dist);
+	game->calc.line_height = (int)(game->y / (scale * game->calc.wall_dist));
 	game->calc.draw_start = -game->calc.line_height / 2 + game->y / 2;
 	if (game->calc.draw_start < 0)
 		game->calc.draw_start = 0;
@@ -165,9 +170,9 @@ void	ft_wall_x(t_game *game)
 }
 
 /*Calculate x coordinate on the texture*/
-void	ft_tex_x(t_game *game)
+void	ft_tex_x(t_game *game, int scale)
 {
-	game->calc.tex_x = (int)(game->calc.wall_x * TEXTURE_SIZE);
+	game->calc.tex_x = (int)(game->calc.wall_x * TEXTURE_SIZE * scale);
 
 	if ((game->calc.wall_side == VERTICAL && game->calc.ray_dir_x < 0) ||
 		(game->calc.wall_side == HORIZONTAL && game->calc.ray_dir_y > 0))
@@ -216,8 +221,8 @@ void	ft_raycasting_untextured(t_game *game)
 		ft_which_box_in(game);
 		ft_delta_dist(game);
 		ft_side_dist(game);
-		ft_dda(game);
-		ft_wall_height(game);
+		ft_dda(game, '1');
+		ft_wall_height(game, 1);
 		color = ft_chose_color(game);//for untextured
 		//printf("game.->map2=%p\n", &game->map2);//APAGAR
 		//printf("x:%d, game->calc.draw_start:%d, game->calc.draw_end:%d\n", x, game->calc.draw_start, game->calc.draw_end);
@@ -225,6 +230,54 @@ void	ft_raycasting_untextured(t_game *game)
 		x++;
 	}
 }
+
+void draw_enemy(t_game *game, int **buffer)
+{
+    int screen_width = game->x;
+    int enemy_screen_x = (screen_width / 2);
+    int draw_start_y = game->calc.draw_end;
+    int draw_end_y = draw_start_y - game->calc.line_height / 5;
+    int tex_x, tex_y, color;
+    double tex_step, tex_pos;
+    int y;
+
+    // Calcula o incremento para mapear a textura ao longo da altura
+    tex_step = (double)TEXTURE_SIZE / game->calc.line_height / 5;
+    tex_pos = 0;
+
+    y = draw_start_y;
+    while (y >= draw_end_y && y >= 0)
+    {
+        // Determina a posição na textura
+        tex_y = (int)tex_pos & (TEXTURE_SIZE - 1);
+        tex_pos += tex_step;
+
+        // Loop horizontal para desenhar o inimigo na escala certa
+        int x = enemy_screen_x - ((game->calc.line_height / 5) / 2);
+        while (x < enemy_screen_x + ((game->calc.line_height / 5) / 2) && x < screen_width)
+        {
+            if (x >= 0)
+            {
+                // Calcula a posição horizontal da textura
+                tex_x = (x - (enemy_screen_x - ((game->calc.line_height / 5) / 2))) * TEXTURE_SIZE / 
+						(game->calc.line_height / 5);
+
+                // Obtém a cor da textura
+                color = game->tex_buff[ENEMY][tex_y * TEXTURE_SIZE + tex_x];
+
+                // Só desenha se a cor não for transparente
+                if (color > 0)
+                {
+                    buffer[y][x] = color;
+                }
+            }
+            x++;
+        }
+        y--;
+    }
+}
+
+
 
 /*TEXTURED VERTION*/
 void	ft_raycasting(t_game *game)
@@ -237,15 +290,28 @@ void	ft_raycasting(t_game *game)
 	ft_get_player_inicial_direction(game);
 	while (x < game->x)
 	{
+		game->calc.enemy_in = 0;
 		ft_ray_position(game, x);
 		ft_which_box_in(game);
 		ft_delta_dist(game);
 		ft_side_dist(game);
-		ft_dda(game);
-		ft_wall_height(game);
+		ft_dda(game, '1');
+		ft_wall_height(game, 1);
 		ft_wall_x(game);//just for textures
-		ft_tex_x(game);//just for textures
-		buffering_image_strip(game, pixels_buffer, x);//just for textures
+		ft_tex_x(game, 1);//just for textures
+		buffering_image_strip(game, pixels_buffer, x, 0);//just for textures
+
+		ft_which_box_in(game);
+		ft_side_dist(game);
+		ft_dda(game, 'X');
+		if (game->calc.enemy_in == 1 /*&& game->calc.camera_x == 0*/)
+		{
+			// draw_enemy(game, pixels_buffer);
+			ft_wall_height(game, 5);
+			ft_wall_x(game);//just for textures
+			ft_tex_x(game, 5);//just for textures
+			buffering_image_strip(game, pixels_buffer, x, 1);//just for textures		
+		}
 		//printf("game.->map2=%p\n", &game->map2);//APAGAR
 		//printf("x:%d, game->calc.draw_start:%d, game->calc.draw_end:%d\n", x, game->calc.draw_start, game->calc.draw_end);
 		x++;
@@ -253,3 +319,4 @@ void	ft_raycasting(t_game *game)
 	update_image_from_buffer(game,&game->map2,pixels_buffer);//just for textures
 	free_pixels_buffer(pixels_buffer, game->y);//just for textures
 }
+

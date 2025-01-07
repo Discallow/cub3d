@@ -46,3 +46,5 @@
 [✅] ler a direção do palyer para a variável game->dir
 
 [✅] criar variável para wall_side VERTICAL e HORIZONTAL
+
+[ ] função de free textures está a dar seg fault se carregarmos um mapa que tem erro
