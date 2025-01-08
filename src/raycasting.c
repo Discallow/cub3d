@@ -6,7 +6,7 @@
 /*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 22:27:37 by asofia-g          #+#    #+#             */
-/*   Updated: 2025/01/08 00:16:56 by asofia-g         ###   ########.fr       */
+/*   Updated: 2025/01/08 01:37:19 by asofia-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,26 @@ void	ft_wall_height(t_game *game, int scale)
 	game->calc.draw_end = game->calc.line_height / 2 + game->y / 2;
 	if (game->calc.draw_end >= game->y)
 		game->calc.draw_end = game->y - 1;
+}
+
+void	ft_enemy_height(t_game *game)
+{
+	double	enemy_dist;
+	
+	// Calcula a distância euclidiana entre o jogador e o inimigo
+	double dx = game->enemy.x - game->player.x;
+	double dy = game->enemy.y - game->player.y;
+	enemy_dist = sqrt(dx * dx + dy * dy);
+
+	// Calcula a altura do inimigo com base na distância
+	if (enemy_dist > 0.0)
+		game->calc.enemy_height = (int)(game->y / enemy_dist);
+	else
+		game->calc.enemy_height = game->y;
+
+	// Debug para verificar os valores
+	printf("enemy_dist = %f\n", enemy_dist);
+	printf("enemy_height = %d\n", game->calc.enemy_height);
 }
 
 /*Calculate value of wallX, where exactly the wall was hit*/
@@ -335,9 +355,11 @@ void	ft_raycasting(t_game *game)
 		ft_which_box_in(game);
 		ft_side_dist(game);
 		ft_dda(game, 'X');
-		if (game->calc.enemy_in == 1 && find_enemy_ray(game,game->calc.last_ray_dir_x, game->calc.last_ray_dir_y, game->calc.ray_dir_x, game->calc.ray_dir_y)/*game->calc.enemy_height == 0*//*game->calc.camera_x == 0*/)
+		if (game->calc.enemy_in == 1 && game->calc.enemy_height == 0 && 
+			find_enemy_ray(game,game->calc.last_ray_dir_x, game->calc.last_ray_dir_y, game->calc.ray_dir_x, game->calc.ray_dir_y)/*game->calc.enemy_height == 0*//*game->calc.camera_x == 0*/)
 		{
-			game->calc.enemy_height = game->calc.line_height;
+			// game->calc.enemy_height = game->calc.line_height;
+			ft_enemy_height(game);
 			game->calc.enemy_pos = x;
 			printf("x = %d\n", x);//APAGAR
 			// ft_wall_height(game, 5);
