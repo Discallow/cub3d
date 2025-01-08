@@ -6,7 +6,7 @@
 /*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 14:47:40 by discallow         #+#    #+#             */
-/*   Updated: 2025/01/07 02:10:05 by asofia-g         ###   ########.fr       */
+/*   Updated: 2025/01/08 00:05:03 by asofia-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,8 @@ typedef struct	s_calculation
 	double	ray_angle;
 	double	ray_dir_x;
 	double	ray_dir_y;
+	double	last_ray_dir_x;
+	double	last_ray_dir_y;
 	double	x_offset;
 	double	y_offset;
 	double	plane_x;
@@ -131,6 +133,8 @@ typedef struct	s_calculation
 	double	tex_y_pos;
 	int		tex_drawn;
 	int		enemy_in;
+	int		enemy_height;
+	int		enemy_pos;
 }				t_calculation;
 
 typedef struct s_texture
@@ -233,7 +237,7 @@ void    ver_Line(t_position *data, int pos_x, int start, int end, int color);
 void	draw_line(t_position *data, int x0, int y0, int x1, int y1, int color);
 void 	update_image_from_buffer(t_game *game, t_position *data,
 								int **buffer);
-void	buffering_image_strip(t_game *game, int **buffer, int x, int enemy);
+void	buffering_image_stripe(t_game *game, int **buffer, int x, int enemy);
 void	ft_set_wall_texture(t_game *game, int enemy);
 int		ft_set_bright(t_game *game, int color);
 
