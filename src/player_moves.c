@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 20:23:57 by discallow         #+#    #+#             */
-/*   Updated: 2025/01/06 22:21:36 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/08 17:29:42 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,12 @@ void move_forward(t_game *game)
 		game->player.x = next_x;
 	if (game->map[(int)next_y][(int)game->player.x] != '1')
 		game->player.y = next_y;
-	game->copy.x = game->player.x * game->x_len;
-	game->copy.y = game->player.y * game->y_len;
+	next_x = game->player.x + game->player.dir_x / 10;
+	next_y = game->player.y + game->player.dir_y / 10;
+	if (game->map[(int)game->player.y][(int)next_x] != '1')
+		game->copy.x = game->player.x;
+	if (game->map[(int)next_y][(int)game->player.x] != '1')
+		game->copy.y = game->player.y;
 	game->flag = true;
 }
 
@@ -49,8 +53,12 @@ void move_backwards(t_game *game)
 		game->player.x = next_x;
 	if (game->map[(int)next_y][(int)game->player.x] != '1')
 		game->player.y = next_y;
-	game->copy.x = game->player.x * game->x_len;
-	game->copy.y = game->player.y * game->y_len;
+	next_x = game->player.x - game->player.dir_x / 10;
+	next_y = game->player.y - game->player.dir_y / 10;
+	if (game->map[(int)game->player.y][(int)next_x] != '1')
+		game->copy.x = game->player.x;
+	if (game->map[(int)next_y][(int)game->player.x] != '1')
+		game->copy.y = game->player.y;
 	game->flag = true;
 }
 
@@ -65,9 +73,12 @@ void move_left(t_game *game)
 		game->player.x = next_x;
 	if (game->map[(int)next_y][(int)game->player.x] != '1')
         game->player.y = next_y;
-	game->copy.x = game->player.x * game->x_len;
-	game->copy.y = game->player.y * game->y_len;
-
+	next_x = game->player.x + game->player.dir_y / 10;
+	next_y = game->player.y - game->player.dir_x / 10;
+	if (game->map[(int)game->player.y][(int)next_x] != '1')
+		game->copy.x = game->player.x;
+	if (game->map[(int)next_y][(int)game->player.x] != '1')
+		game->copy.y = game->player.y;
 	game->flag = true;
 }
 
@@ -82,9 +93,12 @@ void move_right(t_game *game)
 		game->player.x = next_x;
 	if (game->map[(int)next_y][(int)game->player.x] != '1')
 		game->player.y = next_y;
-    game->copy.x = game->player.x * game->x_len;
-    game->copy.y = game->player.y * game->y_len;
-
+	next_x = game->player.x - game->player.dir_y / 10;
+	next_y = game->player.y + game->player.dir_x / 10;
+	if (game->map[(int)game->player.y][(int)next_x] != '1')
+		game->copy.x = game->player.x;
+	if (game->map[(int)next_y][(int)game->player.x] != '1')
+		game->copy.y = game->player.y;
     game->flag = true;
 }
 

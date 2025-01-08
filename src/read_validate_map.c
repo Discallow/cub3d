@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 05:49:29 by discallow         #+#    #+#             */
-/*   Updated: 2025/01/06 22:32:34 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/07 20:43:23 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ void	validate_map(t_game *game)
 				game->player.dir = game->map[i][j];
 				game->player.x = j + 0.5;
 				game->player.y = i + 0.5;
+				game->copy.x = j + 0.5;
+				game->copy.y = i + 0.5;
 			}
 			else if (game->map[i][j] == ' ')
 				check_borders(game, i, j);

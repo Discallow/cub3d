@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 18:12:51 by discallow         #+#    #+#             */
-/*   Updated: 2025/01/07 01:44:18 by asofia-g         ###   ########.fr       */
+/*   Updated: 2025/01/08 17:23:10 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@ void init_struct(t_game *game)
 	game->copy.player_num = 0;
 	game->copy.max_width = 0;
 	game->copy.max_height = 0;
-	game->x_len = 0;
-	game->y_len = 0;
 	game->player.angle = 0.0;
 	game->player.move_a = false;
 	game->player.move_d = false;
@@ -55,6 +53,7 @@ void init_struct(t_game *game)
 	game->player.rotate_left = false;
 	game->player.rotate_right = false;
 	game->flag = false;
+	game->tex_buff = NULL;
 }
 
 void display_big_cub3d(void)
@@ -294,32 +293,32 @@ static int min(int a, int b) {
         while (j < end_j)
         {
             if (game->map[start_i][j] == '1')
-                draw_square(&game->map2, game->x_len, game->y_len, k * game->x_len, i * game->y_len, 0x0000FF00);
+                draw_square(&game->map2, game->len, game->len, k * game->len, i * game->len, 0x0000FF00);
             else if (game->map[start_i][j] == '0' || game->map[start_i][j] == 'N' || game->map[start_i][j] == 'P'
 				|| game->map[start_i][j] == 'E' || game->map[start_i][j] == 'W' || game->map[start_i][j] == 'S')
-                draw_square(&game->map2, game->x_len, game->y_len, k * game->x_len, i * game->y_len, 0x00808080);
+                draw_square(&game->map2, game->len, game->len, k * game->len, i * game->len, 0x00808080);
             j++;
 			k++;
         }
 		start_i++;
         i++;
     }
-    float player_x_on_map = (game->player.x - (float)start_j) * game->x_len;
-    float player_y_on_map = (game->player.y - (float)l) * game->y_len;
-    draw_square(&game->map2, game->x_len / 4 - 1, game->y_len / 4 - 1,
+    float player_x_on_map = (game->copy.x - (float)start_j) * game->len;
+    float player_y_on_map = (game->copy.y - (float)l) * game->len;
+    draw_square(&game->map2, game->len / 5, game->len / 5,
                 (int)player_x_on_map, (int)player_y_on_map, 0x000000FF);
 }
 
 
 void build_map(t_game *game)
 {
-	game->x_len = game->x / SCALE / 8;
-	game->y_len = game->x / SCALE / 8;
+	game->len = game->x / SCALE ;
 	game->map2.img = mlx_new_image(game->connection, game->x, game->y);
 	game->map2.addr = mlx_get_data_addr(game->map2.img, &game->map2.bits_per_pixel, &game->map2.line_len, &game->map2.endian);
 	//ft_raycasting_untextured(game);
 	ft_raycasting(game);
-	draw_minimap(game);
+	if (BONUS)
+		draw_minimap(game);
 	//draw_player_direction(game, &game->map2);
 	mlx_put_image_to_window(game->connection, game->window, game->map2.img, 0, 0);
 }

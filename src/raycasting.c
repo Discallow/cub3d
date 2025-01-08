@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 22:27:37 by asofia-g          #+#    #+#             */
-/*   Updated: 2025/01/07 05:20:07 by asofia-g         ###   ########.fr       */
+/*   Updated: 2025/01/08 01:09:07 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ void	ft_side_dist(t_game *game)
 *wall_side = 1, means we hit horizontal side of the wall*/
 void	ft_dda(t_game *game, char c)
 {
-	printf("ANTES:side_dist_x =%f, side_dist_y =%f, map x,y = %c\n",game->calc.side_dist_x, game->calc.side_dist_y, game->map[game->calc.map_y][game->calc.map_x]);//APAGAR
+	//printf("ANTES:side_dist_x =%f, side_dist_y =%f, map x,y = %c\n",game->calc.side_dist_x, game->calc.side_dist_y, game->map[game->calc.map_y][game->calc.map_x]);//APAGAR
 	while (1)
 	{
 		if (game->calc.side_dist_x < game->calc.side_dist_y)

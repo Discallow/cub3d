@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 14:47:40 by discallow         #+#    #+#             */
-/*   Updated: 2025/01/07 02:10:05 by asofia-g         ###   ########.fr       */
+/*   Updated: 2025/01/07 02:30:47 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,12 @@
 # define NEWLINE 		1
 # define TILE_SIZE		32
 # define M_PI			3.14159265358979323846
-# define SCALE			5
+# define SCALE			40
 # define TEXTURE_SIZE 	64
 # define NUM_TEXTURES 	5
 # define VERTICAL		0
 # define HORIZONTAL		1
+# define BONUS			1
 
 typedef enum	e_element
 {
@@ -161,8 +162,7 @@ typedef struct	s_game
 	t_position		west;
 	t_position		east;
 	bool			flag;
-	int				x_len;
-	int				y_len;
+	int				len;
 	int				x;
 	int				y;
 	int				fd;

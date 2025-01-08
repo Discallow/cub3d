@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_textures.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/05 11:09:43 by asofia-g          #+#    #+#             */
-/*   Updated: 2025/01/05 11:12:35 by asofia-g         ###   ########.fr       */
+/*   Updated: 2025/01/07 02:11:01 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void    free_textures(t_game *game)
 	int i;
 
 	if (!game->tex_buff)
-		return;
+		return ;
 	i = 0;
 	while (i < NUM_TEXTURES)
 	{
@@ -37,7 +37,7 @@ void	free_pixels_buffer(int **pixels_buffer, int height)
 	int i;
 
 	if (!pixels_buffer)
-		return;
+		return ;
 	i = 0;
 	while (i < height)
 	{

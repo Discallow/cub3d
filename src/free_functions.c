@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 23:58:38 by discallow         #+#    #+#             */
-/*   Updated: 2025/01/06 22:30:26 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/07 02:10:02 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	free_everything_2(t_game *game)
 			free(game->map[i]);
 		free(game->map);
 	}
-	//free_textures(game);//just for textures
+	free_textures(game);//just for textures
 }
 
 void	free_everything(t_game *game)
