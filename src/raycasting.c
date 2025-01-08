@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 22:27:37 by asofia-g          #+#    #+#             */
-/*   Updated: 2025/01/08 01:09:07 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/08 17:32:44 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ void	ft_ray_position(t_game *game, int x)
 	game->calc.plane_x = - game->player.dir_y * 0.66;
 	game->calc.plane_y = game->player.dir_x * 0.66;
 	game->calc.camera_x = 2 * x / (double)game->x - 1;
+	game->calc.last_ray_dir_x = game->calc.ray_dir_x;
+	game->calc.last_ray_dir_y = game->calc.ray_dir_y;
 	game->calc.ray_dir_x = game->player.dir_x + 
 						game->calc.plane_x * game->calc.camera_x;
 	game->calc.ray_dir_y = game->player.dir_y + 
@@ -105,7 +107,7 @@ void	ft_side_dist(t_game *game)
 *wall_side = 1, means we hit horizontal side of the wall*/
 void	ft_dda(t_game *game, char c)
 {
-	//printf("ANTES:side_dist_x =%f, side_dist_y =%f, map x,y = %c\n",game->calc.side_dist_x, game->calc.side_dist_y, game->map[game->calc.map_y][game->calc.map_x]);//APAGAR
+	// printf("ANTES:side_dist_x =%f, side_dist_y =%f, map x,y = %c\n",game->calc.side_dist_x, game->calc.side_dist_y, game->map[game->calc.map_y][game->calc.map_x]);//APAGAR
 	while (1)
 	{
 		if (game->calc.side_dist_x < game->calc.side_dist_y)
@@ -151,6 +153,26 @@ void	ft_wall_height(t_game *game, int scale)
 	game->calc.draw_end = game->calc.line_height / 2 + game->y / 2;
 	if (game->calc.draw_end >= game->y)
 		game->calc.draw_end = game->y - 1;
+}
+
+void	ft_enemy_height(t_game *game)
+{
+	double	enemy_dist;
+	
+	// Calcula a distância euclidiana entre o jogador e o inimigo
+	double dx = game->enemy.x - game->player.x;
+	double dy = game->enemy.y - game->player.y;
+	enemy_dist = sqrt(dx * dx + dy * dy);
+
+	// Calcula a altura do inimigo com base na distância
+	if (enemy_dist > 0.0)
+		game->calc.enemy_height = (int)(game->y / enemy_dist);
+	else
+		game->calc.enemy_height = game->y;
+
+	// Debug para verificar os valores
+	printf("enemy_dist = %f\n", enemy_dist);
+	printf("enemy_height = %d\n", game->calc.enemy_height);
 }
 
 /*Calculate value of wallX, where exactly the wall was hit*/
@@ -234,49 +256,77 @@ void	ft_raycasting_untextured(t_game *game)
 void draw_enemy(t_game *game, int **buffer)
 {
     int screen_width = game->x;
-    int enemy_screen_x = (screen_width / 2);
-    int draw_start_y = game->calc.draw_end;
-    int draw_end_y = draw_start_y - game->calc.line_height / 5;
+    // int enemy_screen_x = (screen_width / 2);
+	int enemy_screen_x = game->calc.enemy_pos;
+	printf("enemy_pos = %d, enemy_x = %f, enemy_y = %f\n", game->calc.enemy_pos, game->enemy.x, game->enemy.y);//APAGAR
+    int draw_end_y = game->calc.enemy_height / 2 + game->y / 2;
+	if (draw_end_y >= game->y)
+		draw_end_y = game->y - 1;
+    int draw_start_y = draw_end_y - game->calc.enemy_height / 5;
+	if (draw_start_y < 0)
+		draw_start_y = 0;				
     int tex_x, tex_y, color;
     double tex_step, tex_pos;
     int y;
 
     // Calcula o incremento para mapear a textura ao longo da altura
-    tex_step = (double)TEXTURE_SIZE / game->calc.line_height / 5;
+    tex_step = (double)TEXTURE_SIZE / (game->calc.enemy_height / 5);
     tex_pos = 0;
 
-    y = draw_start_y;
-    while (y >= draw_end_y && y >= 0)
-    {
-        // Determina a posição na textura
-        tex_y = (int)tex_pos & (TEXTURE_SIZE - 1);
-        tex_pos += tex_step;
+	// Loop horizontal para desenhar o inimigo na escala certa
+	int x = enemy_screen_x - ((game->calc.enemy_height / 5) / 2);
+	// int x = enemy_screen_x;
+	while (x < enemy_screen_x + ((game->calc.enemy_height / 5) / 2) && x < screen_width)
+	// while (x < enemy_screen_x + ((game->calc.enemy_height / 5)) && x < screen_width)
+	{
+		if (x >= 0)
+		{
+			// Calcula a posição horizontal da textura
+			tex_x = (x - (enemy_screen_x - ((game->calc.enemy_height / 5) / 2)))
+				 * TEXTURE_SIZE / (game->calc.enemy_height / 5);
+			// tex_x = (x - enemy_screen_x) * TEXTURE_SIZE / (game->calc.enemy_height / 5);
+    		y = draw_start_y;
+			tex_pos = 0;
+			while (y < draw_end_y && y < game->y)
+			{
+				// Determina a posição na textura
+				tex_y = (int)tex_pos & (TEXTURE_SIZE - 1);
+				tex_pos += tex_step;
+				// Obtém a cor da textura
+				color = game->tex_buff[ENEMY][tex_y * TEXTURE_SIZE + tex_x];
+				
+				// printf("y = %d, x = %d, game->y = %d\n", y, x, game->y);//APAGAR
+				// printf("color = %d, tex_x = %d, tex_y = %d\n", color, tex_x, tex_y);//APAGAR
 
-        // Loop horizontal para desenhar o inimigo na escala certa
-        int x = enemy_screen_x - ((game->calc.line_height / 5) / 2);
-        while (x < enemy_screen_x + ((game->calc.line_height / 5) / 2) && x < screen_width)
-        {
-            if (x >= 0)
-            {
-                // Calcula a posição horizontal da textura
-                tex_x = (x - (enemy_screen_x - ((game->calc.line_height / 5) / 2))) * TEXTURE_SIZE / 
-						(game->calc.line_height / 5);
-
-                // Obtém a cor da textura
-                color = game->tex_buff[ENEMY][tex_y * TEXTURE_SIZE + tex_x];
-
-                // Só desenha se a cor não for transparente
-                if (color > 0)
-                {
-                    buffer[y][x] = color;
-                }
-            }
-            x++;
-        }
-        y--;
-    }
+				// Só desenha se a cor não for transparente
+				if (color > 0)
+					buffer[y][x] = color;
+				y++;
+			}
+		}
+		x++;
+	}
 }
+int find_enemy_ray(t_game *game, double ray_dir_x_current, double ray_dir_y_current, 
+                   double ray_dir_x_next, double ray_dir_y_next)
+{
+    // Vetor entre jogador e inimigo
+    double player_to_enemy_x = game->enemy.x - game->player.x;
+    double player_to_enemy_y = game->enemy.y - game->player.y;
 
+    // Produto vetorial do raio atual
+    double cross_product_current = (ray_dir_x_current * player_to_enemy_y) - 
+                                   (ray_dir_y_current * player_to_enemy_x);
+
+    // Produto vetorial do próximo raio
+    double cross_product_next = (ray_dir_x_next * player_to_enemy_y) - 
+                                (ray_dir_y_next * player_to_enemy_x);
+
+    // Verifica mudança de sinal no produto vetorial
+    if (cross_product_current * cross_product_next < 0)
+        return 1; // Passou pelo vetor jogador-inimigo
+    return 0; // Não passou ainda
+}
 
 
 /*TEXTURED VERTION*/
@@ -288,6 +338,7 @@ void	ft_raycasting(t_game *game)
 	pixels_buffer = init_pixels_buffer(game);//just for textures
 	x = 0;
 	ft_get_player_inicial_direction(game);
+	game->calc.enemy_height = 0;
 	while (x < game->x)
 	{
 		game->calc.enemy_in = 0;
@@ -299,23 +350,30 @@ void	ft_raycasting(t_game *game)
 		ft_wall_height(game, 1);
 		ft_wall_x(game);//just for textures
 		ft_tex_x(game, 1);//just for textures
-		buffering_image_strip(game, pixels_buffer, x, 0);//just for textures
+		buffering_image_stripe(game, pixels_buffer, x, 0);//just for textures
 
 		ft_which_box_in(game);
 		ft_side_dist(game);
 		ft_dda(game, 'X');
-		if (game->calc.enemy_in == 1 /*&& game->calc.camera_x == 0*/)
+		if (game->calc.enemy_in == 1 && game->calc.enemy_height == 0 && 
+			find_enemy_ray(game,game->calc.last_ray_dir_x, game->calc.last_ray_dir_y, game->calc.ray_dir_x, game->calc.ray_dir_y)/*game->calc.enemy_height == 0*//*game->calc.camera_x == 0*/)
 		{
-			// draw_enemy(game, pixels_buffer);
-			ft_wall_height(game, 5);
-			ft_wall_x(game);//just for textures
-			ft_tex_x(game, 5);//just for textures
-			buffering_image_strip(game, pixels_buffer, x, 1);//just for textures		
+			// game->calc.enemy_height = game->calc.line_height;
+			ft_enemy_height(game);
+			game->calc.enemy_pos = x;
+			printf("x = %d\n", x);//APAGAR
+			// ft_wall_height(game, 5);
+			// ft_wall_x(game);//just for textures
+			// ft_tex_x(game, 5);//just for textures
+			// buffering_image_stripe(game, pixels_buffer, x, 1);//just for textures		
 		}
 		//printf("game.->map2=%p\n", &game->map2);//APAGAR
 		//printf("x:%d, game->calc.draw_start:%d, game->calc.draw_end:%d\n", x, game->calc.draw_start, game->calc.draw_end);
 		x++;
 	}
+	printf("enemy.height = %d\n", game->calc.enemy_height);//APAGAR
+	if (game->calc.enemy_height)
+		draw_enemy(game, pixels_buffer);
 	update_image_from_buffer(game,&game->map2,pixels_buffer);//just for textures
 	free_pixels_buffer(pixels_buffer, game->y);//just for textures
 }

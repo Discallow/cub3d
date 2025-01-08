@@ -6,7 +6,7 @@
 /*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 22:39:40 by asofia-g          #+#    #+#             */
-/*   Updated: 2025/01/07 04:04:43 by asofia-g         ###   ########.fr       */
+/*   Updated: 2025/01/07 20:42:17 by asofia-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int		ft_set_bright(t_game *game, int color)
 	return(color);
 }
 
-/*Draw a vertical strip with the colors of the texture
+/*Draw a vertical stripe with the colors of the texture
 *
 *tex_y_step calculate how much to increase the texture 
 *	coordinate per screen pixel
@@ -72,7 +72,7 @@ int		ft_set_bright(t_game *game, int color)
 *tex_y = (int)pos & (TEXTURE_SIZE - 1) - Cast the texture coordinate to integer
 *	and mask with (texHeight - 1) in case of overflow
 */
-void	buffering_image_strip(t_game *game, int **buffer, int x, int enemy)
+void	buffering_image_stripe(t_game *game, int **buffer, int x, int enemy)
 {
 	int	tex_y;
 	int	color;
