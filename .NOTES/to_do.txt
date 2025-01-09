@@ -39,7 +39,7 @@
 
 [ ] alterar as texturas para funcionar com qualquer tamanho de imagem
 
-[ ] quando se troca de janela a imagem desaparece
+[✅] quando se troca de janela a imagem desaparece - so acontece no computador da Sofia
 
 [✅] minimapa adequar a mapas grandes
 
@@ -55,18 +55,30 @@
 
 [ ] texturas para paredes
 
-[ ] texturas para arma
+[✅] texturas para arma
 
-[ ] texturas para porta
+[✅] texturas para porta
 
-[ ] implementar porta
+[✅] implementar porta
 
 [ ] implementar mira
 
-[ ] implementar arma
+[✅] implementar arma
 
 [ ] sprites
 
 [ ] movimentação para o rotação com o rato
 
+[ ] implementar arma a disparar - ver se conta como sprite
+
 [ ] flag de bonus nos casos em que e para ser avaliado apenas no bonus
+
+[ ] player nao pode entrar na posicao do inimigo
+
+[ ] atualizar menu inicial com a tecla de desaparecer as portas
+
+[ ] minimapa voltar a desenhar direcao do player
+
+[ ] quando se aproxima do inimigo ele "salta" de posicao
+
+[ ] arranjar forma de o menu inicial se impresso no ecra "antes" de aparecer o jogo
