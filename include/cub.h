@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 14:47:40 by discallow         #+#    #+#             */
-/*   Updated: 2025/01/08 17:32:14 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/09 18:28:26 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@
 # define M_PI			3.14159265358979323846
 # define SCALE			40
 # define TEXTURE_SIZE 	64
-# define NUM_TEXTURES 	5
+# define NUM_TEXTURES 	6
 # define VERTICAL		0
 # define HORIZONTAL		1
 # define BONUS			1
@@ -67,6 +67,8 @@ typedef struct s_position
 	bool	move_d;
 	bool	rotate_right;
 	bool	rotate_left;
+	bool	open_door;
+	bool	flag;
 	float	size;
 	int		num;
 	char	dir;
@@ -156,6 +158,7 @@ typedef enum	e_textures_direction
 	WEST,
 	EAST,
 	ENEMY,
+	DOOR,
 }				t_textures_direction;
 
 typedef struct	s_game
@@ -172,7 +175,7 @@ typedef struct	s_game
 	int				fd;
 	t_map_copy		copy;
 	t_position		player;
-	t_position		exit;
+	t_position		door;
 	t_position		wall;
 	t_position		floor;
 	t_position		ceiling;
@@ -230,6 +233,7 @@ void	my_mlx_pixel_put(t_position *data, int x, int y, int color);
 void	build_map(t_game *game);
 void	destroy_map(t_game *game);
 void	rotate_left(t_game *game);
+void	check_door(t_game *game);
 
 /*DRAWING*/
 void	my_mlx_pixel_put(t_position *data, int x, int y, int color);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   drawing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 22:39:40 by asofia-g          #+#    #+#             */
-/*   Updated: 2025/01/07 20:42:17 by asofia-g         ###   ########.fr       */
+/*   Updated: 2025/01/08 18:23:14 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,13 @@ void	ft_set_wall_texture(t_game *game, int enemy)
 		game->calc.tex_drawn = ENEMY;
 		return;
 	}
+	if (game->door.flag)
+	{
+		game->door.flag = false;
+		game->calc.tex_drawn = DOOR;
+		return ;
+	}
+
 	if (game->calc.wall_side == HORIZONTAL)
 	{
 		if (game->calc.ray_dir_y <= 0)

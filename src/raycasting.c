@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 22:27:37 by asofia-g          #+#    #+#             */
-/*   Updated: 2025/01/08 17:32:44 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/09 19:10:43 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,11 @@ void	ft_dda(t_game *game, char c)
 		//printf("map[map_x][map_y]=%d\n", game->map[game->calc.map_x][game->calc.map_y]);//APAGAR
 		if (game->map[game->calc.map_y][game->calc.map_x] == 'X') 
 			game->calc.enemy_in = 1;
+		if (game->map[game->calc.map_y][game->calc.map_x] == 'P')
+		{
+			game->door.flag = true;
+			break;
+		}
 		if (game->map[game->calc.map_y][game->calc.map_x] == '1' ||
 				game->map[game->calc.map_y][game->calc.map_x] == c) 
 			break;
@@ -262,7 +267,7 @@ void draw_enemy(t_game *game, int **buffer)
     int draw_end_y = game->calc.enemy_height / 2 + game->y / 2;
 	if (draw_end_y >= game->y)
 		draw_end_y = game->y - 1;
-    int draw_start_y = draw_end_y - game->calc.enemy_height / 5;
+    int draw_start_y = draw_end_y - game->calc.enemy_height;
 	if (draw_start_y < 0)
 		draw_start_y = 0;				
     int tex_x, tex_y, color;
@@ -270,20 +275,20 @@ void draw_enemy(t_game *game, int **buffer)
     int y;
 
     // Calcula o incremento para mapear a textura ao longo da altura
-    tex_step = (double)TEXTURE_SIZE / (game->calc.enemy_height / 5);
+    tex_step = (double)TEXTURE_SIZE / (game->calc.enemy_height);
     tex_pos = 0;
 
 	// Loop horizontal para desenhar o inimigo na escala certa
-	int x = enemy_screen_x - ((game->calc.enemy_height / 5) / 2);
+	int x = enemy_screen_x - ((game->calc.enemy_height) / 2);
 	// int x = enemy_screen_x;
-	while (x < enemy_screen_x + ((game->calc.enemy_height / 5) / 2) && x < screen_width)
+	while (x < enemy_screen_x + ((game->calc.enemy_height) / 2) && x < screen_width)
 	// while (x < enemy_screen_x + ((game->calc.enemy_height / 5)) && x < screen_width)
 	{
 		if (x >= 0)
 		{
 			// Calcula a posição horizontal da textura
-			tex_x = (x - (enemy_screen_x - ((game->calc.enemy_height / 5) / 2)))
-				 * TEXTURE_SIZE / (game->calc.enemy_height / 5);
+			tex_x = (x - (enemy_screen_x - ((game->calc.enemy_height) / 2)))
+				 * TEXTURE_SIZE / (game->calc.enemy_height);
 			// tex_x = (x - enemy_screen_x) * TEXTURE_SIZE / (game->calc.enemy_height / 5);
     		y = draw_start_y;
 			tex_pos = 0;

@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 18:12:51 by discallow         #+#    #+#             */
-/*   Updated: 2025/01/08 17:23:10 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/09 19:14:19 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ void init_struct(t_game *game)
 	game->player.dir_x = 0.0;
 	game->player.dir_y = 0.0;
 	game->player.flag_pos = 0;
-	game->exit.num = 0;
+	game->door.path = NULL;
+	game->door.flag = false;
 	game->wall.num = 0;
 	game->floor.num = 0;
 	game->copy.elements_filled = false;
@@ -50,6 +51,7 @@ void init_struct(t_game *game)
 	game->player.move_d = false;
 	game->player.move_s = false;
 	game->player.move_w = false;
+	game->player.open_door = false;
 	game->player.rotate_left = false;
 	game->player.rotate_right = false;
 	game->flag = false;
@@ -174,6 +176,8 @@ int key_pressed(int keysim, t_game *game)
 		game->player.move_d = true;
 	if (keysim == XK_Left)
 		game->player.rotate_left = true;
+	if (keysim == XK_e)
+		game->player.open_door = true;
 	if (keysim == XK_Escape)
 	{
 		write(1, "Couldn't you kill all the enemies? Are you afraid?\n", 51);
@@ -297,6 +301,8 @@ static int min(int a, int b) {
             else if (game->map[start_i][j] == '0' || game->map[start_i][j] == 'N' || game->map[start_i][j] == 'P'
 				|| game->map[start_i][j] == 'E' || game->map[start_i][j] == 'W' || game->map[start_i][j] == 'S')
                 draw_square(&game->map2, game->len, game->len, k * game->len, i * game->len, 0x00808080);
+			else if (game->map[start_i][j] == 'X')
+				draw_square(&game->map2, game->len, game->len, k * game->len, i * game->len, 0x00FF0000);
             j++;
 			k++;
         }
@@ -337,13 +343,8 @@ int	display_map(t_game *game)
 		rotate_left(game);
 	if (game->player.rotate_right)
 		rotate_right(game);
-	//destroy_map(game);
-/* 	else
-	{
-		build_map(game);
-		return (0);
-	}
-	redraw_map(game); */
+	if (game->player.open_door)
+		check_door(game);
 	if (game->flag)
 	{
 		game->flag = false;

@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 05:49:29 by discallow         #+#    #+#             */
-/*   Updated: 2025/01/07 20:43:23 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/08 18:12:00 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ void	validate_map(t_game *game)
 				game->enemy.x = j + 0.5;
 				game->enemy.y = i + 0.5;
 			}
+			else if (game->map[i][j] == 'P')
+				game->door.path = "textures/warped_door.xpm";
 			else if (game->map[i][j] != '1' && game->map[i][j] != '0')
 				return_invalid_map(game);	
 			j++;
