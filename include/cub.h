@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
+/*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 14:47:40 by discallow         #+#    #+#             */
-/*   Updated: 2025/01/09 18:28:26 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/09 21:58:03 by asofia-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@
 # define M_PI			3.14159265358979323846
 # define SCALE			40
 # define TEXTURE_SIZE 	64
-# define NUM_TEXTURES 	6
+# define NUM_TEXTURES 	8
 # define VERTICAL		0
 # define HORIZONTAL		1
 # define BONUS			1
@@ -159,6 +159,8 @@ typedef enum	e_textures_direction
 	EAST,
 	ENEMY,
 	DOOR,
+	WEAPON,
+	WEAPON_SHOOTING,
 }				t_textures_direction;
 
 typedef struct	s_game

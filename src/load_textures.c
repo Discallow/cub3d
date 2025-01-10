@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   load_textures.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
+/*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 00:57:40 by asofia-g          #+#    #+#             */
-/*   Updated: 2025/01/08 19:29:43 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/09 21:52:43 by asofia-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,5 +75,7 @@ void    load_all_textures(t_game *game)
 	buffering_texture(game, game->east.path, EAST);
 	buffering_texture(game,"textures/enemy.xpm", ENEMY);
 	buffering_texture(game, "textures/spruce_door.xpm", DOOR);
+	buffering_texture(game, "textures/weapon_idle.xpm", WEAPON);
+	buffering_texture(game, "textures/weapon_shooting.xpm", WEAPON_SHOOTING);
 	//se alguma textura deu erro ao ser copiada, é necessário apagar todas
 }
