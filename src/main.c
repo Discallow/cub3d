@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 18:12:51 by discallow         #+#    #+#             */
-/*   Updated: 2025/01/09 19:14:19 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/09 19:24:10 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -302,13 +302,17 @@ static int min(int a, int b) {
 				|| game->map[start_i][j] == 'E' || game->map[start_i][j] == 'W' || game->map[start_i][j] == 'S')
                 draw_square(&game->map2, game->len, game->len, k * game->len, i * game->len, 0x00808080);
 			else if (game->map[start_i][j] == 'X')
-				draw_square(&game->map2, game->len, game->len, k * game->len, i * game->len, 0x00FF0000);
+			{
+				draw_square(&game->map2, game->len, game->len, k * game->len, i * game->len, 0x00808080);
+				draw_square(&game->map2, game->len / 5, game->len / 5, k * game->len, i * game->len, 0x00FF0000);
+			}
             j++;
 			k++;
         }
 		start_i++;
         i++;
     }
+	
     float player_x_on_map = (game->copy.x - (float)start_j) * game->len;
     float player_y_on_map = (game->copy.y - (float)l) * game->len;
     draw_square(&game->map2, game->len / 5, game->len / 5,
