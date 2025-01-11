@@ -61,7 +61,7 @@
 
 [✅] implementar porta
 
-[ ] implementar mira
+[✅] implementar mira
 
 [✅] implementar arma
 
@@ -69,7 +69,7 @@
 
 [ ] movimentação para o rotação com o rato
 
-[ ] implementar arma a disparar - ver se conta como sprite
+[✅] implementar arma a disparar - ver se conta como sprite
 
 [ ] flag de bonus nos casos em que e para ser avaliado apenas no bonus
 

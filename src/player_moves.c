@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 20:23:57 by discallow         #+#    #+#             */
-/*   Updated: 2025/01/09 18:32:42 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/10 10:33:03 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	check_door(t_game *game)
 		game->map[(int)next_y][(int)next_x] = '0';
 	}
 	game->player.open_door = false;
+	game->flag = true;
 }
 
 

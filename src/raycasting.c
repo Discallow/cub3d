@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 22:27:37 by asofia-g          #+#    #+#             */
-/*   Updated: 2025/01/09 22:10:45 by asofia-g         ###   ########.fr       */
+/*   Updated: 2025/01/10 10:31:51 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,8 @@ void	ft_side_dist(t_game *game)
 		game->calc.side_dist_y = (game->calc.map_y + 1.0 - 
 								game->player.y) * game->calc.delta_dist_y;
 	}
+	//printf("x:%f, y:%f\n", game->calc.side_dist_x, game->calc.side_dist_y);
+	//draw_line(&game->map2, (int)game->player.x, (int)game->player.y, (int)(game->calc.side_dist_x) / SCALE, (int)(game->calc.side_dist_y) / SCALE, 0x00FF0000);
 	// printf("side_dist_x=%f, side_dist_y=%f\n", game->calc.side_dist_x, game->calc.side_dist_y);//APAGAR
 }
 
@@ -426,7 +428,10 @@ void	ft_raycasting(t_game *game)
 	printf("enemy.height = %d\n", game->calc.enemy_height);//APAGAR
 	if (game->calc.enemy_height)
 		draw_enemy(game, pixels_buffer);
-	draw_weapon(game, pixels_buffer, WEAPON);
+	if (game->player.shoot)
+		draw_weapon(game, pixels_buffer, WEAPON_SHOOTING);
+	else
+		draw_weapon(game, pixels_buffer, WEAPON);
 	update_image_from_buffer(game,&game->map2,pixels_buffer);//just for textures
 	free_pixels_buffer(pixels_buffer, game->y);//just for textures
 }

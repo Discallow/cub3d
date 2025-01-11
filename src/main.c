@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 18:12:51 by discallow         #+#    #+#             */
-/*   Updated: 2025/01/09 19:24:10 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/10 10:49:24 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void init_struct(t_game *game)
 	game->player.open_door = false;
 	game->player.rotate_left = false;
 	game->player.rotate_right = false;
+	game->player.shoot = false;
 	game->flag = false;
 	game->tex_buff = NULL;
 }
@@ -319,6 +320,38 @@ static int min(int a, int b) {
                 (int)player_x_on_map, (int)player_y_on_map, 0x000000FF);
 }
 
+void draw_filled_rect(t_game *game, int x, int y, int width, int height, int color)
+{
+    int i, j;
+
+    for (i = 0; i < height; i++)
+    {
+        for (j = 0; j < width; j++)
+        {
+            my_mlx_pixel_put(&game->map2, x + j, y + i, color);
+        }
+    }
+}
+
+void draw_crosshair(t_game *game)
+{
+    int line_length = (int)(min(game->x, game->y) * 0.01f); // Crosshair line length (1% of smaller screen dimension)
+    int thickness = max(1, line_length / 4);               // Crosshair line thickness (minimum 1 pixel)
+
+    // Draw vertical line (centered at middle_x, middle_y)
+    int x_start = game->x / 2 - (thickness / 2);
+    int y_start_vertical = game->y / 2 - (line_length / 2);
+    int y_end_vertical = game->y / 2 + (line_length / 2);
+
+    draw_filled_rect(game, x_start, y_start_vertical, thickness, y_end_vertical - y_start_vertical, 0x0000FFFF); // White color
+
+    // Draw horizontal line (centered at middle_x, middle_y)
+    int y_start = game->y / 2 - (thickness / 2);
+    int x_start_horizontal = game->x / 2 - (line_length / 2);
+    int x_end_horizontal = game->x / 2 + (line_length / 2);
+
+    draw_filled_rect(game, x_start_horizontal, y_start, x_end_horizontal - x_start_horizontal, thickness, 0x0000FFFF); // White color
+}
 
 void build_map(t_game *game)
 {
@@ -328,7 +361,10 @@ void build_map(t_game *game)
 	//ft_raycasting_untextured(game);
 	ft_raycasting(game);
 	if (BONUS)
+	{
 		draw_minimap(game);
+		draw_crosshair(game);
+	}
 	//draw_player_direction(game, &game->map2);
 	mlx_put_image_to_window(game->connection, game->window, game->map2.img, 0, 0);
 }
@@ -349,11 +385,31 @@ int	display_map(t_game *game)
 		rotate_right(game);
 	if (game->player.open_door)
 		check_door(game);
+	if (game->player.shoot || !game->player.shoot)
+		game->flag = true;
 	if (game->flag)
 	{
 		game->flag = false;
 		redraw_map(game);
 	}	
+	return (0);
+}
+
+int	mouse_pressed(int button, int x, int y, t_game *game)
+{
+	if (button == Button1)
+		game->player.shoot = true;
+	(void)x;
+	(void)y;
+	return (0);
+}
+
+int	mouse_released(int button, int x, int y, t_game *game)
+{
+	if (button == Button1)
+		game->player.shoot = false;
+	(void)x;
+	(void)y;
 	return (0);
 }
 
@@ -372,6 +428,8 @@ int main(int argc, char **argv)
 	build_map(&game);
 	mlx_hook(game.window, KeyPress, KeyPressMask, key_pressed, &game);
 	mlx_hook(game.window, KeyRelease, KeyReleaseMask, key_released, &game);
+	mlx_hook(game.window, ButtonPress, ButtonPressMask, mouse_pressed, &game);
+	mlx_hook(game.window, ButtonRelease, ButtonReleaseMask, mouse_released, &game);
 	mlx_hook(game.window, DestroyNotify, NoEventMask, window_closed, &game);
 	mlx_loop_hook(game.connection, display_map, &game);
 	mlx_loop(game.connection);
