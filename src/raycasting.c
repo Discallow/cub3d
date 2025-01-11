@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 22:27:37 by asofia-g          #+#    #+#             */
-/*   Updated: 2025/01/10 10:31:51 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/11 17:46:40 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ void	ft_side_dist(t_game *game)
 								game->player.y) * game->calc.delta_dist_y;
 	}
 	//printf("x:%f, y:%f\n", game->calc.side_dist_x, game->calc.side_dist_y);
+	//printf("x:%f, y:%f\n", game->player.x, game->player.y);
 	//draw_line(&game->map2, (int)game->player.x, (int)game->player.y, (int)(game->calc.side_dist_x) / SCALE, (int)(game->calc.side_dist_y) / SCALE, 0x00FF0000);
 	// printf("side_dist_x=%f, side_dist_y=%f\n", game->calc.side_dist_x, game->calc.side_dist_y);//APAGAR
 }
@@ -178,8 +179,8 @@ void	ft_enemy_height(t_game *game)
 		game->calc.enemy_height = game->y;
 
 	// Debug para verificar os valores
-	printf("enemy_dist = %f\n", enemy_dist);
-	printf("enemy_height = %d\n", game->calc.enemy_height);
+	//printf("enemy_dist = %f\n", enemy_dist);
+	//printf("enemy_height = %d\n", game->calc.enemy_height);
 }
 
 /*Calculate value of wallX, where exactly the wall was hit*/
@@ -196,6 +197,7 @@ void	ft_wall_x(t_game *game)
 								game->calc.wall_dist * game->calc.ray_dir_x;
 	}
 	game->calc.wall_x -= floor(game->calc.wall_x);
+	//printf("game->calc.wall_x:%f\n", game->calc.wall_x);
 }
 
 /*Calculate x coordinate on the texture*/
@@ -425,7 +427,7 @@ void	ft_raycasting(t_game *game)
 		//printf("x:%d, game->calc.draw_start:%d, game->calc.draw_end:%d\n", x, game->calc.draw_start, game->calc.draw_end);
 		x++;
 	}
-	printf("enemy.height = %d\n", game->calc.enemy_height);//APAGAR
+	//printf("enemy.height = %d\n", game->calc.enemy_height);//APAGAR
 	if (game->calc.enemy_height)
 		draw_enemy(game, pixels_buffer);
 	if (game->player.shoot)

@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 18:12:51 by discallow         #+#    #+#             */
-/*   Updated: 2025/01/10 10:49:24 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/11 17:56:36 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,17 +233,17 @@ void draw_line(t_position *data, int x0, int y0, int x1, int y1, int color)
 	}
 }
 
-/* void draw_player_direction(t_game *game, t_position *data)
+void draw_player_direction(t_game *game, t_position *data)
 {
-	int line_length = 5; // Length of the line
+	//int line_length = 2; // Length of the line
 	int start_x = (int)game->copy.x;
 	int start_y = (int)game->copy.y;
-	int end_x = start_x + game->delta_x * line_length;
-	int end_y = start_y + game->delta_y * line_length;
+	int end_x = start_x + (int)game->player.dir_x * 1;
+	int end_y = start_y + (int)game->player.dir_y * 1;
 
 	// Use the draw_line function to draw the line
 	draw_line(data, start_x, start_y, end_x, end_y, 0x00FF0000); // Red color
-} */
+}
 
 static int max(int a, int b) {
     if (a > b)
@@ -313,7 +313,6 @@ static int min(int a, int b) {
 		start_i++;
         i++;
     }
-	
     float player_x_on_map = (game->copy.x - (float)start_j) * game->len;
     float player_y_on_map = (game->copy.y - (float)l) * game->len;
     draw_square(&game->map2, game->len / 5, game->len / 5,
@@ -365,7 +364,7 @@ void build_map(t_game *game)
 		draw_minimap(game);
 		draw_crosshair(game);
 	}
-	//draw_player_direction(game, &game->map2);
+	draw_player_direction(game, &game->map2);
 	mlx_put_image_to_window(game->connection, game->window, game->map2.img, 0, 0);
 }
 

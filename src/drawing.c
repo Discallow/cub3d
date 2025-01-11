@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 22:39:40 by asofia-g          #+#    #+#             */
-/*   Updated: 2025/01/08 18:23:14 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/11 17:21:07 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,9 @@ void	buffering_image_stripe(t_game *game, int **buffer, int x, int enemy)
 	game->calc.tex_y_pos = (game->calc.draw_start - game->y / 2 +
 						game->calc.line_height / 2) * game->calc.tex_y_step;
 	y = -1 + game->calc.draw_start * enemy;
+	if (y < 0)
+		y = 0;
+	//printf("y:%d\n", y);
 	while (y++ < game->calc.draw_start && enemy == 0)
 		buffer[y][x] = game->ceiling.color;
 	while (y < game->calc.draw_end)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   load_textures.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 00:57:40 by asofia-g          #+#    #+#             */
-/*   Updated: 2025/01/09 21:52:43 by asofia-g         ###   ########.fr       */
+/*   Updated: 2025/01/11 16:51:28 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void    load_all_textures(t_game *game)
 	buffering_texture(game, game->south.path, SOUTH);
 	buffering_texture(game, game->west.path, WEST);
 	buffering_texture(game, game->east.path, EAST);
-	buffering_texture(game,"textures/enemy.xpm", ENEMY);
+	buffering_texture(game, "textures/enemy.xpm", ENEMY);
 	buffering_texture(game, "textures/spruce_door.xpm", DOOR);
 	buffering_texture(game, "textures/weapon_idle.xpm", WEAPON);
 	buffering_texture(game, "textures/weapon_shooting.xpm", WEAPON_SHOOTING);
