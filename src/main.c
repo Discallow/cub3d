@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 18:12:51 by discallow         #+#    #+#             */
-/*   Updated: 2025/01/11 17:56:36 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/12 15:13:19 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ void display_controls(void)
 	printf("    " CYAN "Left Arrow" RESET "  - Rotate view left\n");
 	printf("    " CYAN "Right Arrow" RESET " - Rotate view right\n\n");
 	printf(GREEN BOLD "  Actions:\n" RESET);
+	printf("    " RED "E" RESET " - Interact with doors\n");
 	printf("    " RED "ESC" RESET " - Exit the game\n\n");
 	printf(MAGENTA "------------------------------------------------\n" RESET);
 	printf(BLUE BOLD "       Enjoy exploring the 3D world of Cub3D!\n" RESET);
@@ -412,6 +413,28 @@ int	mouse_released(int button, int x, int y, t_game *game)
 	return (0);
 }
 
+int	mouse_moved(int x, int y, t_game *game)
+{
+	(void)y;
+	//printf("x:%d, y:%d\ngame->x:%d, game->y:%d\n", x, y, game->x, game->y);
+	if (x < game->x / 3)
+	{
+		game->player.rotate_left = true;
+		game->player.rotate_right = false;
+	}
+	else if (x > game->x * 2 / 3)
+	{
+		game->player.rotate_left = false;
+		game->player.rotate_right = true;
+	}
+	else
+	{
+		game->player.rotate_left = false;
+		game->player.rotate_right = false;
+	}
+	return (0);
+}
+
 int main(int argc, char **argv)
 {
 	t_game game;
@@ -429,6 +452,7 @@ int main(int argc, char **argv)
 	mlx_hook(game.window, KeyRelease, KeyReleaseMask, key_released, &game);
 	mlx_hook(game.window, ButtonPress, ButtonPressMask, mouse_pressed, &game);
 	mlx_hook(game.window, ButtonRelease, ButtonReleaseMask, mouse_released, &game);
+	mlx_hook(game.window, MotionNotify, PointerMotionMask, mouse_moved, &game);
 	mlx_hook(game.window, DestroyNotify, NoEventMask, window_closed, &game);
 	mlx_loop_hook(game.connection, display_map, &game);
 	mlx_loop(game.connection);

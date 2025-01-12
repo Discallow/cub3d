@@ -75,7 +75,7 @@
 
 [ ] player nao pode entrar na posicao do inimigo
 
-[ ] atualizar menu inicial com a tecla de desaparecer as portas
+[✅] atualizar menu inicial com a tecla de desaparecer as portas
 
 [ ] minimapa voltar a desenhar direcao do player
 

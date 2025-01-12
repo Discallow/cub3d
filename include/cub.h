@@ -6,7 +6,7 @@
 /*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 14:47:40 by discallow         #+#    #+#             */
-/*   Updated: 2025/01/12 21:30:51 by asofia-g         ###   ########.fr       */
+/*   Updated: 2025/01/12 21:59:15 by asofia-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,6 +201,7 @@ typedef struct	s_game
 	t_position		ceiling;
 	t_position		enemy;
 	t_position		map2;
+	t_position		controls;
 	void			*window;
 	void			*connection;
 	t_calculation	calc;
