@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
+/*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 14:47:40 by discallow         #+#    #+#             */
-/*   Updated: 2025/01/10 10:31:01 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/12 21:30:51 by asofia-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@
 # define VERTICAL		0
 # define HORIZONTAL		1
 # define BONUS			1
+# define WEAPON_SCALE	2
 
 typedef enum	e_element
 {
@@ -152,6 +153,22 @@ typedef struct s_texture
 	int     endian;
 }				t_texture;
 
+typedef struct s_weapon
+{
+	int			draw_end_y;
+	int			draw_start_y;
+	double		tex_step[NUM_TEXTURES];
+	int			tex_x;
+}				t_weapon;
+
+typedef struct s_enemy
+{
+	int			draw_end_y;
+	int			draw_start_y;
+	double		tex_step;
+	int			tex_x;
+}				t_enemy;
+
 typedef enum	e_textures_direction
 {
 	NORTH,
@@ -188,7 +205,10 @@ typedef struct	s_game
 	void			*connection;
 	t_calculation	calc;
 	t_texture		textures[NUM_TEXTURES];
+	t_texture		tex_buff_data[NUM_TEXTURES];
 	int				**tex_buff;
+	t_weapon		weapon_data;
+	t_enemy			enemy_data;
 }				t_game;
 
 char	*get_next_line(int fd);
@@ -244,9 +264,13 @@ void    ver_Line(t_position *data, int pos_x, int start, int end, int color);
 void	draw_line(t_position *data, int x0, int y0, int x1, int y1, int color);
 void 	update_image_from_buffer(t_game *game, t_position *data,
 								int **buffer);
-void	buffering_image_stripe(t_game *game, int **buffer, int x, int enemy);
-void	ft_set_wall_texture(t_game *game, int enemy);
+void	buffering_image_stripe(t_game *game, int **buffer, int x);
+void	ft_set_wall_texture(t_game *game);
 int		ft_set_bright(t_game *game, int color);
+
+void    ini_weapon(t_game *game);
+void	draw_weapon(t_game *game, int **buffer, int	weapon_type);
+void	draw_enemy(t_game *game, int **buffer);
 
 /*LOAD TEXTURES*/
 void	load_texture(t_game *game, char *relative_path, int index);

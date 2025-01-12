@@ -32,7 +32,9 @@ SRC_FILES = $(SRC_DIR)/main.c \
 		$(SRC_DIR)/drawing.c \
 		$(SRC_DIR)/raycasting.c \
 		$(SRC_DIR)/load_textures.c \
-		$(SRC_DIR)/free_textures.c 
+		$(SRC_DIR)/free_textures.c \
+		$(SRC_DIR)/weapon.c \
+		$(SRC_DIR)/enemy.c
 OBJ_FILES = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC_FILES))
 
 all: libft mlx $(NAME)

@@ -37,7 +37,7 @@
                 garantir que não existem leaks em qualquer uma das imagens validadas.
                 exemplo: as primeiras 2 são validas, a 3 é invalida.
 
-[ ] alterar as texturas para funcionar com qualquer tamanho de imagem
+[✅] alterar as texturas para funcionar com qualquer tamanho de imagem
 
 [✅] quando se troca de janela a imagem desaparece - so acontece no computador da Sofia
 
@@ -49,7 +49,7 @@
 
 [✅] função de free textures está a dar seg fault se carregarmos um mapa que tem erro
 
-[ ] ao carregar sempre no A assim que se inicia o jogo por exemplo com o works.cub, dá segfault no raycasting
+[✅] ao carregar sempre no A assim que se inicia o jogo por exemplo com o works.cub, dá segfault no raycasting
 
 [✅] corrigir mini mapa
 
@@ -67,7 +67,7 @@
 
 [ ] sprites
 
-[ ] movimentação para o rotação com o rato
+[✅] movimentação para o rotação com o rato
 
 [✅] implementar arma a disparar - ver se conta como sprite
 
@@ -82,3 +82,7 @@
 [ ] quando se aproxima do inimigo ele "salta" de posicao
 
 [ ] arranjar forma de o menu inicial se impresso no ecra "antes" de aparecer o jogo
+
+[ ] colocar os caminhos das imagens no .h
+
+[ ] escalas das imagens como variáveis ou no .h

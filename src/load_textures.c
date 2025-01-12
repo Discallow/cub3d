@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   load_textures.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
+/*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 00:57:40 by asofia-g          #+#    #+#             */
-/*   Updated: 2025/01/11 16:51:28 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/12 19:57:57 by asofia-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void	load_texture(t_game *game, char *relative_path, int index)
 								&game->textures[index].bpp,
 								&game->textures[index].size_line,
 								&game->textures[index].endian);
+	game->tex_buff_data[index].tex_height = game->textures[index].tex_height;
+	game->tex_buff_data[index].tex_width = game->textures[index].tex_width;
 }
 /*The data_addr is simply a continuous block of memory where the texture data 
 is stored line by line.
@@ -46,17 +48,18 @@ void	buffering_texture(t_game *game, char *relative_path, int index)
 	int 	pixel_index;
 	
 	load_texture(game, relative_path, index);
-	buffer = ft_calloc(1, sizeof * buffer * TEXTURE_SIZE * TEXTURE_SIZE);
+	buffer = ft_calloc(1, sizeof * buffer * game->textures[index].tex_width
+										 * game->textures[index].tex_height);
 	// if (!buffer)//CLEAR EVERITHING
 	y = 0;
-	while (y < TEXTURE_SIZE)
+	while (y < game->textures[index].tex_height)
 	{
 		x = 0;
-		while (x < TEXTURE_SIZE)
+		while (x < game->textures[index].tex_width)
 		{
 			pixel_index = (y * game->textures[index].size_line) + 
 							(x * (game->textures[index].bpp / 8));
-			buffer[y * TEXTURE_SIZE + x] = 
+			buffer[y * game->textures[index].tex_width + x] = 
 					*(int *)(game->textures[index].data_addr + pixel_index);
 			++x;
 		}
@@ -77,5 +80,6 @@ void    load_all_textures(t_game *game)
 	buffering_texture(game, "textures/spruce_door.xpm", DOOR);
 	buffering_texture(game, "textures/weapon_idle.xpm", WEAPON);
 	buffering_texture(game, "textures/weapon_shooting.xpm", WEAPON_SHOOTING);
+	ini_weapon(game);
 	//se alguma textura deu erro ao ser copiada, é necessário apagar todas
 }

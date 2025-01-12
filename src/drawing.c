@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   drawing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
+/*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 22:39:40 by asofia-g          #+#    #+#             */
-/*   Updated: 2025/01/11 17:21:07 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/12 19:26:15 by asofia-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,8 @@ void    ver_Line(t_position *data, int pos_x, int start, int end, int color)
 }
 
 /*Calculates which texture to use depending wall cardinal direction*/
-void	ft_set_wall_texture(t_game *game, int enemy)
+void	ft_set_wall_texture(t_game *game)
 {
-	if (enemy == 1)
-	{
-		game->calc.tex_drawn = ENEMY;
-		return;
-	}
 	if (game->door.flag)
 	{
 		game->door.flag = false;
@@ -79,35 +74,32 @@ int		ft_set_bright(t_game *game, int color)
 *tex_y = (int)pos & (TEXTURE_SIZE - 1) - Cast the texture coordinate to integer
 *	and mask with (texHeight - 1) in case of overflow
 */
-void	buffering_image_stripe(t_game *game, int **buffer, int x, int enemy)
+void	buffering_image_stripe(t_game *game, int **buffer, int x)
 {
 	int	tex_y;
 	int	color;
 	int	y;
 
-	ft_set_wall_texture(game, enemy);
-	game->calc.tex_y_step = 1.0 * TEXTURE_SIZE / game->calc.line_height;
+	game->calc.tex_y_step = 1.0 * game->tex_buff_data[
+					game->calc.tex_drawn].tex_height / game->calc.line_height;
 	game->calc.tex_y_pos = (game->calc.draw_start - game->y / 2 +
 						game->calc.line_height / 2) * game->calc.tex_y_step;
-	y = -1 + game->calc.draw_start * enemy;
-	if (y < 0)
-		y = 0;
-	//printf("y:%d\n", y);
-	while (y++ < game->calc.draw_start && enemy == 0)
+	y = 0;
+	while (y++ < game->calc.draw_start && y < game->y)
 		buffer[y][x] = game->ceiling.color;
 	while (y < game->calc.draw_end)
 	{
-		tex_y = (int)game->calc.tex_y_pos & (TEXTURE_SIZE - 1);	
+		tex_y = (int)game->calc.tex_y_pos & 
+					(game->tex_buff_data[game->calc.tex_drawn].tex_height - 1);
 		game->calc.tex_y_pos += game->calc.tex_y_step;
-		color = game->tex_buff[game->calc.tex_drawn]
-								[TEXTURE_SIZE * tex_y + game->calc.tex_x];
-		color = ft_set_bright(game, color);
-		if (color > 0)
-			buffer[y][x] = color;
+		color = game->tex_buff[game->calc.tex_drawn][game->tex_buff_data[
+				game->calc.tex_drawn].tex_width * tex_y + game->calc.tex_x];
+		if (ft_set_bright(game, color) > 0)
+			buffer[y][x] = ft_set_bright(game, color);
 		y ++;
 	}
 	y = game->calc.draw_end - 1;
-	while (enemy == 0 && ++y < game->y)
+	while (++y < game->y)
 		buffer[y][x] = game->floor.color;
 }
 
