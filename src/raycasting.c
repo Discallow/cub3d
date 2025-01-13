@@ -6,7 +6,7 @@
 /*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 22:27:37 by asofia-g          #+#    #+#             */
-/*   Updated: 2025/01/12 21:18:26 by asofia-g         ###   ########.fr       */
+/*   Updated: 2025/01/13 01:06:50 by asofia-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -263,10 +263,18 @@ void	ft_raycasting_untextured(t_game *game)
 		x++;
 	}
 }
-
-int find_enemy_ray(t_game *game, double ray_dir_x_current, double ray_dir_y_current, 
-				   double ray_dir_x_next, double ray_dir_y_next)
+/*Check if the vector player-enemy is aligned with the ray*/
+int find_enemy_ray(t_game *game)
 {
+	double	ray_dir_x_current;
+	double	ray_dir_y_current;
+	double	ray_dir_x_next;
+	double	ray_dir_y_next;
+
+	ray_dir_x_current = game->calc.last_ray_dir_x;
+	ray_dir_y_current = game->calc.last_ray_dir_y;
+	ray_dir_x_next = game->calc.ray_dir_x;
+	ray_dir_y_next = game->calc.ray_dir_y;
 	// Vetor entre jogador e inimigo
 	double player_to_enemy_x = game->enemy.x - game->player.x;
 	double player_to_enemy_y = game->enemy.y - game->player.y;
@@ -285,6 +293,18 @@ int find_enemy_ray(t_game *game, double ray_dir_x_current, double ray_dir_y_curr
 	return 0; // Não passou ainda
 }
 
+void	enemy_can_die(t_game *game, int **buffer)
+{
+	double	dist;
+
+	dist = sqrt(pow(game->enemy.x - game->player.x, 2) + 
+				pow(game->enemy.y - game->player.y, 2));
+	if (game->calc.enemy_height && game->player.shoot)
+	{
+		if (game->calc.enemy_pos == game->x / 2 && dist < 2.0)
+			draw_enemy(game, buffer);//necessário fazer como na weapon para mudar a imagem
+	}
+}
 
 /*TEXTURED VERTION*/
 void	ft_raycasting(t_game *game)
@@ -309,11 +329,12 @@ void	ft_raycasting(t_game *game)
 		ft_tex_x(game, 1);//just for textures
 		buffering_image_stripe(game, pixels_buffer, x);//just for textures
 
+		/*FINDING ENEMYS*/
 		ft_which_box_in(game);
 		ft_side_dist(game);
 		ft_dda(game, 'X');
-		if (game->calc.enemy_in == 1 && game->calc.enemy_height == 0 && 
-			find_enemy_ray(game,game->calc.last_ray_dir_x, game->calc.last_ray_dir_y, game->calc.ray_dir_x, game->calc.ray_dir_y)/*game->calc.enemy_height == 0*//*game->calc.camera_x == 0*/)
+		if (game->calc.enemy_in == 1 && game->calc.enemy_height == 0 
+										&& find_enemy_ray(game))
 		{
 			// game->calc.enemy_height = game->calc.line_height;
 			ft_enemy_height(game);
@@ -324,8 +345,6 @@ void	ft_raycasting(t_game *game)
 			// ft_tex_x(game, 5);//just for textures
 			// buffering_image_stripe(game, pixels_buffer, x, 1);//just for textures		
 		}
-		//printf("game.->map2=%p\n", &game->map2);//APAGAR
-		//printf("x:%d, game->calc.draw_start:%d, game->calc.draw_end:%d\n", x, game->calc.draw_start, game->calc.draw_end);
 		x++;
 	}
 	//printf("enemy.height = %d\n", game->calc.enemy_height);//APAGAR
@@ -335,6 +354,9 @@ void	ft_raycasting(t_game *game)
 		draw_weapon(game, pixels_buffer, WEAPON_SHOOTING);
 	else
 		draw_weapon(game, pixels_buffer, WEAPON);
+		
+	// enemy_can_die(game, pixels_buffer);
+	
 	update_image_from_buffer(game,&game->map2,pixels_buffer);//just for textures
 	free_pixels_buffer(pixels_buffer, game->y);//just for textures
 }
