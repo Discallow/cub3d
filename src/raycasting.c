@@ -6,7 +6,7 @@
 /*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 22:27:37 by asofia-g          #+#    #+#             */
-/*   Updated: 2025/01/13 01:06:50 by asofia-g         ###   ########.fr       */
+/*   Updated: 2025/01/13 01:24:07 by asofia-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -304,6 +304,8 @@ void	enemy_can_die(t_game *game, int **buffer)
 		if (game->calc.enemy_pos == game->x / 2 && dist < 2.0)
 			draw_enemy(game, buffer);//necessário fazer como na weapon para mudar a imagem
 	}
+	else if (game->calc.enemy_height)
+		draw_enemy(game, buffer);
 }
 
 /*TEXTURED VERTION*/
@@ -350,12 +352,12 @@ void	ft_raycasting(t_game *game)
 	//printf("enemy.height = %d\n", game->calc.enemy_height);//APAGAR
 	if (game->calc.enemy_height)
 		draw_enemy(game, pixels_buffer);
+	enemy_can_die(game, pixels_buffer);
 	if (game->player.shoot)
 		draw_weapon(game, pixels_buffer, WEAPON_SHOOTING);
 	else
 		draw_weapon(game, pixels_buffer, WEAPON);
 		
-	// enemy_can_die(game, pixels_buffer);
 	
 	update_image_from_buffer(game,&game->map2,pixels_buffer);//just for textures
 	free_pixels_buffer(pixels_buffer, game->y);//just for textures
