@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
+/*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 22:27:37 by asofia-g          #+#    #+#             */
-/*   Updated: 2025/01/14 17:28:18 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/14 20:48:18 by asofia-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,10 +129,10 @@ void	ft_dda(t_game *game, char c)
 		//printf("map[map_x][map_y]=%d\n", game->map[game->calc.map_x][game->calc.map_y]);//APAGAR
 		if (game->map[game->calc.map_y][game->calc.map_x] == 'X') 
 			game->calc.enemy_in = 1;
-		if (game->map[game->calc.map_y][game->calc.map_x] == 'P')
+		if (game->map[game->calc.map_y][game->calc.map_x] == 'P' && c == 'P')
 		{
 			game->door.flag = true;
-			break ;
+			//break ;
 		}
 		if (game->map[game->calc.map_y][game->calc.map_x] == '1' ||
 				game->map[game->calc.map_y][game->calc.map_x] == c) 
@@ -308,6 +308,21 @@ void	enemy_can_die(t_game *game, int **buffer)
 		draw_enemy(game, buffer);
 }
 
+void	ft_finding_doors(t_game *game, int **buffer, int x)
+{
+		ft_which_box_in(game);
+		ft_side_dist(game);
+		ft_dda(game, 'P');
+	if (game->door.flag)
+	{
+		ft_wall_height(game, 1);
+		ft_wall_x(game);//just for textures
+		ft_tex_x(game, 1);//just for textures
+		buffering_image_stripe(game, buffer, x);//just for textures
+	}
+	
+}
+
 /*TEXTURED VERTION*/
 void	ft_raycasting(t_game *game)
 {
@@ -347,6 +362,7 @@ void	ft_raycasting(t_game *game)
 			// ft_tex_x(game, 5);//just for textures
 			// buffering_image_stripe(game, pixels_buffer, x, 1);//just for textures		
 		}
+		ft_finding_doors(game, pixels_buffer, x);
 		x++;
 	}
 	//printf("enemy.height = %d\n", game->calc.enemy_height);//APAGAR

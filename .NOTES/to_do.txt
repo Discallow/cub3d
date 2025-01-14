@@ -86,3 +86,5 @@
 [ ] colocar os caminhos das imagens no .h
 
 [ ] escalas das imagens como variáveis ou no .h
+
+[ ] makefile está a dar relink
