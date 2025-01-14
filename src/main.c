@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 18:12:51 by discallow         #+#    #+#             */
-/*   Updated: 2025/01/12 15:13:19 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/14 18:18:18 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ void init_struct(t_game *game)
 	game->map = NULL;
 	game->copy.exit = 0;
 	game->player.num = 0;
-	game->player.dir_x = 0.0;
-	game->player.dir_y = 0.0;
+	game->player.dir_x = 0;
+	game->player.dir_y = 0;
 	game->player.flag_pos = 0;
 	game->door.path = NULL;
 	game->door.flag = false;
@@ -52,6 +52,7 @@ void init_struct(t_game *game)
 	game->player.move_s = false;
 	game->player.move_w = false;
 	game->player.open_door = false;
+	game->player.close_door = true;
 	game->player.rotate_left = false;
 	game->player.rotate_right = false;
 	game->player.shoot = false;
@@ -178,8 +179,8 @@ int key_pressed(int keysim, t_game *game)
 		game->player.move_d = true;
 	if (keysim == XK_Left)
 		game->player.rotate_left = true;
-	if (keysim == XK_e)
-		game->player.open_door = true;
+/* 	if (keysim == XK_e)
+		game->player.open_door = true; */
 	if (keysim == XK_Escape)
 	{
 		write(1, "Couldn't you kill all the enemies? Are you afraid?\n", 51);
@@ -383,11 +384,11 @@ int	display_map(t_game *game)
 		rotate_left(game);
 	if (game->player.rotate_right)
 		rotate_right(game);
-	if (game->player.open_door)
-		check_door(game);
+/* 	if (game->player.open_door)
+		check_door(game); */
 	if (game->player.shoot || !game->player.shoot)
 		game->flag = true;
-	if (game->flag)
+	if (game->flag || !game->flag)
 	{
 		game->flag = false;
 		redraw_map(game);

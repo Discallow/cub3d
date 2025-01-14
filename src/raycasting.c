@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 22:27:37 by asofia-g          #+#    #+#             */
-/*   Updated: 2025/01/13 01:24:07 by asofia-g         ###   ########.fr       */
+/*   Updated: 2025/01/14 17:28:18 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ void	ft_dda(t_game *game, char c)
 		if (game->map[game->calc.map_y][game->calc.map_x] == 'P')
 		{
 			game->door.flag = true;
-			break;
+			break ;
 		}
 		if (game->map[game->calc.map_y][game->calc.map_x] == '1' ||
 				game->map[game->calc.map_y][game->calc.map_x] == c) 

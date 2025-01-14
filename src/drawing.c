@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   drawing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 22:39:40 by asofia-g          #+#    #+#             */
-/*   Updated: 2025/01/12 19:26:15 by asofia-g         ###   ########.fr       */
+/*   Updated: 2025/01/14 18:27:52 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,17 @@ void    ver_Line(t_position *data, int pos_x, int start, int end, int color)
 /*Calculates which texture to use depending wall cardinal direction*/
 void	ft_set_wall_texture(t_game *game)
 {
+	static int	text = 0;
 	if (game->door.flag)
 	{
 		game->door.flag = false;
-		game->calc.tex_drawn = DOOR;
+		if (text == 1 && game->player.open_door)
+		{
+			game->calc.tex_drawn = DOOR_OPEN;
+			return ;
+		}
+		game->calc.tex_drawn = DOOR_CLOSED;
+		text++;
 		return ;
 	}
 

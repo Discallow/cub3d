@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 14:47:40 by discallow         #+#    #+#             */
-/*   Updated: 2025/01/13 01:05:06 by asofia-g         ###   ########.fr       */
+/*   Updated: 2025/01/14 18:12:22 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include <errno.h>
 # include <string.h>
 # include <stdbool.h>
+# include <sys/time.h>
 # include <math.h>//math functions, need -lm to compile
 /*# include <stdint.h>//to use uint32_t, int > 0 with 32 bits */
 					/*(0 a 4.294.967.295 (2^32 - 1))*/
@@ -46,11 +47,12 @@
 # define M_PI			3.14159265358979323846
 # define SCALE			40
 # define TEXTURE_SIZE 	64
-# define NUM_TEXTURES 	8
+# define NUM_TEXTURES 	9
 # define VERTICAL		0
 # define HORIZONTAL		1
 # define BONUS			1
 # define WEAPON_SCALE	2
+# define MILLISECOND 1000
 
 typedef enum	e_element
 {
@@ -69,6 +71,7 @@ typedef struct s_position
 	bool	rotate_right;
 	bool	rotate_left;
 	bool	open_door;
+	bool	close_door;
 	bool	shoot;
 	bool	flag;
 	float	size;
@@ -176,7 +179,8 @@ typedef enum	e_textures_direction
 	WEST,
 	EAST,
 	ENEMY,
-	DOOR,
+	DOOR_CLOSED,
+	DOOR_OPEN,
 	WEAPON,
 	WEAPON_SHOOTING,
 }				t_textures_direction;
@@ -257,7 +261,7 @@ void	my_mlx_pixel_put(t_position *data, int x, int y, int color);
 void	build_map(t_game *game);
 void	destroy_map(t_game *game);
 void	rotate_left(t_game *game);
-void	check_door(t_game *game);
+void	check_door(t_game *game, int x, int y);
 
 /*DRAWING*/
 void	my_mlx_pixel_put(t_position *data, int x, int y, int color);

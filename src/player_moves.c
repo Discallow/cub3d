@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 20:23:57 by discallow         #+#    #+#             */
-/*   Updated: 2025/01/10 10:33:03 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/14 18:09:11 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,46 @@ void	redraw_map(t_game *game)
 	destroy_map(game);
 	build_map(game);
 }
-
-void	check_door(t_game *game)
+long	gettime(void)
 {
-	float	next_x;
-	float	next_y;
+	struct timeval	start;
+	long			elapsed;
 
-	next_x = game->player.x + game->player.dir_x / 9;
-	next_y = game->player.y + game->player.dir_y / 9;
-    if (game->map[(int)game->player.y][(int)next_x] == 'P' || game->map[(int)next_y][(int)game->player.x] == 'P')
+	if (gettimeofday(&start, NULL))
 	{
-		game->map[(int)next_y][(int)next_x] = '0';
+		printf(YELLOW"gettimeofday function failed."RESET"\n");
+		exit (1);
 	}
-	game->player.open_door = false;
+	elapsed = (start.tv_sec * MILLISECOND) + (start.tv_usec / MILLISECOND);
+	return (elapsed);
+}
+
+void	change_door_texture(void)
+{
+	long	start;
+
+	start = gettime();
+	printf("start:%ld\n", start);
+	while (1)
+	{
+		if (gettime() - start >= 100)
+			break ;
+	}
+	start = gettime();
+	printf("start:%ld\n", start);
+}
+
+void	check_door(t_game *game, int x, int y)
+{
+    if (game->map[(int)game->player.y][x] == 'P')
+	{
+		//change_door_texture();
+		game->player.open_door = true;
+		//game->map[(int)game->player.y][x] = '0';
+	}
+	if (game->map[y][(int)game->player.x] == 'P')
+		game->map[y][(int)game->player.x] = '0';
+/* 	game->player.open_door = false; */
 	game->flag = true;
 }
 
@@ -56,6 +83,13 @@ void move_forward(t_game *game)
 		game->copy.x = game->player.x;
 	if (game->map[(int)next_y][(int)game->player.x] != '1' && game->map[(int)next_y][(int)game->player.x] != 'P')
 		game->copy.y = game->player.y;
+	next_x = (game->player.x + game->player.dir_x);
+	next_y = (game->player.y + game->player.dir_y);
+	if (game->player.dir_x == 0)
+		next_x = game->player.x + 1;
+	if (game->player.dir_y == 0)
+		next_y = game->player.y + 1;
+	check_door(game, (int)next_x, (int)next_y);
 	game->flag = true;
 }
 
@@ -76,6 +110,13 @@ void move_backwards(t_game *game)
 		game->copy.x = game->player.x;
 	if (game->map[(int)next_y][(int)game->player.x] != '1' && game->map[(int)next_y][(int)game->player.x] != 'P')
 		game->copy.y = game->player.y;
+	next_x = (game->player.x - game->player.dir_x);
+	next_y = (game->player.y - game->player.dir_y);
+	if (game->player.dir_x == 0)
+		next_x = game->player.x - 1;
+	if (game->player.dir_y == 0)
+		next_y = game->player.y - 1;
+	check_door(game, (int)next_x, (int)next_y);
 	game->flag = true;
 }
 
@@ -96,6 +137,13 @@ void move_left(t_game *game)
 		game->copy.x = game->player.x;
 	if (game->map[(int)next_y][(int)game->player.x] != '1' && game->map[(int)next_y][(int)game->player.x] != 'P')
 		game->copy.y = game->player.y;
+	next_x = (game->player.x + game->player.dir_x);
+	next_y = (game->player.y - game->player.dir_y);
+	if (game->player.dir_x == 0)
+		next_x = game->player.x + 1;
+	if (game->player.dir_y == 0)
+		next_y = game->player.y - 1;
+	check_door(game, (int)next_x, (int)next_y);
 	game->flag = true;
 }
 
@@ -116,6 +164,13 @@ void move_right(t_game *game)
 		game->copy.x = game->player.x;
 	if (game->map[(int)next_y][(int)game->player.x] != '1' && game->map[(int)next_y][(int)game->player.x] != 'P')
 		game->copy.y = game->player.y;
+	next_x = (game->player.x - game->player.dir_x);
+	next_y = (game->player.y + game->player.dir_y);
+	if (game->player.dir_x == 0)
+		next_x = game->player.x - 1;
+	if (game->player.dir_y == 0)
+		next_y = game->player.y + 1;
+	check_door(game, (int)next_x, (int)next_y);
     game->flag = true;
 }
 
