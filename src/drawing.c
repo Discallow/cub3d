@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 22:39:40 by asofia-g          #+#    #+#             */
-/*   Updated: 2025/01/15 05:41:13 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/15 19:46:03 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,28 +39,25 @@ void	change_door_texture(t_game *game)
 
 	start = gettime();
 	//printf("start:%ld, elapsed:%ld\n", start, game->elapsed);
-	if (game->elapsed && start - game->elapsed >= 800 && game->player.open_door)
+	if (game->elapsed && start - game->elapsed >= 400 && game->door.open_door) 
 	{
 		game->calc.tex_drawn = DOOR_OPEN2;
 		game->player.flag = true;
 	}
-	else if (game->player.open_door)
+	else if (game->door.open_door)
 		game->calc.tex_drawn = DOOR_OPEN1;
 }
 
 /*Calculates which texture to use depending wall cardinal direction*/
 void	ft_set_wall_texture(t_game *game)
 {
-	static int	text = 0;
-
 	if (game->door.flag)
 	{
 		game->door.flag = false;
-		if (!game->player.open_door)
-			game->calc.tex_drawn = DOOR_CLOSED;
-		if (!text && game->player.open_door)
+		if (game->door.open_door == false)
 		{
-			text++;
+			game->calc.tex_drawn = DOOR_CLOSED;
+			game->player.flag = false;
 			game->elapsed = gettime();
 		}
 		change_door_texture(game);

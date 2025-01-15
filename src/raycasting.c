@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 22:27:37 by asofia-g          #+#    #+#             */
-/*   Updated: 2025/01/15 05:40:21 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/15 19:33:29 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,13 +128,17 @@ void	ft_dda(t_game *game, char c)
 		}
 		// printf("map_x=%d, map_y=%d\n", game->calc.map_x, game->calc.map_y);//APAGAR
 		//printf("map[map_x][map_y]=%d\n", game->map[game->calc.map_x][game->calc.map_y]);//APAGAR
-		if (game->map[game->calc.map_y][game->calc.map_x] == 'X') 
-			game->calc.enemy_in = 1;
 		if (game->map[game->calc.map_y][game->calc.map_x] == 'P' && c == 'P')
 		{
+/* 			printf("aqui2\n"); */
 			game->door.flag = true;
-			//break ;
+			break ;
 		}
+		if (game->map[game->calc.map_y][game->calc.map_x] == 'X')
+		{
+			game->calc.enemy_in = 1;
+		}
+
 		if (game->map[game->calc.map_y][game->calc.map_x] == '1' ||
 				game->map[game->calc.map_y][game->calc.map_x] == c) 
 			break;
@@ -316,6 +320,7 @@ void	ft_finding_doors(t_game *game, int **buffer, int x)
 		ft_dda(game, 'P');
 	if (game->door.flag)
 	{
+/* 		printf("aqui\n"); */
 		ft_wall_height(game, 1);
 		ft_wall_x(game);//just for textures
 		ft_tex_x(game, 1);//just for textures

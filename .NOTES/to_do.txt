@@ -53,7 +53,7 @@
 
 [✅] corrigir mini mapa
 
-[ ] texturas para paredes
+[✅] texturas para paredes
 
 [✅] texturas para arma
 
@@ -65,7 +65,7 @@
 
 [✅] implementar arma
 
-[ ] sprites
+[✅] sprites
 
 [✅] movimentação para o rotação com o rato
 

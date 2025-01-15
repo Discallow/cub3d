@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 18:12:51 by discallow         #+#    #+#             */
-/*   Updated: 2025/01/15 05:13:14 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/15 16:23:41 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ void init_struct(t_game *game)
 	game->player.move_d = false;
 	game->player.move_s = false;
 	game->player.move_w = false;
-	game->player.open_door = false;
-	game->player.close_door = true;
+	game->door.open_door = false;
+	game->door.close_door = true;
 	game->player.rotate_left = false;
 	game->player.rotate_right = false;
 	game->player.shoot = false;
