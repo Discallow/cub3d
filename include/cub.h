@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 14:47:40 by discallow         #+#    #+#             */
-/*   Updated: 2025/01/15 15:57:21 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/15 22:32:05 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@
 # define VERTICAL		0
 # define HORIZONTAL		1
 # define BONUS			1
-# define WEAPON_SCALE	2
+# define WEAPON_SCALE	3
 # define MILLISECOND 1000
 
 typedef enum	e_element
