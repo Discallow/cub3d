@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   load_textures.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
+/*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 00:57:40 by asofia-g          #+#    #+#             */
-/*   Updated: 2025/01/14 18:12:06 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/14 22:05:24 by asofia-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,11 @@ void    load_all_textures(t_game *game)
 	buffering_texture(game, game->east.path, EAST);
 	buffering_texture(game, "textures/enemy.xpm", ENEMY);
 	buffering_texture(game, "textures/door.xpm", DOOR_CLOSED);
-	buffering_texture(game, "textures/door2.xpm", DOOR_OPEN);	
-	buffering_texture(game, "textures/weapon_idle.xpm", WEAPON);
-	buffering_texture(game, "textures/weapon_shooting.xpm", WEAPON_SHOOTING);
+	buffering_texture(game, "textures/door2.xpm", DOOR_OPEN);
+	buffering_texture(game, "textures/test.xpm", WEAPON);
+	buffering_texture(game, "textures/weapon_shooting2.xpm", WEAPON_SHOOTING);	
+	// buffering_texture(game, "textures/weapon_idle.xpm", WEAPON);
+	// buffering_texture(game, "textures/weapon_shooting.xpm", WEAPON_SHOOTING);
 	ini_weapon(game);
 	//se alguma textura deu erro ao ser copiada, é necessário apagar todas
 }
