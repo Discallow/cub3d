@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 14:47:40 by discallow         #+#    #+#             */
-/*   Updated: 2025/01/15 04:27:01 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/15 05:13:06 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@
 # define M_PI			3.14159265358979323846
 # define SCALE			40
 # define TEXTURE_SIZE 	64
-# define NUM_TEXTURES 	9
+# define NUM_TEXTURES 	10
 # define VERTICAL		0
 # define HORIZONTAL		1
 # define BONUS			1
@@ -180,7 +180,8 @@ typedef enum	e_textures_direction
 	EAST,
 	ENEMY,
 	DOOR_CLOSED,
-	DOOR_OPEN,
+	DOOR_OPEN1,
+	DOOR_OPEN2,
 	WEAPON,
 	WEAPON_SHOOTING,
 }				t_textures_direction;
@@ -197,6 +198,7 @@ typedef struct	s_game
 	int				x;
 	int				y;
 	int				fd;
+	long			elapsed;
 	t_map_copy		copy;
 	t_position		player;
 	t_position		door;
@@ -262,6 +264,7 @@ void	build_map(t_game *game);
 void	destroy_map(t_game *game);
 void	rotate_left(t_game *game);
 void	check_door(t_game *game, int x, int y);
+long	gettime(void);
 
 /*DRAWING*/
 void	my_mlx_pixel_put(t_position *data, int x, int y, int color);

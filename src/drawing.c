@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 22:39:40 by asofia-g          #+#    #+#             */
-/*   Updated: 2025/01/14 18:27:52 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/15 05:41:13 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,23 +33,39 @@ void    ver_Line(t_position *data, int pos_x, int start, int end, int color)
 	}
 }
 
+void	change_door_texture(t_game *game)
+{
+	long	start;
+
+	start = gettime();
+	//printf("start:%ld, elapsed:%ld\n", start, game->elapsed);
+	if (game->elapsed && start - game->elapsed >= 800 && game->player.open_door)
+	{
+		game->calc.tex_drawn = DOOR_OPEN2;
+		game->player.flag = true;
+	}
+	else if (game->player.open_door)
+		game->calc.tex_drawn = DOOR_OPEN1;
+}
+
 /*Calculates which texture to use depending wall cardinal direction*/
 void	ft_set_wall_texture(t_game *game)
 {
 	static int	text = 0;
+
 	if (game->door.flag)
 	{
 		game->door.flag = false;
-		if (text == 1 && game->player.open_door)
+		if (!game->player.open_door)
+			game->calc.tex_drawn = DOOR_CLOSED;
+		if (!text && game->player.open_door)
 		{
-			game->calc.tex_drawn = DOOR_OPEN;
-			return ;
+			text++;
+			game->elapsed = gettime();
 		}
-		game->calc.tex_drawn = DOOR_CLOSED;
-		text++;
+		change_door_texture(game);
 		return ;
 	}
-
 	if (game->calc.wall_side == HORIZONTAL)
 	{
 		if (game->calc.ray_dir_y <= 0)

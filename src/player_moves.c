@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 20:23:57 by discallow         #+#    #+#             */
-/*   Updated: 2025/01/14 18:09:11 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/15 05:51:44 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ long	gettime(void)
 	return (elapsed);
 }
 
-void	change_door_texture(void)
+/* void	change_door_texture(void)
 {
 	long	start;
 
@@ -49,19 +49,18 @@ void	change_door_texture(void)
 	}
 	start = gettime();
 	printf("start:%ld\n", start);
-}
+} */
 
 void	check_door(t_game *game, int x, int y)
 {
-    if (game->map[(int)game->player.y][x] == 'P')
+    if (game->map[(int)game->player.y][x] == 'P' || game->map[y][(int)game->player.x] == 'P')
 	{
 		//change_door_texture();
 		game->player.open_door = true;
 		//game->map[(int)game->player.y][x] = '0';
 	}
-	if (game->map[y][(int)game->player.x] == 'P')
-		game->map[y][(int)game->player.x] = '0';
-/* 	game->player.open_door = false; */
+/* 	else
+		game->player.open_door = false; */
 	game->flag = true;
 }
 
@@ -73,15 +72,15 @@ void move_forward(t_game *game)
 
 	next_x = game->player.x + game->player.dir_x / 10;
 	next_y = game->player.y + game->player.dir_y / 10;
-    if (game->map[(int)game->player.y][(int)next_x] != '1' && game->map[(int)game->player.y][(int)next_x] != 'P')
+    if (game->map[(int)game->player.y][(int)next_x] != '1' && (game->map[(int)game->player.y][(int)next_x] != 'P' || game->player.flag))
 		game->player.x = next_x;
-	if (game->map[(int)next_y][(int)game->player.x] != '1' && game->map[(int)next_y][(int)game->player.x] != 'P')
+	if (game->map[(int)next_y][(int)game->player.x] != '1' && (game->map[(int)next_y][(int)game->player.x] != 'P' || game->player.flag))
 		game->player.y = next_y;
 	next_x = game->player.x + game->player.dir_x / 10;
 	next_y = game->player.y + game->player.dir_y / 10;
-	if (game->map[(int)game->player.y][(int)next_x] != '1' && game->map[(int)game->player.y][(int)next_x] != 'P')
+	if (game->map[(int)game->player.y][(int)next_x] != '1' && (game->map[(int)game->player.y][(int)next_x] != 'P' || game->player.flag))
 		game->copy.x = game->player.x;
-	if (game->map[(int)next_y][(int)game->player.x] != '1' && game->map[(int)next_y][(int)game->player.x] != 'P')
+	if (game->map[(int)next_y][(int)game->player.x] != '1' && (game->map[(int)next_y][(int)game->player.x] != 'P'  || game->player.flag))
 		game->copy.y = game->player.y;
 	next_x = (game->player.x + game->player.dir_x);
 	next_y = (game->player.y + game->player.dir_y);
@@ -100,15 +99,15 @@ void move_backwards(t_game *game)
 
 	next_x = game->player.x - game->player.dir_x / 10;
 	next_y = game->player.y - game->player.dir_y / 10;
-	if (game->map[(int)game->player.y][(int)next_x] != '1' && game->map[(int)game->player.y][(int)next_x] != 'P')
+	if (game->map[(int)game->player.y][(int)next_x] != '1' && (game->map[(int)game->player.y][(int)next_x] != 'P' || game->player.flag))
 		game->player.x = next_x;
-	if (game->map[(int)next_y][(int)game->player.x] != '1' && game->map[(int)next_y][(int)game->player.x] != 'P')
+	if (game->map[(int)next_y][(int)game->player.x] != '1' && (game->map[(int)next_y][(int)game->player.x] != 'P' || game->player.flag))
 		game->player.y = next_y;
 	next_x = game->player.x - game->player.dir_x / 10;
 	next_y = game->player.y - game->player.dir_y / 10;
-	if (game->map[(int)game->player.y][(int)next_x] != '1' && game->map[(int)game->player.y][(int)next_x] != 'P')
+	if (game->map[(int)game->player.y][(int)next_x] != '1' && (game->map[(int)game->player.y][(int)next_x] != 'P' || game->player.flag))
 		game->copy.x = game->player.x;
-	if (game->map[(int)next_y][(int)game->player.x] != '1' && game->map[(int)next_y][(int)game->player.x] != 'P')
+	if (game->map[(int)next_y][(int)game->player.x] != '1' && (game->map[(int)next_y][(int)game->player.x] != 'P' || game->player.flag))
 		game->copy.y = game->player.y;
 	next_x = (game->player.x - game->player.dir_x);
 	next_y = (game->player.y - game->player.dir_y);
@@ -127,15 +126,15 @@ void move_left(t_game *game)
 
 	next_x = game->player.x + game->player.dir_y / 10;
 	next_y = game->player.y - game->player.dir_x / 10;
-	if (game->map[(int)game->player.y][(int)next_x] != '1' && game->map[(int)game->player.y][(int)next_x] != 'P')
+	if (game->map[(int)game->player.y][(int)next_x] != '1' && (game->map[(int)game->player.y][(int)next_x] != 'P' || game->player.flag))
 		game->player.x = next_x;
-	if (game->map[(int)next_y][(int)game->player.x] != '1' && game->map[(int)next_y][(int)game->player.x] != 'P')
+	if (game->map[(int)next_y][(int)game->player.x] != '1' && (game->map[(int)next_y][(int)game->player.x] != 'P' || game->player.flag))
         game->player.y = next_y;
 	next_x = game->player.x + game->player.dir_y / 10;
 	next_y = game->player.y - game->player.dir_x / 10;
-	if (game->map[(int)game->player.y][(int)next_x] != '1' && game->map[(int)game->player.y][(int)next_x] != 'P')
+	if (game->map[(int)game->player.y][(int)next_x] != '1' && (game->map[(int)game->player.y][(int)next_x] != 'P' || game->player.flag))
 		game->copy.x = game->player.x;
-	if (game->map[(int)next_y][(int)game->player.x] != '1' && game->map[(int)next_y][(int)game->player.x] != 'P')
+	if (game->map[(int)next_y][(int)game->player.x] != '1' && (game->map[(int)next_y][(int)game->player.x] != 'P' || game->player.flag))
 		game->copy.y = game->player.y;
 	next_x = (game->player.x + game->player.dir_x);
 	next_y = (game->player.y - game->player.dir_y);
@@ -154,15 +153,15 @@ void move_right(t_game *game)
 
 	next_x = game->player.x - game->player.dir_y / 10;
 	next_y = game->player.y + game->player.dir_x / 10;
-	if (game->map[(int)game->player.y][(int)next_x] != '1' && game->map[(int)game->player.y][(int)next_x] != 'P')
+	if (game->map[(int)game->player.y][(int)next_x] != '1' && (game->map[(int)game->player.y][(int)next_x] != 'P' || game->player.flag))
 		game->player.x = next_x;
-	if (game->map[(int)next_y][(int)game->player.x] != '1' && game->map[(int)next_y][(int)game->player.x] != 'P')
+	if (game->map[(int)next_y][(int)game->player.x] != '1' && (game->map[(int)next_y][(int)game->player.x] != 'P' || game->player.flag))
 		game->player.y = next_y;
 	next_x = game->player.x - game->player.dir_y / 10;
 	next_y = game->player.y + game->player.dir_x / 10;
-	if (game->map[(int)game->player.y][(int)next_x] != '1' && game->map[(int)game->player.y][(int)next_x] != 'P')
+	if (game->map[(int)game->player.y][(int)next_x] != '1' && (game->map[(int)game->player.y][(int)next_x] != 'P' || game->player.flag))
 		game->copy.x = game->player.x;
-	if (game->map[(int)next_y][(int)game->player.x] != '1' && game->map[(int)next_y][(int)game->player.x] != 'P')
+	if (game->map[(int)next_y][(int)game->player.x] != '1' && (game->map[(int)next_y][(int)game->player.x] != 'P' || game->player.flag))
 		game->copy.y = game->player.y;
 	next_x = (game->player.x - game->player.dir_x);
 	next_y = (game->player.y + game->player.dir_y);

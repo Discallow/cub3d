@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 18:12:51 by discallow         #+#    #+#             */
-/*   Updated: 2025/01/14 18:18:18 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/15 05:13:14 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void init_struct(t_game *game)
 	game->player.shoot = false;
 	game->flag = false;
 	game->tex_buff = NULL;
+	game->elapsed = 0;
 }
 
 void display_big_cub3d(void)

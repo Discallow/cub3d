@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 22:27:37 by asofia-g          #+#    #+#             */
-/*   Updated: 2025/01/14 20:48:18 by asofia-g         ###   ########.fr       */
+/*   Updated: 2025/01/15 05:40:21 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 void	ft_get_player_inicial_direction(t_game *game)
 {
-	if (game->player.flag_pos == 1)
+	static int	flag = 0;
+	if (flag)
 		return;
 	if (game->player.dir == 'N')
 		game->player.dir_y = -1.0;
@@ -25,7 +26,7 @@ void	ft_get_player_inicial_direction(t_game *game)
 	if (game->player.dir == 'W')
 		game->player.dir_x = -1.0;
 	game->player.angle = atan2(game->player.dir_y, game->player.dir_x);
-	game->player.flag_pos = 1;
+	flag++;
 }
 
 /*calculate ray position and direction 
