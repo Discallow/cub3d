@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
+/*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 22:27:37 by asofia-g          #+#    #+#             */
-/*   Updated: 2025/01/15 19:33:29 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/16 02:05:01 by asofia-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,17 +128,14 @@ void	ft_dda(t_game *game, char c)
 		}
 		// printf("map_x=%d, map_y=%d\n", game->calc.map_x, game->calc.map_y);//APAGAR
 		//printf("map[map_x][map_y]=%d\n", game->map[game->calc.map_x][game->calc.map_y]);//APAGAR
+		if (game->map[game->calc.map_y][game->calc.map_x] == 'X')
+			game->calc.enemy_in = 1;
 		if (game->map[game->calc.map_y][game->calc.map_x] == 'P' && c == 'P')
 		{
 /* 			printf("aqui2\n"); */
 			game->door.flag = true;
 			break ;
 		}
-		if (game->map[game->calc.map_y][game->calc.map_x] == 'X')
-		{
-			game->calc.enemy_in = 1;
-		}
-
 		if (game->map[game->calc.map_y][game->calc.map_x] == '1' ||
 				game->map[game->calc.map_y][game->calc.map_x] == c) 
 			break;
@@ -372,9 +369,9 @@ void	ft_raycasting(t_game *game)
 		x++;
 	}
 	//printf("enemy.height = %d\n", game->calc.enemy_height);//APAGAR
-	if (game->calc.enemy_height)
+	if (game->calc.enemy_height && (game->player.flag || game->door.open_door))
 		draw_enemy(game, pixels_buffer);
-	enemy_can_die(game, pixels_buffer);
+	// enemy_can_die(game, pixels_buffer);
 	if (game->player.shoot)
 		draw_weapon(game, pixels_buffer, WEAPON_SHOOTING);
 	else

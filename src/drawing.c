@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   drawing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
+/*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 22:39:40 by asofia-g          #+#    #+#             */
-/*   Updated: 2025/01/15 19:46:03 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/16 01:05:54 by asofia-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,9 @@ void	change_door_texture(t_game *game)
 		game->player.flag = true;
 	}
 	else if (game->door.open_door)
+	{
 		game->calc.tex_drawn = DOOR_OPEN1;
+	}
 }
 
 /*Calculates which texture to use depending wall cardinal direction*/
