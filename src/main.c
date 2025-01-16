@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 18:12:51 by discallow         #+#    #+#             */
-/*   Updated: 2025/01/15 16:23:41 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/16 06:31:20 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void init_struct(t_game *game)
 	game->player.move_w = false;
 	game->door.open_door = false;
 	game->door.close_door = true;
+	game->player.flag = false;
 	game->player.rotate_left = false;
 	game->player.rotate_right = false;
 	game->player.shoot = false;
@@ -389,11 +390,7 @@ int	display_map(t_game *game)
 		check_door(game); */
 	if (game->player.shoot || !game->player.shoot)
 		game->flag = true;
-	if (game->flag || !game->flag)
-	{
-		game->flag = false;
-		redraw_map(game);
-	}	
+	redraw_map(game);
 	return (0);
 }
 

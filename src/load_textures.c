@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 00:57:40 by asofia-g          #+#    #+#             */
-/*   Updated: 2025/01/15 22:15:00 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/16 04:41:10 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ void    load_all_textures(t_game *game)
 	buffering_texture(game, "textures/door.xpm", DOOR_CLOSED);
 	buffering_texture(game, "textures/door2.xpm", DOOR_OPEN1);
 	buffering_texture(game, "textures/door3.xpm", DOOR_OPEN2);
+	buffering_texture(game, "textures/door4.xpm", DOOR_OPEN3);
 	buffering_texture(game, "textures/weapon_idle.xpm", WEAPON);
 	buffering_texture(game, "textures/weapon_shooting.xpm", WEAPON_SHOOTING);	
 	// buffering_texture(game, "textures/weapon_idle.xpm", WEAPON);

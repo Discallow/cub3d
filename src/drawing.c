@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   drawing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 22:39:40 by asofia-g          #+#    #+#             */
-/*   Updated: 2025/01/16 01:05:54 by asofia-g         ###   ########.fr       */
+/*   Updated: 2025/01/16 06:12:28 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,19 +33,67 @@ void    ver_Line(t_position *data, int pos_x, int start, int end, int color)
 	}
 }
 
+void	change_door_texture2(t_game *game)
+{
+	long	start;
+	static int	text = 0;
+	static int	flag = 0;
+
+	start = gettime();
+	if (game->door.close_door || game->door.open_door)
+		return ;
+	if (flag == 0)
+	{
+		flag++;
+		game->elapsed = gettime();
+	}
+	if (text && start - game->elapsed >= 600)
+	{
+		game->calc.tex_drawn = DOOR_CLOSED;
+		game->door.close_door = true;
+		flag = 0;
+	}
+	else if (text && start - game->elapsed >= 400)
+	{
+		game->calc.tex_drawn = DOOR_OPEN1;
+	}
+	else if (game->elapsed && start - game->elapsed >= 200) 
+	{
+		text++;
+		game->calc.tex_drawn = DOOR_OPEN2;
+	}
+	else
+	{
+		game->player.flag = true;
+		text = 0;
+		game->calc.tex_drawn = DOOR_OPEN3;
+	}
+}
+
 void	change_door_texture(t_game *game)
 {
 	long	start;
+	static int	text = 0;
 
 	start = gettime();
-	//printf("start:%ld, elapsed:%ld\n", start, game->elapsed);
-	if (game->elapsed && start - game->elapsed >= 400 && game->door.open_door) 
+	if (game->door.open_door && !game->door.close_door)
+		game->calc.tex_drawn = DOOR_OPEN3;
+	if (!game->door.open_door || game->door.close_door == false)
+		return ;
+	if (text && start - game->elapsed >= 400)
 	{
-		game->calc.tex_drawn = DOOR_OPEN2;
+		game->calc.tex_drawn = DOOR_OPEN3;
+		game->door.close_door = false;
 		game->player.flag = true;
 	}
-	else if (game->door.open_door)
+	else if (game->elapsed && start - game->elapsed >= 200) 
 	{
+		text++;
+		game->calc.tex_drawn = DOOR_OPEN2;
+	}
+	else
+	{
+		text = 0;
 		game->calc.tex_drawn = DOOR_OPEN1;
 	}
 }
@@ -56,13 +104,14 @@ void	ft_set_wall_texture(t_game *game)
 	if (game->door.flag)
 	{
 		game->door.flag = false;
-		if (game->door.open_door == false)
+		if (game->door.open_door == false && game->door.close_door)
 		{
 			game->calc.tex_drawn = DOOR_CLOSED;
 			game->player.flag = false;
 			game->elapsed = gettime();
 		}
 		change_door_texture(game);
+		change_door_texture2(game);
 		return ;
 	}
 	if (game->calc.wall_side == HORIZONTAL)

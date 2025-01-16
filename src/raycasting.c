@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 22:27:37 by asofia-g          #+#    #+#             */
-/*   Updated: 2025/01/16 03:54:13 by asofia-g         ###   ########.fr       */
+/*   Updated: 2025/01/16 06:46:39 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -310,15 +310,16 @@ void	enemy_can_die(t_game *game, int **buffer)
 		// printf("enemy_pos=%d, game->x / 2 =%d, dist = %f\n", game->calc.enemy_pos, game->x / 2, dist);//APAGAR
 		if (game->calc.enemy_pos > game->x / 2 - ((game->y / WEAPON_SCALE)) 
 			&& game->calc.enemy_pos < game->x / 2 + ((game->y / WEAPON_SCALE))
-			&& dist < 2.0 && (game->player.flag || game->door.open_door 
+			&& dist < 2.0 && (game->player.flag || !game->door.open_door 
 								|| game->enemy.wall_dist < game->door.wall_dist))
 			{
 				// draw_enemy(game, buffer);//necessário fazer como na weapon para mudar a imagem
 				printf("inimigo morreu");//APAGAR
+				game->map[(int)game->enemy.y][(int)game->enemy.x] = '0';
 			}
 	}
 	else if (game->calc.enemy_height 
-					&& (game->player.flag || game->door.open_door 
+					&& (game->player.flag || !game->door.open_door 
 							|| game->enemy.wall_dist < game->door.wall_dist))
 		draw_enemy(game, buffer);
 }
@@ -382,7 +383,7 @@ void	ft_raycasting(t_game *game)
 		x++;
 	}
 	//printf("enemy.height = %d\n", game->calc.enemy_height);//APAGAR
-	if (game->calc.enemy_height && (game->player.flag || game->door.open_door
+	if (game->calc.enemy_height && (game->player.flag || !game->door.open_door
 			|| game->enemy.wall_dist < game->door.wall_dist))
 		draw_enemy(game, pixels_buffer);
 	// printf("open_door=%d, player_flag = %d, door.flag = %d\n", game->door.open_door, game->player.flag, game->door.flag);//APAGAR

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 14:47:40 by discallow         #+#    #+#             */
-/*   Updated: 2025/01/16 03:38:41 by asofia-g         ###   ########.fr       */
+/*   Updated: 2025/01/16 04:41:37 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@
 # define M_PI			3.14159265358979323846
 # define SCALE			40
 # define TEXTURE_SIZE 	64
-# define NUM_TEXTURES 	10
+# define NUM_TEXTURES 	11
 # define VERTICAL		0
 # define HORIZONTAL		1
 # define BONUS			1
@@ -183,6 +183,7 @@ typedef enum	e_textures_direction
 	DOOR_CLOSED,
 	DOOR_OPEN1,
 	DOOR_OPEN2,
+	DOOR_OPEN3,
 	WEAPON,
 	WEAPON_SHOOTING,
 }				t_textures_direction;
