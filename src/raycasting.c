@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 22:27:37 by asofia-g          #+#    #+#             */
-/*   Updated: 2025/01/16 06:46:39 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/17 05:09:26 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,11 @@ void	ft_ray_position(t_game *game, int x)
 						game->calc.plane_x * game->calc.camera_x;
 	game->calc.ray_dir_y = game->player.dir_y + 
 						game->calc.plane_y * game->calc.camera_x;
-	//printf("dir_x=%f, dir_y= %f, plane_x=%f, plane_y=%f, camera_x=%f, ray_dir_x=%f, ray_dir_y=%f\n", game->player.dir_x, game->player.dir_y, game->calc.plane_x, game->calc.plane_y, game->calc.camera_x, game->calc.ray_dir_x, game->calc.ray_dir_y);//APAGAR
 }
 
 /*which box of the map we're in*/
 void	ft_which_box_in(t_game *game)
 {
-	// printf("player_x=%f, player_y=%f\n", game->player.x, game->player.y);//APAGAR
-	// printf("player_angle=%f\n", game->player.angle);//APAGAR
 	game->calc.map_x = (int)game->player.x;
 	game->calc.map_y = (int)game->player.y;
 }
@@ -68,7 +65,6 @@ void	ft_delta_dist(t_game *game)
 		game->calc.delta_dist_y = 1e30;
 	else
 		game->calc.delta_dist_y = fabs(1 / game->calc.ray_dir_y);
-	//printf("delta_dist_x =%f, delta_dist_y =%f\n", game->calc.delta_dist_x, game->calc.delta_dist_y);//APAGAR
 }
 
 /*side_dist is length of ray from current position to next x or y-side
@@ -99,10 +95,6 @@ void	ft_side_dist(t_game *game)
 		game->calc.side_dist_y = (game->calc.map_y + 1.0 - 
 								game->player.y) * game->calc.delta_dist_y;
 	}
-	//printf("x:%f, y:%f\n", game->calc.side_dist_x, game->calc.side_dist_y);
-	//printf("x:%f, y:%f\n", game->player.x, game->player.y);
-	//draw_line(&game->map2, (int)game->player.x, (int)game->player.y, (int)(game->calc.side_dist_x) / SCALE, (int)(game->calc.side_dist_y) / SCALE, 0x00FF0000);
-	// printf("side_dist_x=%f, side_dist_y=%f\n", game->calc.side_dist_x, game->calc.side_dist_y);//APAGAR
 }
 
 /*jump to next map square, either in x-direction, or in y-direction
@@ -111,7 +103,6 @@ void	ft_side_dist(t_game *game)
 *wall_side = 1, means we hit horizontal side of the wall*/
 void	ft_dda(t_game *game, char c)
 {
-	// printf("ANTES:side_dist_x =%f, side_dist_y =%f, map x,y = %c\n",game->calc.side_dist_x, game->calc.side_dist_y, game->map[game->calc.map_y][game->calc.map_x]);//APAGAR
 	while (1)
 	{
 		if (game->calc.side_dist_x < game->calc.side_dist_y)
@@ -126,13 +117,10 @@ void	ft_dda(t_game *game, char c)
 			game->calc.map_y += game->calc.step_y;
 			game->calc.wall_side = HORIZONTAL;
 		}
-		// printf("map_x=%d, map_y=%d\n", game->calc.map_x, game->calc.map_y);//APAGAR
-		//printf("map[map_x][map_y]=%d\n", game->map[game->calc.map_x][game->calc.map_y]);//APAGAR
-		if (game->map[game->calc.map_y][game->calc.map_x] == 'X')
+		if (BONUS && game->map[game->calc.map_y][game->calc.map_x] == 'X')
 			game->calc.enemy_in = 1;
-		if (game->map[game->calc.map_y][game->calc.map_x] == 'P' && c == 'P')
+		if (BONUS && game->map[game->calc.map_y][game->calc.map_x] == 'P' && c == 'P')
 		{
-/* 			printf("aqui2\n"); */
 			game->door.flag = true;
 			break ;
 		}
@@ -140,7 +128,6 @@ void	ft_dda(t_game *game, char c)
 				game->map[game->calc.map_y][game->calc.map_x] == c) 
 			break;
 	}
-	// printf("DEPOIS:side_dist_x =%f, side_dist_y =%f, map x,y = %c\n",game->calc.side_dist_x, game->calc.side_dist_y, game->map[game->calc.map_y][game->calc.map_x]);//APAGAR
 }
 
 /*Calculate distance of perpendicular ray, i.e. remove fisheye effect!*/
@@ -364,36 +351,33 @@ void	ft_raycasting(t_game *game)
 		buffering_image_stripe(game, pixels_buffer, x);//just for textures
 
 		/*FINDING ENEMYS*/
-		ft_which_box_in(game);
-		ft_side_dist(game);
-		ft_dda(game, 'X');
-		if (game->calc.enemy_in == 1 && game->calc.enemy_height == 0 
-										&& find_enemy_ray(game))
+		if (BONUS)
 		{
-			// game->calc.enemy_height = game->calc.line_height;
-			ft_enemy_height(game);
-			game->calc.enemy_pos = x;
-			// printf("x = %d\n", x);//APAGAR
-			// ft_wall_height(game, 5);
-			// ft_wall_x(game);//just for textures
-			// ft_tex_x(game, 5);//just for textures
-			// buffering_image_stripe(game, pixels_buffer, x, 1);//just for textures		
+			ft_which_box_in(game);
+			ft_side_dist(game);
+			ft_dda(game, 'X');
+			if (game->calc.enemy_in == 1 && game->calc.enemy_height == 0 
+											&& find_enemy_ray(game))
+			{
+				ft_enemy_height(game);
+				game->calc.enemy_pos = x;	
+			}
+			ft_finding_doors(game, pixels_buffer, x);			
 		}
-		ft_finding_doors(game, pixels_buffer, x);
 		x++;
 	}
-	//printf("enemy.height = %d\n", game->calc.enemy_height);//APAGAR
-	if (game->calc.enemy_height && (game->player.flag || !game->door.open_door
-			|| game->enemy.wall_dist < game->door.wall_dist))
-		draw_enemy(game, pixels_buffer);
-	// printf("open_door=%d, player_flag = %d, door.flag = %d\n", game->door.open_door, game->player.flag, game->door.flag);//APAGAR
-	enemy_can_die(game, pixels_buffer);
-	if (game->player.shoot)
-		draw_weapon(game, pixels_buffer, WEAPON_SHOOTING);
-	else
-		draw_weapon(game, pixels_buffer, WEAPON);
-		
-	
+	if (BONUS)
+	{
+		if (game->calc.enemy_height && (game->player.flag || !game->door.open_door
+				|| game->enemy.wall_dist < game->door.wall_dist))
+			draw_enemy(game, pixels_buffer);
+		// printf("open_door=%d, player_flag = %d, door.flag = %d\n", game->door.open_door, game->player.flag, game->door.flag);//APAGAR
+		enemy_can_die(game, pixels_buffer);
+		if (game->player.shoot)
+			draw_weapon(game, pixels_buffer, WEAPON_SHOOTING);
+		else
+			draw_weapon(game, pixels_buffer, WEAPON);		
+	}
 	update_image_from_buffer(game,&game->map2,pixels_buffer);//just for textures
 	free_pixels_buffer(pixels_buffer, game->y);//just for textures
 }

@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 00:57:40 by asofia-g          #+#    #+#             */
-/*   Updated: 2025/01/16 04:41:10 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/17 15:53:10 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,16 @@ void	load_texture(t_game *game, char *relative_path, int index)
 								relative_path,
 								&game->textures[index].tex_width,
 								&game->textures[index].tex_height);
-	// if (game->textures[index].tex == NULL)//CLEAR EVERITHING
+	if (game->textures[index].tex == NULL)
+	{
+		printf(YELLOW"Error while building image"RESET"\n");
+		free_everything(game);
+		mlx_destroy_window(game->connection, game->window);
+		mlx_destroy_display(game->connection);
+		free(game->connection);
+		exit (1);		
+	}
+
 	game->textures[index].data_addr = mlx_get_data_addr(
 								game->textures[index].tex,
 								&game->textures[index].bpp,
@@ -76,15 +85,16 @@ void    load_all_textures(t_game *game)
 	buffering_texture(game, game->south.path, SOUTH);
 	buffering_texture(game, game->west.path, WEST);
 	buffering_texture(game, game->east.path, EAST);
-	buffering_texture(game, "textures/enemy.xpm", ENEMY);
-	buffering_texture(game, "textures/door.xpm", DOOR_CLOSED);
-	buffering_texture(game, "textures/door2.xpm", DOOR_OPEN1);
-	buffering_texture(game, "textures/door3.xpm", DOOR_OPEN2);
-	buffering_texture(game, "textures/door4.xpm", DOOR_OPEN3);
-	buffering_texture(game, "textures/weapon_idle.xpm", WEAPON);
-	buffering_texture(game, "textures/weapon_shooting.xpm", WEAPON_SHOOTING);	
-	// buffering_texture(game, "textures/weapon_idle.xpm", WEAPON);
-	// buffering_texture(game, "textures/weapon_shooting.xpm", WEAPON_SHOOTING);
-	ini_weapon(game);
-	//se alguma textura deu erro ao ser copiada, é necessário apagar todas
+	if (BONUS)
+	{
+		buffering_texture(game, ENEMY_TEXTURE, ENEMY);
+		buffering_texture(game, ENEMY_DEAD_TEXTURE, ENEMY_DEAD);
+		buffering_texture(game, DOOR_CLOSED_TEXTURE, DOOR_CLOSED);
+		buffering_texture(game, DOOR_OPEN1_TEXTURE, DOOR_OPEN1);
+		buffering_texture(game, DOOR_OPEN2_TEXTURE, DOOR_OPEN2);
+		buffering_texture(game, DOOR_OPEN3_TEXTURE, DOOR_OPEN3);
+		buffering_texture(game, WEAPON_IDLE_TEXTURE, WEAPON);
+		buffering_texture(game, WEAPON_SHOOTING_TEXTURE, WEAPON_SHOOTING);
+		ini_weapon(game);
+	}
 }

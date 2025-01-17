@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 18:12:51 by discallow         #+#    #+#             */
-/*   Updated: 2025/01/16 06:31:20 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/17 16:05:17 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,10 @@ void init_struct(t_game *game)
 	game->ceiling.path = NULL;
 	game->x = 0;
 	game->y = 0;
-	game->player.size = 0;
 	game->map = NULL;
-	game->copy.exit = 0;
-	game->player.num = 0;
 	game->player.dir_x = 0;
 	game->player.dir_y = 0;
-	game->player.flag_pos = 0;
-	game->door.path = NULL;
 	game->door.flag = false;
-	game->wall.num = 0;
-	game->floor.num = 0;
 	game->copy.elements_filled = false;
 	game->ceiling.color = 0;
 	game->floor.color = 0;
@@ -40,8 +33,6 @@ void init_struct(t_game *game)
 	game->floor.rgb = NULL;
 	game->copy.line_index = 0;
 	game->copy.map_read = false;
-	game->copy.start_line = 0;
-	game->copy.last_line = 0;
 	game->copy.map_joined = NULL;
 	game->copy.player_num = 0;
 	game->copy.max_width = 0;
@@ -57,7 +48,6 @@ void init_struct(t_game *game)
 	game->player.rotate_left = false;
 	game->player.rotate_right = false;
 	game->player.shoot = false;
-	game->flag = false;
 	game->tex_buff = NULL;
 	game->elapsed = 0;
 }
@@ -90,7 +80,6 @@ void display_controls(void)
 	printf("    " CYAN "Left Arrow" RESET "  - Rotate view left\n");
 	printf("    " CYAN "Right Arrow" RESET " - Rotate view right\n\n");
 	printf(GREEN BOLD "  Actions:\n" RESET);
-	printf("    " RED "E" RESET " - Interact with doors\n");
 	printf("    " RED "ESC" RESET " - Exit the game\n\n");
 	printf(MAGENTA "------------------------------------------------\n" RESET);
 	printf(BLUE BOLD "       Enjoy exploring the 3D world of Cub3D!\n" RESET);
@@ -108,15 +97,12 @@ void init_connection(t_game *game)
 		exit(1);
 	}
 	mlx_get_screen_size(game->connection, &game->x, &game->y);
-/* 	game->x = 800;
-	game->y = 800; */
 	game->window = mlx_new_window(game->connection, (game->x),
-								  (game->y), "CUB");
+								  (game->y), "CUB3D");
 	if (!game->window)
 	{
-		mlx_destroy_display(game->connection);
 		printf(RED "Error:Couldn't open window." RESET "\n");
-		free(game->connection);
+		mlx_destroy_window(game->connection, game->window);
 		free_everything(game);
 		exit(1);
 	}
@@ -125,10 +111,11 @@ void init_connection(t_game *game)
 int window_closed(t_game *game)
 {
 	write(1, "Window closed!\n", 15);
+	mlx_destroy_image(game->connection, game->map2.img);
+	free_everything(game);
 	mlx_destroy_window(game->connection, game->window);
 	mlx_destroy_display(game->connection);
 	free(game->connection);
-	free_everything(game);
 	exit(0);
 }
 
@@ -181,16 +168,14 @@ int key_pressed(int keysim, t_game *game)
 		game->player.move_d = true;
 	if (keysim == XK_Left)
 		game->player.rotate_left = true;
-/* 	if (keysim == XK_e)
-		game->player.open_door = true; */
 	if (keysim == XK_Escape)
 	{
-		write(1, "Couldn't you kill all the enemies? Are you afraid?\n", 51);
-		destroy_map(game);
+		printf(RED"Couldn't you kill all the enemies? Are you afraid?"RESET"\n");
+		mlx_destroy_image(game->connection, game->map2.img);
+		free_everything(game);
 		mlx_destroy_window(game->connection, game->window);
 		mlx_destroy_display(game->connection);
 		free(game->connection);
-		free_everything(game);
 		exit(0);
 	}
 	return (0);
@@ -361,14 +346,12 @@ void build_map(t_game *game)
 	game->len = game->x / SCALE ;
 	game->map2.img = mlx_new_image(game->connection, game->x, game->y);
 	game->map2.addr = mlx_get_data_addr(game->map2.img, &game->map2.bits_per_pixel, &game->map2.line_len, &game->map2.endian);
-	//ft_raycasting_untextured(game);
 	ft_raycasting(game);
 	if (BONUS)
 	{
 		draw_minimap(game);
 		draw_crosshair(game);
 	}
-	draw_player_direction(game, &game->map2);
 	mlx_put_image_to_window(game->connection, game->window, game->map2.img, 0, 0);
 }
 
@@ -386,10 +369,6 @@ int	display_map(t_game *game)
 		rotate_left(game);
 	if (game->player.rotate_right)
 		rotate_right(game);
-/* 	if (game->player.open_door)
-		check_door(game); */
-	if (game->player.shoot || !game->player.shoot)
-		game->flag = true;
 	redraw_map(game);
 	return (0);
 }
@@ -415,7 +394,6 @@ int	mouse_released(int button, int x, int y, t_game *game)
 int	mouse_moved(int x, int y, t_game *game)
 {
 	(void)y;
-	//printf("x:%d, y:%d\ngame->x:%d, game->y:%d\n", x, y, game->x, game->y);
 	if (x < game->x / 3)
 	{
 		game->player.rotate_left = true;
@@ -449,15 +427,14 @@ int main(int argc, char **argv)
 	build_map(&game);
 	mlx_hook(game.window, KeyPress, KeyPressMask, key_pressed, &game);
 	mlx_hook(game.window, KeyRelease, KeyReleaseMask, key_released, &game);
-	mlx_hook(game.window, ButtonPress, ButtonPressMask, mouse_pressed, &game);
-	mlx_hook(game.window, ButtonRelease, ButtonReleaseMask, mouse_released, &game);
-	mlx_hook(game.window, MotionNotify, PointerMotionMask, mouse_moved, &game);
+	if (BONUS)
+	{
+		mlx_hook(game.window, ButtonPress, ButtonPressMask, mouse_pressed, &game);
+		mlx_hook(game.window, ButtonRelease, ButtonReleaseMask, mouse_released, &game);
+		mlx_hook(game.window, MotionNotify, PointerMotionMask, mouse_moved, &game);		
+	}
 	mlx_hook(game.window, DestroyNotify, NoEventMask, window_closed, &game);
 	mlx_loop_hook(game.connection, display_map, &game);
 	mlx_loop(game.connection);
-	/* 	mlx_destroy_window(game.connection, game.window);
-		mlx_destroy_display(game.connection);
-		free(game.connection); */
-	free_everything(&game);
 	return (0);
 }

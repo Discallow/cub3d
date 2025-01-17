@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 22:39:40 by asofia-g          #+#    #+#             */
-/*   Updated: 2025/01/16 06:12:28 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/17 16:41:30 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void    ver_Line(t_position *data, int pos_x, int start, int end, int color)
 	int y;
 	
 	y = start;
-	//printf("pos_x=%d, start=%d, end=%d\n", pos_x, start, end);//APAGAR
 	while (y <= end)
 	{
 		my_mlx_pixel_put(data, pos_x, y, color);
@@ -78,15 +77,15 @@ void	change_door_texture(t_game *game)
 	start = gettime();
 	if (game->door.open_door && !game->door.close_door)
 		game->calc.tex_drawn = DOOR_OPEN3;
-	if (!game->door.open_door || game->door.close_door == false)
+	if (game->door.open_door == false || game->door.close_door == false)
 		return ;
-	if (text && start - game->elapsed >= 400)
+	if (text && start - game->elapsed >= 600)
 	{
 		game->calc.tex_drawn = DOOR_OPEN3;
 		game->door.close_door = false;
 		game->player.flag = true;
 	}
-	else if (game->elapsed && start - game->elapsed >= 200) 
+	else if (game->elapsed && start - game->elapsed >= 400)
 	{
 		text++;
 		game->calc.tex_drawn = DOOR_OPEN2;

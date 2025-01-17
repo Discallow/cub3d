@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 00:04:35 by discallow         #+#    #+#             */
-/*   Updated: 2025/01/03 15:41:40 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/17 15:55:10 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,12 @@ void	check_valid_color(t_game *game, char *line, int i)
 {
 	if (!ft_strncmp(line, "C", i) && !game->ceiling.path)
 	{
-		game->ceiling.path = ft_strdup(line + i);/* check_name(game, line + i, line); */
+		game->ceiling.path = ft_strdup(line + i);
 		check_rgb_value(game, &game->ceiling, line);
 	}
 	else if (!ft_strncmp(line, "F", i) && !game->floor.path)
 	{
-		game->floor.path = ft_strdup(line + i);/* check_name(game, line + i, line); */
+		game->floor.path = ft_strdup(line + i);
 		check_rgb_value(game, &game->floor, line);
 	}
 	else

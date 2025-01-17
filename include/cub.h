@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 14:47:40 by discallow         #+#    #+#             */
-/*   Updated: 2025/01/16 04:41:37 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/17 16:14:28 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,22 @@
 # define TILE_SIZE		32
 # define M_PI			3.14159265358979323846
 # define SCALE			40
-# define TEXTURE_SIZE 	64
-# define NUM_TEXTURES 	11
+# define NUM_TEXTURES 	12
 # define VERTICAL		0
 # define HORIZONTAL		1
 # define BONUS			1
 # define WEAPON_SCALE	3
-# define MILLISECOND 1000
+# define MILLISECOND	1000
+
+# define ENEMY_TEXTURE				"textures/enemy.xpm"
+# define ENEMY_DEAD_TEXTURE			"textures/enemy_dead.xpm"
+# define DOOR_CLOSED_TEXTURE		"textures/door.xpm"
+# define DOOR_OPEN1_TEXTURE			"textures/door2.xpm"
+# define DOOR_OPEN2_TEXTURE			"textures/door3.xpm"
+# define DOOR_OPEN3_TEXTURE			"textures/door4.xpm"
+# define WEAPON_IDLE_TEXTURE		"textures/weapon_idle.xpm"
+# define WEAPON_SHOOTING_TEXTURE	"textures/weapon_shooting.xpm"
+
 
 typedef enum	e_element
 {
@@ -74,12 +83,9 @@ typedef struct s_position
 	bool	close_door;
 	bool	shoot;
 	bool	flag;
-	float	size;
-	int		num;
 	char	dir;
 	double	dir_x;
 	double	dir_y;
-	int		flag_pos;
 	char	**rgb;
 	int		color;
 	int		total;
@@ -97,30 +103,22 @@ typedef struct	s_map_copy
 {
 	double	x;
 	double	y;
-	int		exit;
 	int		line_index;
 	bool	elements_filled;
 	bool	map_read;
-	int		start_line;
-	int		last_line;
 	int		max_width;
 	int		max_height;
 	char	*map_joined;
 	int		player_num;
-	
 }				t_map_copy;
 
 typedef struct	s_calculation
 {
 	double	camera_x;
-	int		ray;
-	double	ray_angle;
 	double	ray_dir_x;
 	double	ray_dir_y;
 	double	last_ray_dir_x;
 	double	last_ray_dir_y;
-	double	x_offset;
-	double	y_offset;
 	double	plane_x;
 	double	plane_y;
 	int		map_x;
@@ -180,6 +178,7 @@ typedef enum	e_textures_direction
 	WEST,
 	EAST,
 	ENEMY,
+	ENEMY_DEAD,
 	DOOR_CLOSED,
 	DOOR_OPEN1,
 	DOOR_OPEN2,
@@ -195,7 +194,6 @@ typedef struct	s_game
 	t_position		south;
 	t_position		west;
 	t_position		east;
-	bool			flag;
 	int				len;
 	int				x;
 	int				y;
@@ -209,7 +207,6 @@ typedef struct	s_game
 	t_position		ceiling;
 	t_position		enemy;
 	t_position		map2;
-	t_position		controls;
 	void			*window;
 	void			*connection;
 	t_calculation	calc;
