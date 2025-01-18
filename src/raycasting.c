@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
+/*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 22:27:37 by asofia-g          #+#    #+#             */
-/*   Updated: 2025/01/17 05:09:26 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/18 02:40:07 by asofia-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -288,26 +288,26 @@ int find_enemy_ray(t_game *game)
 
 void	enemy_can_die(t_game *game, int **buffer)
 {
-	double	dist;
+	double		dist;
+	static long	start;
 
 	dist = sqrt(pow(game->enemy.x - game->player.x, 2) + 
 				pow(game->enemy.y - game->player.y, 2));
 	if (game->calc.enemy_height && game->player.shoot)
 	{
-		// printf("enemy_pos=%d, game->x / 2 =%d, dist = %f\n", game->calc.enemy_pos, game->x / 2, dist);//APAGAR
 		if (game->calc.enemy_pos > game->x / 2 - ((game->y / WEAPON_SCALE)) 
 			&& game->calc.enemy_pos < game->x / 2 + ((game->y / WEAPON_SCALE))
-			&& dist < 2.0 && (game->player.flag || !game->door.open_door 
-								|| game->enemy.wall_dist < game->door.wall_dist))
+			&& dist < 2.0)
 			{
-				// draw_enemy(game, buffer);//necessário fazer como na weapon para mudar a imagem
-				printf("inimigo morreu");//APAGAR
-				game->map[(int)game->enemy.y][(int)game->enemy.x] = '0';
+				start = gettime();
+				game->enemy_data.enemy_type = ENEMY_DEAD;
 			}
 	}
-	else if (game->calc.enemy_height 
-					&& (game->player.flag || !game->door.open_door 
-							|| game->enemy.wall_dist < game->door.wall_dist))
+	if (game->enemy_data.enemy_type == ENEMY_DEAD && gettime() - start >= 400)
+		game->map[(int)game->enemy.y][(int)game->enemy.x] = '0';
+	// printf("open_door=%d, player_flag = %d, door.flag = %d, door_wall_dist = %f\n", game->door.open_door, game->player.flag, game->door.flag, game->door.wall_dist);//APAGAR
+	if (game->calc.enemy_height && (!game->door.wall_dist || game->door.open_door
+					|| game->enemy.wall_dist < game->door.wall_dist))
 		draw_enemy(game, buffer);
 }
 
@@ -337,6 +337,7 @@ void	ft_raycasting(t_game *game)
 	x = 0;
 	ft_get_player_inicial_direction(game);
 	game->calc.enemy_height = 0;
+	game->door.wall_dist = 0;
 	while (x < game->x)
 	{
 		game->calc.enemy_in = 0;
@@ -356,7 +357,7 @@ void	ft_raycasting(t_game *game)
 			ft_which_box_in(game);
 			ft_side_dist(game);
 			ft_dda(game, 'X');
-			if (game->calc.enemy_in == 1 && game->calc.enemy_height == 0 
+			if (game->calc.enemy_in == 1 /*&& game->calc.enemy_height == 0*/ 
 											&& find_enemy_ray(game))
 			{
 				ft_enemy_height(game);
@@ -368,9 +369,12 @@ void	ft_raycasting(t_game *game)
 	}
 	if (BONUS)
 	{
-		if (game->calc.enemy_height && (game->player.flag || !game->door.open_door
-				|| game->enemy.wall_dist < game->door.wall_dist))
-			draw_enemy(game, pixels_buffer);
+		// 	printf("enemy_type = %d\n", game->enemy_data.enemy_type);//APAGAR	
+		// if (game->calc.enemy_height && (game->door.open_door
+		// 								|| game->enemy.wall_dist < game->door.wall_dist))
+		// {
+		// 	draw_enemy(game, pixels_buffer);
+		// }
 		// printf("open_door=%d, player_flag = %d, door.flag = %d\n", game->door.open_door, game->player.flag, game->door.flag);//APAGAR
 		enemy_can_die(game, pixels_buffer);
 		if (game->player.shoot)

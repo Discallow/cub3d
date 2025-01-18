@@ -79,7 +79,7 @@
 
 [ ] minimapa voltar a desenhar direcao do player
 
-[ ] quando se aproxima do inimigo ele "salta" de posicao
+[✅] quando se aproxima do inimigo ele "salta" de posicao
 
 [ ] arranjar forma de o menu inicial se impresso no ecra "antes" de aparecer o jogo
 

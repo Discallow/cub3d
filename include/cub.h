@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
+/*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 14:47:40 by discallow         #+#    #+#             */
-/*   Updated: 2025/01/17 16:14:28 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/18 01:43:01 by asofia-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@
 # define BONUS			1
 # define WEAPON_SCALE	3
 # define MILLISECOND	1000
+# define ENEMY_SCALE	3
 
 # define ENEMY_TEXTURE				"textures/enemy.xpm"
 # define ENEMY_DEAD_TEXTURE			"textures/enemy_dead.xpm"
@@ -169,6 +170,8 @@ typedef struct s_enemy
 	int			draw_start_y;
 	double		tex_step;
 	int			tex_x;
+	int			enemy_type;
+	long		is_dead;
 }				t_enemy;
 
 typedef enum	e_textures_direction

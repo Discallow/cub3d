@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
+/*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 18:12:51 by discallow         #+#    #+#             */
-/*   Updated: 2025/01/17 16:05:17 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/18 02:36:22 by asofia-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void init_struct(t_game *game)
 	game->player.shoot = false;
 	game->tex_buff = NULL;
 	game->elapsed = 0;
+	game->enemy_data.enemy_type = ENEMY;
 }
 
 void display_big_cub3d(void)
