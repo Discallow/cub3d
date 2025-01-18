@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 00:04:35 by discallow         #+#    #+#             */
-/*   Updated: 2025/01/17 15:55:10 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/18 15:36:48 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ void	check_rgb_value( t_game *game, t_position *element, char *line)
 	int		num;
 
 	num = 0;
-
 	element->rgb = ft_split(element->path, ',');
 	if (!element->rgb)
 		return_invalid_color(element->path, game, line);

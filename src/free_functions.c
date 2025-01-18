@@ -6,11 +6,51 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 23:58:38 by discallow         #+#    #+#             */
-/*   Updated: 2025/01/17 06:10:25 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/18 16:26:07 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub.h"
+
+void	free_textures(t_game *game)
+{
+	int	i;
+
+	if (!game->tex_buff)
+		return ;
+	i = 0;
+	while (i < NUM_TEXTURES)
+	{
+		if (game->tex_buff[i])
+		{
+			free(game->tex_buff[i]);
+			game->tex_buff[i] = NULL;
+		}
+		i++;
+	}
+	free(game->tex_buff);
+	game->tex_buff = NULL;
+}
+
+void	free_pixels_buffer(int **pixels_buffer, int height)
+{
+	int	i;
+
+	if (!pixels_buffer)
+		return ;
+	i = 0;
+	while (i < height)
+	{
+		if (pixels_buffer[i])
+		{
+			free(pixels_buffer[i]);
+			pixels_buffer[i] = NULL;
+		}
+		i++;
+	}
+	free(pixels_buffer);
+	pixels_buffer = NULL;
+}
 
 void	free_everything_2(t_game *game)
 {
@@ -32,7 +72,7 @@ void	free_everything_2(t_game *game)
 			free(game->map[i]);
 		free(game->map);
 	}
-	free_textures(game);//just for textures
+	free_textures(game);
 }
 
 void	free_everything(t_game *game)

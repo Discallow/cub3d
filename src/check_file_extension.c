@@ -6,11 +6,27 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 00:01:40 by discallow         #+#    #+#             */
-/*   Updated: 2025/01/03 15:34:56 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/18 16:54:35 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub.h"
+
+void	check_image_extension(t_game *game)
+{
+	if (game->copy.elements_filled)
+	{
+		if (ft_strcmp2(game->north.path, ".xpm")
+			|| ft_strcmp2(game->south.path, ".xpm")
+			|| ft_strcmp2(game->east.path, ".xpm")
+			|| ft_strcmp2(game->west.path, ".xpm"))
+		{
+			printf(RED"Wrong extension file"RESET"\n");
+			free_everything(game);
+			exit (1);
+		}
+	}
+}
 
 int	check_extension(char *file)
 {

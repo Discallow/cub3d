@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 22:27:37 by asofia-g          #+#    #+#             */
-/*   Updated: 2025/01/18 02:40:07 by asofia-g         ###   ########.fr       */
+/*   Updated: 2025/01/18 16:08:49 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -252,7 +252,7 @@ void	ft_raycasting_untextured(t_game *game)
 		color = ft_chose_color(game);//for untextured
 		//printf("game.->map2=%p\n", &game->map2);//APAGAR
 		//printf("x:%d, game->calc.draw_start:%d, game->calc.draw_end:%d\n", x, game->calc.draw_start, game->calc.draw_end);
-		ver_Line(&game->map2, x, game->calc.draw_start, game->calc.draw_end, color);//for untextured
+		ver_line(game, x, color);//for untextured
 		x++;
 	}
 }
@@ -322,7 +322,7 @@ void	ft_finding_doors(t_game *game, int **buffer, int x)
 		ft_wall_height(game, 1,'P');
 		ft_wall_x(game);//just for textures
 		ft_tex_x(game, 1);//just for textures
-		buffering_image_stripe(game, buffer, x);//just for textures
+		buffering_image_stripe(game, buffer, x, 0);//just for textures
 	}
 	
 }
@@ -349,7 +349,7 @@ void	ft_raycasting(t_game *game)
 		ft_wall_height(game, 1, '1');
 		ft_wall_x(game);//just for textures
 		ft_tex_x(game, 1);//just for textures
-		buffering_image_stripe(game, pixels_buffer, x);//just for textures
+		buffering_image_stripe(game, pixels_buffer, x, 0);//just for textures
 
 		/*FINDING ENEMYS*/
 		if (BONUS)

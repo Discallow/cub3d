@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 18:12:51 by discallow         #+#    #+#             */
-/*   Updated: 2025/01/18 02:36:22 by asofia-g         ###   ########.fr       */
+/*   Updated: 2025/01/18 15:17:59 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,18 +223,6 @@ void draw_line(t_position *data, int x0, int y0, int x1, int y1, int color)
 	}
 }
 
-void draw_player_direction(t_game *game, t_position *data)
-{
-	//int line_length = 2; // Length of the line
-	int start_x = (int)game->copy.x;
-	int start_y = (int)game->copy.y;
-	int end_x = start_x + (int)game->player.dir_x * 1;
-	int end_y = start_y + (int)game->player.dir_y * 1;
-
-	// Use the draw_line function to draw the line
-	draw_line(data, start_x, start_y, end_x, end_y, 0x00FF0000); // Red color
-}
-
 static int max(int a, int b) {
     if (a > b)
         return a;
@@ -295,7 +283,7 @@ static int min(int a, int b) {
 			else if (game->map[start_i][j] == 'X')
 			{
 				draw_square(&game->map2, game->len, game->len, k * game->len, i * game->len, 0x00808080);
-				draw_square(&game->map2, game->len / 5, game->len / 5, k * game->len, i * game->len, 0x00FF0000);
+				draw_square(&game->map2, game->len, game->len, k * game->len, i * game->len, 0x00FF0000);
 			}
             j++;
 			k++;
@@ -303,8 +291,8 @@ static int min(int a, int b) {
 		start_i++;
         i++;
     }
-    float player_x_on_map = (game->copy.x - (float)start_j) * game->len;
-    float player_y_on_map = (game->copy.y - (float)l) * game->len;
+    float player_x_on_map = (game->player.x - (float)start_j) * game->len;
+    float player_y_on_map = (game->player.y - (float)l) * game->len;
     draw_square(&game->map2, game->len / 5, game->len / 5,
                 (int)player_x_on_map, (int)player_y_on_map, 0x000000FF);
 }

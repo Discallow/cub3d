@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 14:47:40 by discallow         #+#    #+#             */
-/*   Updated: 2025/01/18 01:43:01 by asofia-g         ###   ########.fr       */
+/*   Updated: 2025/01/18 16:53:54 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,6 @@ typedef struct s_position
 
 typedef struct	s_map_copy
 {
-	double	x;
-	double	y;
 	int		line_index;
 	bool	elements_filled;
 	bool	map_read;
@@ -233,6 +231,7 @@ int		ft_atoi2(const char *s);
 char	*ft_strjoin3(char *s1, char *s2);
 int		ft_strcmp2(char *str1, char *str2);
 int		check_extension(char *file);
+void	check_image_extension(t_game *game);
 void	open_file(t_game *game, char *file);
 void	check_valid_element(char *line, t_game *game);
 void	check_valid_color(t_game *game, char *line, int i);
@@ -263,18 +262,17 @@ void	rotate_right(t_game *game);
 void	draw_square(t_position *data, int x, int y, int start_x, int start_y, int color);
 void	my_mlx_pixel_put(t_position *data, int x, int y, int color);
 void	build_map(t_game *game);
-void	destroy_map(t_game *game);
 void	rotate_left(t_game *game);
 int		check_door(t_game *game, int x, int y, int flag);
 long	gettime(void);
 
 /*DRAWING*/
 void	my_mlx_pixel_put(t_position *data, int x, int y, int color);
-void    ver_Line(t_position *data, int pos_x, int start, int end, int color);
+void    ver_line(t_game* game, int pos_x, int color);
 void	draw_line(t_position *data, int x0, int y0, int x1, int y1, int color);
 void 	update_image_from_buffer(t_game *game, t_position *data,
 								int **buffer);
-void	buffering_image_stripe(t_game *game, int **buffer, int x);
+void	buffering_image_stripe(t_game *game, int **buffer, int x, int y);
 void	ft_set_wall_texture(t_game *game);
 int		ft_set_bright(t_game *game, int color);
 
