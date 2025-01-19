@@ -3,34 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   drawing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
+/*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 22:39:40 by asofia-g          #+#    #+#             */
-/*   Updated: 2025/01/18 16:12:07 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/19 17:12:37 by asofia-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub.h"
-
-void	my_mlx_pixel_put(t_position *data, int x, int y, int color)
-{
-	char	*dst;
-
-	dst = data->addr + (y * data->line_len + x * (data->bits_per_pixel / 8));
-	*(unsigned int *)dst = color;
-}
-
-void	ver_line(t_game *game, int pos_x, int color)
-{
-	int	y;
-
-	y = game->calc.draw_start;
-	while (y <= game->calc.draw_end)
-	{
-		my_mlx_pixel_put(&game->map2, pos_x, y, color);
-		y++;
-	}
-}
 
 /*give x and y sides different brightness*/
 int	ft_set_bright(t_game *game, int color)
@@ -97,5 +77,18 @@ void	update_image_from_buffer(t_game *game, t_position *data,
 			x++;
 		}
 		y++;
+	}
+	free_pixels_buffer(buffer, game->y);
+}
+
+void	ft_drawing_enemys_and_weapon(t_game *game, int **pixels_buffer)
+{
+	if (BONUS)
+	{
+		enemy_can_die(game, pixels_buffer);
+		if (game->player.shoot)
+			draw_weapon(game, pixels_buffer, WEAPON_SHOOTING);
+		else
+			draw_weapon(game, pixels_buffer, WEAPON);
 	}
 }

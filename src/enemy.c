@@ -3,14 +3,48 @@
 /*                                                        :::      ::::::::   */
 /*   enemy.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
+/*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 21:11:44 by asofia-g          #+#    #+#             */
-/*   Updated: 2025/01/18 16:24:44 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/19 17:20:01 by asofia-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub.h"
+
+void	ft_finding_enemys_and_doors(t_game *game, int x, int **buffer)
+{
+	if (BONUS)
+	{
+		ft_which_box_in(game);
+		ft_side_dist(game);
+		ft_dda(game, 'X');
+		if (game->calc.enemy_in == 1 && find_enemy_ray(game))
+		{
+			ft_enemy_height(game);
+			game->calc.enemy_pos = x;
+		}
+		ft_finding_doors(game, buffer, x);
+	}
+}
+
+/*enemy_dist - distance between player and enemy
+*enemy_height - height based on enemy distance*/
+void	ft_enemy_height(t_game *game)
+{
+	double	enemy_dist;
+	double	dx;
+	double	dy;
+
+	dx = game->enemy.x - game->player.x;
+	dy = game->enemy.y - game->player.y;
+	enemy_dist = sqrt(dx * dx + dy * dy);
+	if (enemy_dist > 0.0)
+		game->calc.enemy_height = (int)(game->y / enemy_dist);
+	else
+		game->calc.enemy_height = game->y;
+	ft_wall_height(game, 1, 'X');
+}
 
 void	ini_enemy(t_game *game)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
+/*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 14:47:40 by discallow         #+#    #+#             */
-/*   Updated: 2025/01/18 16:53:54 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/19 17:45:05 by asofia-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,7 @@
 # define WEAPON_IDLE_TEXTURE		"textures/weapon_idle.xpm"
 # define WEAPON_SHOOTING_TEXTURE	"textures/weapon_shooting.xpm"
 
-
-typedef enum	e_element
+typedef enum e_element
 {
 	CEILING,
 	FLOOR,
@@ -100,7 +99,7 @@ typedef struct s_position
 	double	wall_dist;
 }		t_position;
 
-typedef struct	s_map_copy
+typedef struct s_map_copy
 {
 	int		line_index;
 	bool	elements_filled;
@@ -111,7 +110,7 @@ typedef struct	s_map_copy
 	int		player_num;
 }				t_map_copy;
 
-typedef struct	s_calculation
+typedef struct s_calculation
 {
 	double	camera_x;
 	double	ray_dir_x;
@@ -131,8 +130,8 @@ typedef struct	s_calculation
 	int		wall_side;
 	double	wall_dist;
 	int		line_height;
-	int 	draw_start;
-	int 	draw_end;
+	int		draw_start;
+	int		draw_end;
 	double	wall_x;
 	int		tex_x;
 	double	tex_y_step;
@@ -146,12 +145,12 @@ typedef struct	s_calculation
 typedef struct s_texture
 {
 	void	*tex;
-	char    *data_addr;
+	char	*data_addr;
 	int		tex_width;
 	int		tex_height;
-	int     bpp;
-	int     size_line;
-	int     endian;
+	int		bpp;
+	int		size_line;
+	int		endian;
 }				t_texture;
 
 typedef struct s_weapon
@@ -172,7 +171,7 @@ typedef struct s_enemy
 	long		is_dead;
 }				t_enemy;
 
-typedef enum	e_textures_direction
+typedef enum e_textures_direction
 {
 	NORTH,
 	SOUTH,
@@ -188,7 +187,7 @@ typedef enum	e_textures_direction
 	WEAPON_SHOOTING,
 }				t_textures_direction;
 
-typedef struct	s_game
+typedef struct s_game
 {
 	char			**map;
 	t_position		north;
@@ -250,6 +249,9 @@ void	check_first_last_line(t_game *game);
 
 /*CLEANING ROUTINE*/
 void	free_everything(t_game *game);
+void	texture_error(t_game *game);
+void	free_textures(t_game *game);
+void	free_pixels_buffer(int **pixels_buffer, int height);
 
 /*MOVES*/
 void	redraw_map(t_game *game);
@@ -259,34 +261,59 @@ void	move_left(t_game *game);
 void	move_right(t_game *game);
 void	move_forward(t_game *game);
 void	rotate_right(t_game *game);
-void	draw_square(t_position *data, int x, int y, int start_x, int start_y, int color);
+void	draw_square(t_position *data, int x, int y, int start_x,
+			int start_y, int color);
 void	my_mlx_pixel_put(t_position *data, int x, int y, int color);
 void	build_map(t_game *game);
 void	rotate_left(t_game *game);
 int		check_door(t_game *game, int x, int y, int flag);
 long	gettime(void);
 
-/*DRAWING*/
+/*CALCULATIONS*/
+void	ft_get_player_inicial_direction(t_game *game);
+void	ft_ray_position(t_game *game, int x);
+void	ft_which_box_in(t_game *game);
+void	ft_delta_dist(t_game *game);
+void	ft_side_dist(t_game *game);
+void	ft_dda(t_game *game, char c);
+void	ft_wall_height(t_game *game, int scale, char c);
+
+/*UNTEXTURE CALCULATIONS*/
 void	my_mlx_pixel_put(t_position *data, int x, int y, int color);
-void    ver_line(t_game* game, int pos_x, int color);
+void	ver_line(t_game *game, int pos_x, int color);
+void	ft_raycasting_untextured(t_game *game);
+
+/*TEXTURES CALCULATION*/
+void	ft_wall_x(t_game *game);
+void	ft_tex_x(t_game *game, int scale);
+int		ft_chose_color(t_game *game);
+
+/*DRAWING*/
 void	draw_line(t_position *data, int x0, int y0, int x1, int y1, int color);
-void 	update_image_from_buffer(t_game *game, t_position *data,
-								int **buffer);
-void	buffering_image_stripe(t_game *game, int **buffer, int x, int y);
 void	ft_set_wall_texture(t_game *game);
 int		ft_set_bright(t_game *game, int color);
+void	update_image_from_buffer(t_game *game, t_position *data,
+			int **buffer);
+void	buffering_image_stripe(t_game *game, int **buffer, int x, int y);
+void	ft_drawing_enemys_and_weapon(t_game *game, int **pixels_buffer);
 
-void    ini_weapon(t_game *game);
-void	draw_weapon(t_game *game, int **buffer, int	weapon_type);
+/*ABOUT WEAPON*/
+void	ini_weapon(t_game *game);
+void	draw_weapon(t_game *game, int **buffer, int weapon_type);
+
+/*ABOUT ENEMY*/
+void	ft_enemy_height(t_game *game);
+void	ft_finding_enemys_and_doors(t_game *game, int x, int **buffer);
+int		find_enemy_ray(t_game *game);
+void	enemy_can_die(t_game *game, int **buffer);
 void	draw_enemy(t_game *game, int **buffer);
+
+/*ABOUT DOORS*/
+void	ft_finding_doors(t_game *game, int **buffer, int x);
 
 /*LOAD TEXTURES*/
 void	load_texture(t_game *game, char *relative_path, int index);
-void    load_all_textures(t_game *game);
-
-/*FREE TEXTURES*/
-void    free_textures(t_game *game);
-void	free_pixels_buffer(int **pixels_buffer, int height);
+void	load_all_textures(t_game *game);
 
 /*RAYCASTING*/
 void	ft_raycasting(t_game *game);

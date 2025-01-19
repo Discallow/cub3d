@@ -33,7 +33,7 @@
 [✅] Parsing - Falta:
         - texturas são XPM
 
-[ ] validar se as texturas são validas. a função mlx_xpm_file_to_image devolve NULL caso a textura seja invalida por exemplo.
+[✅] validar se as texturas são validas. a função mlx_xpm_file_to_image devolve NULL caso a textura seja invalida por exemplo.
                 garantir que não existem leaks em qualquer uma das imagens validadas.
                 exemplo: as primeiras 2 são validas, a 3 é invalida.
 
@@ -71,7 +71,7 @@
 
 [✅] implementar arma a disparar - ver se conta como sprite
 
-[ ] flag de bonus nos casos em que e para ser avaliado apenas no bonus
+[✅] flag de bonus nos casos em que e para ser avaliado apenas no bonus
 
 [ ] player nao pode entrar na posicao do inimigo
 
@@ -83,8 +83,12 @@
 
 [ ] arranjar forma de o menu inicial se impresso no ecra "antes" de aparecer o jogo
 
-[ ] colocar os caminhos das imagens no .h
+[✅] colocar os caminhos das imagens no .h
 
-[ ] escalas das imagens como variáveis ou no .h
+[✅] escalas das imagens como variáveis ou no .h
 
 [ ] makefile está a dar relink
+
+[ ] testar malloc error
+
+[ ] atualizar o menu inicial com setas p o lado, movimento do rato e clique de rato

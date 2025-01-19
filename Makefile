@@ -35,7 +35,12 @@ SRC_FILES = $(SRC_DIR)/main.c \
 		$(SRC_DIR)/weapon.c \
 		$(SRC_DIR)/enemy.c \
 		$(SRC_DIR)/check_rotation_door.c \
-		$(SRC_DIR)/check_wall_door_texture.c
+		$(SRC_DIR)/check_wall_door_texture.c \
+		$(SRC_DIR)/enemy_death.c \
+		$(SRC_DIR)/raycasting_calcs.c \
+		$(SRC_DIR)/doors.c \
+		$(SRC_DIR)/raycasting_calcs_untextured.c \
+		$(SRC_DIR)/raycasting_calcs_textured.c 
 OBJ_FILES = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC_FILES))
 
 all: libft mlx $(NAME)

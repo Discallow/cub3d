@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
+/*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 18:12:51 by discallow         #+#    #+#             */
-/*   Updated: 2025/01/18 15:17:59 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/19 16:28:38 by asofia-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -330,6 +330,8 @@ void draw_crosshair(t_game *game)
     draw_filled_rect(game, x_start_horizontal, y_start, x_end_horizontal - x_start_horizontal, thickness, 0x0000FFFF); // White color
 }
 
+/*to try untextured version, set BONUS do 0 and 
+*change ft_raycasting(game) to ft_raycasting_untextured(game)*/
 void build_map(t_game *game)
 {
 	game->len = game->x / SCALE ;

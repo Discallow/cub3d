@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   load_textures.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
+/*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 00:57:40 by asofia-g          #+#    #+#             */
-/*   Updated: 2025/01/18 16:44:44 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/19 12:42:46 by asofia-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub.h"
 
-static void	texture_error(t_game *game)
+void	texture_error(t_game *game)
 {
 	free_everything(game);
 	mlx_destroy_window(game->connection, game->window);
