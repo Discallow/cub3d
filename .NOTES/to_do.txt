@@ -83,7 +83,7 @@
 
 [✅] escalas das imagens como variáveis ou no .h
 
-[ ] makefile está a dar relink
+[✅] makefile está a dar relink
 
 [ ] testar malloc error
 

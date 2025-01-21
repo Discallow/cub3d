@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 18:12:51 by discallow         #+#    #+#             */
-/*   Updated: 2025/01/21 21:27:29 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/21 22:49:34 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	init_struct(t_game *game)
 	game->copy.map_read = false;
 	game->copy.map_joined = NULL;
 	game->copy.player_num = 0;
+	game->copy.enemy_num = 0;
 	game->copy.max_width = 0;
 	game->copy.max_height = 0;
 	game->player.angle = 0.0;

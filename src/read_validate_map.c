@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 05:49:29 by discallow         #+#    #+#             */
-/*   Updated: 2025/01/21 21:28:52 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/21 22:50:18 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ static void	check_valid_char(t_game *game, int i, int j)
 		check_borders(game, i, j);
 	else if (BONUS && game->map[i][j] == 'X')
 	{
+		game->copy.enemy_num++;
 		game->enemy.x = j + 0.5;
 		game->enemy.y = i + 0.5;
 	}
@@ -69,7 +70,7 @@ static void	validate_map(t_game *game)
 		game->copy.max_height++;
 		i++;
 	}
-	if (game->copy.player_num != 1)
+	if (game->copy.player_num != 1 || game->copy.enemy_num != 1)
 		return_invalid_number_players(game);
 }
 

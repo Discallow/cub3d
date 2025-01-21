@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 14:47:40 by discallow         #+#    #+#             */
-/*   Updated: 2025/01/21 21:47:10 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/21 22:48:23 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ typedef struct s_map_copy
 	int		max_height;
 	char	*map_joined;
 	int		player_num;
+	int		enemy_num;
 }				t_map_copy;
 
 typedef struct s_calculation
