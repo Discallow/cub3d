@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   enemy_death.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 13:13:37 by asofia-g          #+#    #+#             */
-/*   Updated: 2025/01/19 17:27:02 by asofia-g         ###   ########.fr       */
+/*   Updated: 2025/01/21 21:26:51 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub.h"
+#include "cub.h"
 
 /*Check if the vector player-enemy is aligned with the ray
 *Calculate the player-enemy vector. Calculate the cross product of the 

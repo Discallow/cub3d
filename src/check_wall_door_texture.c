@@ -6,11 +6,11 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 15:38:11 by discallow         #+#    #+#             */
-/*   Updated: 2025/01/18 16:18:27 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/21 21:26:17 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub.h"
+#include "cub.h"
 
 static void	close_doors2(t_game *game, int *flag)
 {

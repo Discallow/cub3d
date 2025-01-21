@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 14:47:40 by discallow         #+#    #+#             */
-/*   Updated: 2025/01/19 17:45:05 by asofia-g         ###   ########.fr       */
+/*   Updated: 2025/01/21 21:47:10 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,13 @@
 # define NUM_TEXTURES 	12
 # define VERTICAL		0
 # define HORIZONTAL		1
-# define BONUS			1
 # define WEAPON_SCALE	3
 # define MILLISECOND	1000
 # define ENEMY_SCALE	3
+
+# ifndef BONUS
+#  define BONUS 1
+# endif
 
 # define ENEMY_TEXTURE				"textures/enemy.xpm"
 # define ENEMY_DEAD_TEXTURE			"textures/enemy_dead.xpm"
@@ -187,6 +190,30 @@ typedef enum e_textures_direction
 	WEAPON_SHOOTING,
 }				t_textures_direction;
 
+typedef struct s_mini_map
+{
+	int		start_i;
+	int		start_j;
+	int		end_i;
+	int		end_j;
+	float	player_x;
+	float	player_y;
+}				t_mini_map;
+
+typedef struct s_crosshair
+{
+	int	line_length;
+	int	thickness;
+	int	x_start;
+	int	y_start;
+	int	y_start_vertical;
+	int	y_end_vertical;
+	int	x_start_horizontal;
+	int	x_end_horizontal;
+	int	height;
+	int	width;
+}				t_crosshair;
+
 typedef struct s_game
 {
 	char			**map;
@@ -200,6 +227,8 @@ typedef struct s_game
 	int				fd;
 	long			elapsed;
 	t_map_copy		copy;
+	t_mini_map		mini_map;
+	t_crosshair		crosshair;
 	t_position		player;
 	t_position		door;
 	t_position		wall;
@@ -232,16 +261,8 @@ int		ft_strcmp2(char *str1, char *str2);
 int		check_extension(char *file);
 void	check_image_extension(t_game *game);
 void	open_file(t_game *game, char *file);
-void	check_valid_element(char *line, t_game *game);
-void	check_valid_color(t_game *game, char *line, int i);
-bool	check_elements_filled(t_game *game);
 void	check_valid_line(char *line, t_game *game);
-void	check_rgb_value( t_game *game, t_position *element, char *line);
-void	check_one_or_space(t_game *game, int i);
-void	validate_map(t_game *game);
 void	read_map(t_game *game);
-void	read_file(t_game *game);
-void	check_valid_map(char *line, t_game *game);
 char	*check_name(t_game *game, char *line, char *complete_line);
 void	check_map_end(t_game *game, char *line);
 void	check_borders(t_game *game, int x, int y);
@@ -250,19 +271,19 @@ void	check_first_last_line(t_game *game);
 /*CLEANING ROUTINE*/
 void	free_everything(t_game *game);
 void	texture_error(t_game *game);
-void	free_textures(t_game *game);
 void	free_pixels_buffer(int **pixels_buffer, int height);
+int		window_closed(t_game *game);
 
 /*MOVES*/
 void	redraw_map(t_game *game);
 void	build_map(t_game *game);
+int		key_pressed(int keysim, t_game *game);
+int		key_released(int keysim, t_game *game);
 void	move_backwards(t_game *game);
 void	move_left(t_game *game);
 void	move_right(t_game *game);
 void	move_forward(t_game *game);
 void	rotate_right(t_game *game);
-void	draw_square(t_position *data, int x, int y, int start_x,
-			int start_y, int color);
 void	my_mlx_pixel_put(t_position *data, int x, int y, int color);
 void	build_map(t_game *game);
 void	rotate_left(t_game *game);
@@ -279,8 +300,6 @@ void	ft_dda(t_game *game, char c);
 void	ft_wall_height(t_game *game, int scale, char c);
 
 /*UNTEXTURE CALCULATIONS*/
-void	my_mlx_pixel_put(t_position *data, int x, int y, int color);
-void	ver_line(t_game *game, int pos_x, int color);
 void	ft_raycasting_untextured(t_game *game);
 
 /*TEXTURES CALCULATION*/
@@ -289,17 +308,17 @@ void	ft_tex_x(t_game *game, int scale);
 int		ft_chose_color(t_game *game);
 
 /*DRAWING*/
-void	draw_line(t_position *data, int x0, int y0, int x1, int y1, int color);
 void	ft_set_wall_texture(t_game *game);
-int		ft_set_bright(t_game *game, int color);
 void	update_image_from_buffer(t_game *game, t_position *data,
 			int **buffer);
 void	buffering_image_stripe(t_game *game, int **buffer, int x, int y);
 void	ft_drawing_enemys_and_weapon(t_game *game, int **pixels_buffer);
+void	draw_crosshair(t_game *game);
 
 /*ABOUT WEAPON*/
 void	ini_weapon(t_game *game);
 void	draw_weapon(t_game *game, int **buffer, int weapon_type);
+void	check_mouse_hooks(t_game *game);
 
 /*ABOUT ENEMY*/
 void	ft_enemy_height(t_game *game);
@@ -317,5 +336,15 @@ void	load_all_textures(t_game *game);
 
 /*RAYCASTING*/
 void	ft_raycasting(t_game *game);
+
+/*UTILS*/
+int		min(int a, int b);
+int		max(int a, int b);
+void	display_big_cub3d(void);
+void	display_controls(void);
+void	init_connection(t_game *game);
+
+/*MINIMAP*/
+void	draw_minimap(t_game *game);
 
 #endif

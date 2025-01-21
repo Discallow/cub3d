@@ -6,13 +6,13 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 21:51:44 by discallow         #+#    #+#             */
-/*   Updated: 2025/01/18 16:55:39 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/21 21:28:00 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub.h"
+#include "cub.h"
 
-void	read_file(t_game *game)
+static void	read_file(t_game *game)
 {
 	char	*line;
 

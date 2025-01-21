@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   doors.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 13:45:11 by asofia-g          #+#    #+#             */
-/*   Updated: 2025/01/19 13:48:16 by asofia-g         ###   ########.fr       */
+/*   Updated: 2025/01/21 21:26:41 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub.h"
+#include "cub.h"
 
 void	ft_finding_doors(t_game *game, int **buffer, int x)
 {

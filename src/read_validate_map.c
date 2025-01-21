@@ -6,13 +6,13 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 05:49:29 by discallow         #+#    #+#             */
-/*   Updated: 2025/01/18 16:55:27 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/21 21:28:52 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub.h"
+#include "cub.h"
 
-void	check_one_or_space(t_game *game, int i)
+static void	check_one_or_space(t_game *game, int i)
 {
 	int			len;
 	static int	flag = 0;
@@ -51,7 +51,7 @@ static void	check_valid_char(t_game *game, int i, int j)
 		return_invalid_map(game);
 }
 
-void	validate_map(t_game *game)
+static void	validate_map(t_game *game)
 {
 	int	i;
 	int	j;
@@ -71,6 +71,24 @@ void	validate_map(t_game *game)
 	}
 	if (game->copy.player_num != 1)
 		return_invalid_number_players(game);
+}
+
+static void	check_valid_map(char *line, t_game *game)
+{
+	static int	flag = 0;
+	size_t		i;
+
+	i = 0;
+	skip_spaces(line, &i);
+	if (!line[i])
+	{
+		if (flag)
+			check_map_end(game, line);
+		return ;
+	}
+	if (!flag)
+		flag = 1;
+	game->copy.map_joined = ft_strjoin3(game->copy.map_joined, line);
 }
 
 void	read_map(t_game *game)
@@ -96,22 +114,4 @@ void	read_map(t_game *game)
 		return_invalid_map(game);
 	game->map = ft_split2(game->copy.map_joined, '\n');
 	validate_map(game);
-}
-
-void	check_valid_map(char *line, t_game *game)
-{
-	static int	flag = 0;
-	size_t		i;
-
-	i = 0;
-	skip_spaces(line, &i);
-	if (!line[i])
-	{
-		if (flag)
-			check_map_end(game, line);
-		return ;
-	}
-	if (!flag)
-		flag = 1;
-	game->copy.map_joined = ft_strjoin3(game->copy.map_joined, line);
 }

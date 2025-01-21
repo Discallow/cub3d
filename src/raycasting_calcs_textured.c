@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting_calcs_textured.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 15:12:08 by asofia-g          #+#    #+#             */
-/*   Updated: 2025/01/19 16:11:16 by asofia-g         ###   ########.fr       */
+/*   Updated: 2025/01/21 21:28:13 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub.h"
+#include "cub.h"
 
 /*Calculate value of wallX, where exactly the wall was hit*/
 void	ft_wall_x(t_game *game)

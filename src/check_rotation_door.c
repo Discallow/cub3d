@@ -6,11 +6,11 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 15:34:32 by discallow         #+#    #+#             */
-/*   Updated: 2025/01/18 15:36:25 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/21 21:26:08 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub.h"
+#include "cub.h"
 
 void	redraw_map(t_game *game)
 {
@@ -30,6 +30,25 @@ long	gettime(void)
 	}
 	elapsed = (start.tv_sec * MILLISECOND) + (start.tv_usec / MILLISECOND);
 	return (elapsed);
+}
+
+int	check_door(t_game *game, int x, int y, int flag)
+{
+	x = game->player.x + game->player.dir_x;
+	y = game->player.y + game->player.dir_y;
+	if (game->map[(int)game->player.y][x] == 'P'
+		|| game->map[y][(int)game->player.x] == 'P')
+		game->door.open_door = true;
+	if (BONUS && flag == 2 && game->map[(int)game->player.y][x] != 'P'
+		&& game->map[y][(int)game->player.x] != 'P'
+		&& game->door.open_door)
+		game->door.open_door = false;
+	if (flag && (game->map[(int)game->player.y][(int)x] != 'P'
+		|| game->player.flag))
+		return (1);
+	if (game->map[(int)y][(int)game->player.x] != 'P' || game->player.flag)
+		return (2);
+	return (0);
 }
 
 void	rotate_right(t_game *game)

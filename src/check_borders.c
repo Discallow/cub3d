@@ -6,11 +6,11 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 12:12:53 by discallow         #+#    #+#             */
-/*   Updated: 2024/12/03 12:17:19 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/21 21:25:50 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub.h"
+#include "cub.h"
 
 void	check_map_end(t_game *game, char *line)
 {

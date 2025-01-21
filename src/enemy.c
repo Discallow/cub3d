@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   enemy.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 21:11:44 by asofia-g          #+#    #+#             */
-/*   Updated: 2025/01/19 17:20:01 by asofia-g         ###   ########.fr       */
+/*   Updated: 2025/01/21 21:27:00 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub.h"
+#include "cub.h"
 
 void	ft_finding_enemys_and_doors(t_game *game, int x, int **buffer)
 {

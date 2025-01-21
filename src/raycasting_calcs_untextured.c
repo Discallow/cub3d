@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting_calcs_untextured.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 14:45:58 by asofia-g          #+#    #+#             */
-/*   Updated: 2025/01/19 16:56:51 by asofia-g         ###   ########.fr       */
+/*   Updated: 2025/01/21 21:28:21 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub.h"
+#include "cub.h"
 
 /*Calculate distance of perpendicular ray, i.e. remove fisheye effect!*/
 void	ft_wall_height(t_game *game, int scale, char c)
@@ -56,7 +56,7 @@ void	my_mlx_pixel_put(t_position *data, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-void	ver_line(t_game *game, int pos_x, int color)
+static void	ver_line(t_game *game, int pos_x, int color)
 {
 	int	y;
 

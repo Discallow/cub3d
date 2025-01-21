@@ -6,11 +6,11 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 23:53:51 by discallow         #+#    #+#             */
-/*   Updated: 2025/01/03 15:34:45 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/21 21:28:59 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub.h"
+#include "cub.h"
 
 void	skip_spaces(char *line, size_t *i)
 {

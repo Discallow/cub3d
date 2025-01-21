@@ -6,11 +6,11 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 00:01:40 by discallow         #+#    #+#             */
-/*   Updated: 2025/01/18 16:54:35 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/21 21:26:02 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub.h"
+#include "cub.h"
 
 void	check_image_extension(t_game *game)
 {

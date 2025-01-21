@@ -6,24 +6,35 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 00:04:35 by discallow         #+#    #+#             */
-/*   Updated: 2025/01/18 15:36:48 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/21 21:25:56 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub.h"
+#include "cub.h"
 
-void	check_valid_line(char *line, t_game *game)
+static void	check_rgb_value( t_game *game, t_position *element, char *line)
 {
-	size_t	i;
+	int		num;
 
-	i = 0;
-	skip_spaces(line, &i);
-	if (!line[i])
-		return ;
-	check_valid_element(line + i, game);
+	num = 0;
+	element->rgb = ft_split(element->path, ',');
+	if (!element->rgb)
+		return_invalid_color(element->path, game, line);
+	num = ft_atoi2(element->rgb[0]);
+	if (num == -1)
+		return_invalid_color(element->rgb[0], game, line);
+	element->color |= num << 16;
+	num = ft_atoi2(element->rgb[1]);
+	if (num == -1)
+		return_invalid_color(element->rgb[1], game, line);
+	element->color |= num << 8;
+	num = ft_atoi2(element->rgb[2]);
+	if (num == -1)
+		return_invalid_color(element->rgb[2], game, line);
+	element->color |= num;
 }
 
-bool	check_elements_filled(t_game *game)
+static bool	check_elements_filled(t_game *game)
 {
 	if (game->north.path && game->south.path && game->east.path
 		&& game->west.path && game->floor.path && game->ceiling.path)
@@ -34,7 +45,7 @@ bool	check_elements_filled(t_game *game)
 	return (false);
 }
 
-void	check_valid_color(t_game *game, char *line, int i)
+static void	check_valid_color(t_game *game, char *line, int i)
 {
 	if (!ft_strncmp(line, "C", i) && !game->ceiling.path)
 	{
@@ -50,7 +61,7 @@ void	check_valid_color(t_game *game, char *line, int i)
 		return_invalid_line(game, line);
 }
 
-void	check_valid_element(char *line, t_game *game)
+static void	check_valid_element(char *line, t_game *game)
 {
 	int	i;
 
@@ -74,24 +85,13 @@ void	check_valid_element(char *line, t_game *game)
 	check_elements_filled(game);
 }
 
-void	check_rgb_value( t_game *game, t_position *element, char *line)
+void	check_valid_line(char *line, t_game *game)
 {
-	int		num;
+	size_t	i;
 
-	num = 0;
-	element->rgb = ft_split(element->path, ',');
-	if (!element->rgb)
-		return_invalid_color(element->path, game, line);
-	num = ft_atoi2(element->rgb[0]);
-	if (num == -1)
-		return_invalid_color(element->rgb[0], game, line);
-	element->color |= num << 16;
-	num = ft_atoi2(element->rgb[1]);
-	if (num == -1)
-		return_invalid_color(element->rgb[1], game, line);
-	element->color |= num << 8;
-	num = ft_atoi2(element->rgb[2]);
-	if (num == -1)
-		return_invalid_color(element->rgb[2], game, line);
-	element->color |= num;
+	i = 0;
+	skip_spaces(line, &i);
+	if (!line[i])
+		return ;
+	check_valid_element(line + i, game);
 }

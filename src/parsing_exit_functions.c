@@ -6,11 +6,11 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 23:49:12 by discallow         #+#    #+#             */
-/*   Updated: 2024/12/03 12:15:31 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/21 21:27:53 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub.h"
+#include "cub.h"
 
 void	return_invalid_color(char *str, t_game *game, char *line)
 {

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting_calcs.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 13:52:07 by asofia-g          #+#    #+#             */
-/*   Updated: 2025/01/19 14:43:11 by asofia-g         ###   ########.fr       */
+/*   Updated: 2025/01/21 21:28:39 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub.h"
+#include "cub.h"
 
 /*calculate ray position and direction 
 *camera plane is perpendicular to the direction

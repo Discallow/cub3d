@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_functions.c                                   :+:      :+:    :+:   */
+/*   exit_functions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 23:58:38 by discallow         #+#    #+#             */
-/*   Updated: 2025/01/18 16:26:07 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/21 21:27:07 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub.h"
+#include "cub.h"
 
-void	free_textures(t_game *game)
+static void	free_textures(t_game *game)
 {
 	int	i;
 
@@ -99,4 +99,15 @@ void	free_everything(t_game *game)
 		free(game->ceiling.rgb);
 	}
 	free_everything_2(game);
+}
+
+int	window_closed(t_game *game)
+{
+	write(1, "Window closed!\n", 15);
+	mlx_destroy_image(game->connection, game->map2.img);
+	free_everything(game);
+	mlx_destroy_window(game->connection, game->window);
+	mlx_destroy_display(game->connection);
+	free(game->connection);
+	exit(0);
 }

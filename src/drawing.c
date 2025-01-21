@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   drawing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asofia-g <asofia-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 22:39:40 by asofia-g          #+#    #+#             */
-/*   Updated: 2025/01/19 17:12:37 by asofia-g         ###   ########.fr       */
+/*   Updated: 2025/01/21 21:26:46 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub.h"
+#include "cub.h"
 
 /*give x and y sides different brightness*/
-int	ft_set_bright(t_game *game, int color)
+static int	ft_set_bright(t_game *game, int color)
 {
 	if (game->calc.tex_drawn == NORTH || game->calc.tex_drawn == EAST)
 		color = ((color >> 1) & 8355711);

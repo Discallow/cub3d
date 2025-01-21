@@ -6,11 +6,11 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 19:46:17 by asofia-g          #+#    #+#             */
-/*   Updated: 2025/01/18 17:01:28 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/21 21:29:16 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub.h"
+#include "cub.h"
 
 void	ini_weapon(t_game *game)
 {
