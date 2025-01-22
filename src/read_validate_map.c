@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 05:49:29 by discallow         #+#    #+#             */
-/*   Updated: 2025/01/21 22:50:18 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/22 00:34:54 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static void	validate_map(t_game *game)
 		game->copy.max_height++;
 		i++;
 	}
-	if (game->copy.player_num != 1 || game->copy.enemy_num != 1)
+	if (game->copy.player_num != 1 || (BONUS && game->copy.enemy_num != 1))
 		return_invalid_number_players(game);
 }
 
