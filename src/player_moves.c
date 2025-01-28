@@ -18,7 +18,11 @@ static void	check_enemy(t_game *game, int x, int y)
 		|| game->map[(int)game->player.y][x] == 'X')
 	{
 		printf(RED"You died!"RESET"\n");
+		mlx_destroy_image(game->connection, game->map2.img);
 		free_everything(game);
+		mlx_destroy_window(game->connection, game->window);
+		mlx_destroy_display(game->connection);
+		free(game->connection);
 		exit (0);
 	}
 }

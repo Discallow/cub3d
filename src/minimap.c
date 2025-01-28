@@ -39,10 +39,9 @@ static void	draw_into_buffer(t_game *game, int i, int j, int k)
 	if (game->map[game->mini_map.start_i][j] == '1')
 		draw_square(game, k * game->len, i * game->len, 0x0000FF00);
 	else if (game->map[game->mini_map.start_i][j] == 'X')
-	{
-		draw_square(game, k * game->len, i * game->len, 0x00808080);
 		draw_square(game, k * game->len, i * game->len, 0x00FF0000);
-	}
+	else if (game->map[game->mini_map.start_i][j] == 'P')
+		draw_square(game, k * game->len, i * game->len, 0x0088E788);
 	else
 		draw_square(game, k * game->len, i * game->len, 0x00808080);
 }

@@ -52,6 +52,7 @@
 # define WEAPON_SCALE	3
 # define MILLISECOND	1000
 # define ENEMY_SCALE	3
+# define ROTATION_SPEED	0.05
 
 # ifndef BONUS
 #  define BONUS 1

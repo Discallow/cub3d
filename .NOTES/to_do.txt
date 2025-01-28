@@ -88,3 +88,9 @@
 [ ] testar malloc error
 
 [✅] atualizar o menu inicial com setas p o lado, movimento do rato e clique de rato
+
+[ ] multiplas portas nao funciona
+
+[ ] aparecer jogo depois de carregar no enter
+
+[ ] validar as 4 direcoes do player/porta/chao/inimigo

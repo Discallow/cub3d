@@ -53,7 +53,7 @@ int	check_door(t_game *game, int x, int y, int flag)
 
 void	rotate_right(t_game *game)
 {
-	game->player.angle += 0.1;
+	game->player.angle += ROTATION_SPEED;
 	if (game->player.angle > 2 * M_PI)
 		game->player.angle -= 2 * M_PI;
 	game->player.dir_x = cos(game->player.angle);
@@ -62,7 +62,7 @@ void	rotate_right(t_game *game)
 
 void	rotate_left(t_game *game)
 {
-	game->player.angle -= 0.1;
+	game->player.angle -= ROTATION_SPEED;
 	if (game->player.angle < 0)
 		game->player.angle += 2 * M_PI;
 	game->player.dir_x = cos(game->player.angle);
