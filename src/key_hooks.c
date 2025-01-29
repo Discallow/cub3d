@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 07:53:01 by discallow         #+#    #+#             */
-/*   Updated: 2025/01/21 21:27:14 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/29 18:28:13 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,7 @@ int	key_pressed(int keysim, t_game *game)
 		game->player.rotate_left = true;
 	if (keysim == XK_Escape)
 	{
-		printf(RED"Couldn't you kill all the enemies? ");
-		printf("Are you afraid?"RESET"\n");
+		printf("Window closed!\n");
 		mlx_destroy_image(game->connection, game->map2.img);
 		free_everything(game);
 		mlx_destroy_window(game->connection, game->window);

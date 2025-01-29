@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 14:47:40 by discallow         #+#    #+#             */
-/*   Updated: 2025/01/21 22:48:23 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/29 17:54:06 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ typedef struct s_position
 	int		endian;
 	double	angle;
 	double	wall_dist;
+	int		num;
 }		t_position;
 
 typedef struct s_map_copy
@@ -175,6 +176,13 @@ typedef struct s_enemy
 	int			enemy_type;
 	long		is_dead;
 }				t_enemy;
+
+typedef enum e_icon
+{
+	DOOR,
+	PLAYER,
+	ENEMIES,
+}				t_icon;		
 
 typedef enum e_textures_direction
 {
@@ -253,7 +261,7 @@ char	*get_next_line(int fd);
 /*PARSING*/
 void	check_map(t_game *game, char *map);
 void	return_invalid_color(char *str, t_game *game, char *line);
-void	return_invalid_number_players(t_game *game);
+void	return_invalid_number_players(t_game *game, t_icon icon);
 void	return_invalid_map(t_game *game);
 void	return_invalid_line(t_game *game, char *line);
 void	skip_spaces(char *line, size_t *i);
@@ -268,6 +276,8 @@ void	read_map(t_game *game);
 char	*check_name(t_game *game, char *line, char *complete_line);
 void	check_map_end(t_game *game, char *line);
 void	check_borders(t_game *game, int x, int y);
+void	check_door_borders(t_game *game, int x, int y);
+void	check_if_map_closed(t_game *game, int x, int y);
 void	check_first_last_line(t_game *game);
 
 /*CLEANING ROUTINE*/

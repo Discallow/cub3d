@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 05:49:29 by discallow         #+#    #+#             */
-/*   Updated: 2025/01/22 01:25:55 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/29 17:54:22 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ static void	check_one_or_space(t_game *game, int i)
 
 static void	check_valid_char(t_game *game, int i, int j)
 {
+	if (game->map[i][j] != '1' && game->map[i][j] != ' ')
+		check_if_map_closed(game, i, j);
 	if (game->map[i][j] == 'N' || game->map[i][j] == 'S'
 		|| game->map[i][j] == 'W' || game->map[i][j] == 'E')
 	{
@@ -47,7 +49,7 @@ static void	check_valid_char(t_game *game, int i, int j)
 		game->enemy.y = i + 0.5;
 	}
 	else if (BONUS && game->map[i][j] == 'P')
-		;
+		check_door_borders(game, i, j);
 	else if (game->map[i][j] != '1' && game->map[i][j] != '0')
 		return_invalid_map(game);
 }
@@ -70,8 +72,12 @@ static void	validate_map(t_game *game)
 		game->copy.max_height++;
 		i++;
 	}
-	if (game->copy.player_num != 1 || (BONUS && game->copy.enemy_num > 1))
-		return_invalid_number_players(game);
+	if (game->copy.player_num != 1)
+		return_invalid_number_players(game, PLAYER);
+	if (BONUS && game->copy.enemy_num > 1)
+		return_invalid_number_players(game, ENEMIES);
+	else if (BONUS && game->door.num > 1)
+		return_invalid_number_players(game, DOOR);
 }
 
 static void	check_valid_map(char *line, t_game *game)

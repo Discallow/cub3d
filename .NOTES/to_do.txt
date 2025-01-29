@@ -93,4 +93,4 @@
 
 [ ] aparecer jogo depois de carregar no enter
 
-[ ] validar as 4 direcoes do player/porta/chao/inimigo
+[✅] validar as 4 direcoes do player/porta/chao/inimigo

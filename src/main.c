@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 18:12:51 by discallow         #+#    #+#             */
-/*   Updated: 2025/01/21 22:49:34 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/29 17:40:54 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	init_struct_2(t_game *game)
 	game->tex_buff = NULL;
 	game->elapsed = 0;
 	game->enemy_data.enemy_type = ENEMY;
+	game->door.num = 0;
 }
 
 void	init_struct(t_game *game)

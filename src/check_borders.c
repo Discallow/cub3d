@@ -6,7 +6,7 @@
 /*   By: discallow <discallow@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 12:12:53 by discallow         #+#    #+#             */
-/*   Updated: 2025/01/21 21:25:50 by discallow        ###   ########.fr       */
+/*   Updated: 2025/01/29 18:28:58 by discallow        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,46 @@ void	check_map_end(t_game *game, char *line)
 		free(temp_line);
 	}
 	game->copy.map_read = true;
+}
+
+void	check_if_map_closed(t_game *game, int x, int y)
+{
+	int	len;
+	int	max_y;
+
+	len = 0;
+	while (game->map[x][y] && game->map[x][y] != ' ')
+	{
+		max_y = ft_strlen(game->map[x - 1]) - 1;
+		x++;
+		if (y > max_y)
+			break ;
+		max_y = ft_strlen(game->map[x]) - 1;
+		if (y > max_y)
+			break ;
+	}
+	if ((len == 0 && game->map[x - 1][y] != '1') || game->map[x - 1][y] != '1')
+		return_invalid_map(game);
+}
+
+void	check_door_borders(t_game *game, int x, int y)
+{
+	bool	vertical_walls;
+	bool	horizontal_walls;
+
+	vertical_walls = false;
+	horizontal_walls = false;
+	game->door.num++;
+	if (game->map[x - 1][y] == '1' && game->map[x + 1][y] == '1')
+		vertical_walls = true;
+	if (game->map[x][y - 1] == '1' && game->map[x][y + 1] == '1')
+		horizontal_walls = true;
+	if (!vertical_walls && !horizontal_walls)
+	{
+		printf(RED"You need walls around the door!"RESET"\n");
+		free_everything(game);
+		exit (1);
+	}
 }
 
 void	check_borders(t_game *game, int x, int y)
